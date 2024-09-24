@@ -1,4 +1,4 @@
-import { isDebugEnable } from './debugEnable.ts'
+import { isDebugEnable } from './DebugEnable.ts'
 
 function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal' = 'info') {
   const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const
@@ -30,4 +30,4 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
   }
 }
 
-export const logger = createLogger(isDebugEnable ? 'debug' : 'info')
+export const log = createLogger(isDebugEnable ? 'debug' : 'info')
