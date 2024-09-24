@@ -1,7 +1,7 @@
 /**
  * This function is used to convert a string or boolean value to boolean.
  */
-function isTrue(value) {
+function isTrue(value: unknown) {
   if (typeof value === 'string') {
     return value.toLowerCase() === 'true' || value.toLowerCase() === '1'
   }
@@ -9,4 +9,4 @@ function isTrue(value) {
 }
 
 export default isTrue
-export const isFalse = (value) => !isTrue(value)
+export const isFalse = (value: unknown) => !isTrue(value)
