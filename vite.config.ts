@@ -1,9 +1,22 @@
-import { defineConfig } from 'vite'
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()]
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  const isDebugEnable = isTrue(env.VITE_IS_DEBUG_ENABLE)
+  if (isDebugEnable) {
+    console.log()
+  }
+  return {
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    }
+  }
 })
 
 // Helper functions
@@ -46,20 +59,12 @@ export default defineConfig({
 //     return new TextDecoder().decode(bytes)
 // }
 //
-// /**
-//  * This function is used to convert a string or boolean value to boolean.
-//  */
-// function isTrue(value) {
-//     if (typeof value === 'string') {
-//         return value.toLowerCase() === 'true' || value.toLowerCase() === '1'
-//     }
-//     return Boolean(value).valueOf()
-// }
-//
-// /**
-//  * APIs
-//  */
-// const APIs = (mode) => {
-//     const env = loadEnv(mode, process.cwd(), '')
-//     return {}
-// }
+/**
+ * This function is used to convert a string or boolean value to boolean.
+ */
+function isTrue(value: unknown): boolean {
+  if (typeof value === 'string') {
+    return value.toLowerCase() === 'true' || value.toLowerCase() === '1'
+  }
+  return Boolean(value).valueOf()
+}
