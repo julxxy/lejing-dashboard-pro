@@ -2,11 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { isDebugEnable } from './common/debugEnable.ts'
-import { logger } from './common/logger.ts'
+import { isDebugEnable } from './common/DebugEnable.ts'
+import { log } from './common/Logger.ts'
 
 if (isDebugEnable) {
-  logger.debug('Debug mode is enabled.')
+  log.debug('Debug mode is enabled.')
 }
 
 createRoot(document.getElementById('root')!).render(
