@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: apiUrl, // Proxy API requests to the backend server
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          rewrite: path => path.replace(/^\/api/, '')
         }
       }
     }
@@ -51,7 +51,6 @@ function encodeBase64(str: string, recursiveCount = 1, currentCount = 0) {
 
 encodeBase64('Hello, world!')
 
-
 function decodeBase64(encodedStr: string) {
   let decode = encodedStr
   if (isBase64(decode)) {
@@ -64,7 +63,7 @@ function decodeBase64(encodedStr: string) {
 }
 
 function utf8Decode(utf8String: string) {
-  const bytes = new Uint8Array(utf8String.split('').map((char) => char.charCodeAt(0)))
+  const bytes = new Uint8Array(utf8String.split('').map(char => char.charCodeAt(0)))
   return new TextDecoder().decode(bytes)
 }
 
@@ -78,19 +77,16 @@ function isTrue(value: unknown): boolean {
   return Boolean(value).valueOf()
 }
 
-
 /**
  * APIs
  */
 const APIs = (mode: string) => {
   const env = loadEnv(mode, process.cwd(), '')
   const isDebugEnable = isTrue(env.VITE_IS_DEBUG_ENABLE)
-  const apiUrls = [
-    { key: 'apiUrl', url: env.APP_API_URL }
-  ]
+  const apiUrls = [{ key: 'apiUrl', url: env.APP_API_URL }]
 
   let encodeByBase64 = false
-  apiUrls.forEach((api) => {
+  apiUrls.forEach(api => {
     if (isBase64(api.url)) {
       encodeByBase64 = true
       api.url = decodeBase64(api.url)
@@ -98,11 +94,11 @@ const APIs = (mode: string) => {
   })
 
   if (isDebugEnable && encodeByBase64) {
-    console.log(`Parsed APIs: ${apiUrls.map((api) => api.url).join(', ')}\n`)
+    console.log(`Parsed APIs: ${apiUrls.map(api => api.url).join(', ')}\n`)
   }
 
   return {
     isDebugEnable,
-    hosts: Object.fromEntries(apiUrls.map((api) => [api.key, api.url]))
+    hosts: Object.fromEntries(apiUrls.map(api => [api.key, api.url]))
   }
 }

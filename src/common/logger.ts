@@ -4,7 +4,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
   const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const
   const levelIndex = levels.indexOf(level)
 
-  const levelColors: { [key in typeof levels[number]]: string } = {
+  const levelColors: { [key in (typeof levels)[number]]: string } = {
     trace: 'color: gray',
     debug: 'color: blue',
     info: 'color: green',
@@ -13,7 +13,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
     fatal: 'color: magenta'
   }
 
-  const logMethod = (method: typeof levels[number], ...args: unknown[]) => {
+  const logMethod = (method: (typeof levels)[number], ...args: unknown[]) => {
     if (levels.indexOf(method) >= levelIndex) {
       const color = levelColors[method]
       console.log(`%c[${method.toUpperCase()}]%c`, color, '', ...args)
