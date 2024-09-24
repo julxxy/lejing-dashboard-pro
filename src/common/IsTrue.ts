@@ -3,7 +3,7 @@
  */
 function isTrue(value: unknown) {
   if (typeof value === 'string') {
-    return value.toLowerCase() === 'true' || value.toLowerCase() === '1'
+    return value.toLowerCase() === 'true' || value === '1'
   }
   return Boolean(value).valueOf()
 }
