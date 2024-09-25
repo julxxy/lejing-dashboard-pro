@@ -1,69 +1,44 @@
 import './App.css'
-import { useState } from 'react'
-import { flushSync } from 'react-dom'
+import { useEffect, useState } from 'react'
+import useWindowSize from './useWindowSize.ts'
 
 function App() {
-  /**
-   * useState语法讲解（字符串、数字、数组、对象动态更新）
-   */
-    // 定义数据
-  const [name, setName] = useState('Weasley')
-  const [user, setUser] = useState({ name: 'John', age: 25 })
-  const [list, setList] = useState(['Tom', 'Jack', 'Jane'])
+  // useEffect语法讲解（模拟生命周期以及自定义Hook）
+
   const [count, setCount] = useState(0)
+  const [total, setTotal] = useState(0)
 
-  // 定义事件处理函数
-  const handleUpdate = () => setName('John')
-  const handleUserUpdate = () => setUser({ ...user, age: 30 })
-  const handlerListUpdate = () => setList([...list, 'Sally'])
-  const handlerCountUpdate = () => {
-    // setCount(count + 1)
+  useEffect(() => {
+    document.title = 'Lejing Admin React App'
+  }, []) // 只在组件挂载时执行
 
-    // setTimeout(() => {
-    //   setCount(count + 1)
-    // }, 1000) // 模拟异步操作
+  useEffect(() => {
+    setCount(count + 1)
+  }, []) // 只在count变化时执行
 
-    // setCount((count) => count + 1) // 也可以使用箭头函数
+  useEffect(() => {
+    setTotal(count * 5)
+  }, [count]) // 只在count变化时执行
 
-    // 强制刷新组件，同步更新数据
-    flushSync(() => {
+  useEffect(() => {
+    const T = setInterval(() => {
       setCount(count + 1)
-      setCount(count + 1)
-    })
+    }, 1000)
+    return () => {
+      clearInterval(T)
+    }
+  }, [count]) // 每隔1秒执行一次
 
-    flushSync(() => {
-      setCount(count + 1)
-      setCount(count + 1)
-    })
-
-    // flushSync同步提高优先级，保证数据更新后再渲染组件，内部会合并成一次更新
-  }
+  // 使用自定义 hook
+  const [size] = useWindowSize()
 
   return (
     <div className={'App'}>
       <h1>Welcome to Lejing Admin</h1>
       <p>
-        <span>Username: {name}</span>
-        <span style={{ marginLeft: 10 }}>User age: {user.age}</span>
+        Count: {count}, Total: {total}
       </p>
-      <p>Count: {count}</p>
-      <p>
-        <span>
-          {list.map((item, index) => {
-            return (
-              <span key={index} style={{ marginRight: 10 }}>
-                {item}
-              </span>
-            )
-          })}
-        </span>
-      </p>
-      <p>
-        <button onClick={handleUpdate}>Change Name</button>
-        <button onClick={handleUserUpdate}>Update User Age</button>
-        <button onClick={handlerListUpdate}>Update List</button>
-        <button onClick={handlerCountUpdate}>Update Count</button>
-      </p>
+      <p>Window width: {size.width}, Window height: {size.height}</p>
     </div>
   )
 }
