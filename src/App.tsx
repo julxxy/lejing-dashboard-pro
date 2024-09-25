@@ -6,7 +6,7 @@ function App() {
   /**
    * useState语法讲解（字符串、数字、数组、对象动态更新）
    */
-    // 定义数据
+  // 定义数据
   const [name, setName] = useState('Weasley')
   const [user, setUser] = useState({ name: 'John', age: 25 })
   const [list, setList] = useState(['Tom', 'Jack', 'Jane'])
@@ -49,15 +49,15 @@ function App() {
         </p>
         <p>Count: {count}</p>
         <p>
-        <span>
-          {list.map((item, index) => {
-            return (
-              <span key={index} style={{ marginRight: 10 }}>
-                {item}
-              </span>
-            )
-          })}
-        </span>
+          <span>
+            {list.map((item, index) => {
+              return (
+                <span key={index} style={{ marginRight: 10 }}>
+                  {item}
+                </span>
+              )
+            })}
+          </span>
         </p>
         <p>
           <button onClick={handleUpdate}>Change Name</button>
