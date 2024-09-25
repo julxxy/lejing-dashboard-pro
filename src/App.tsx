@@ -1,21 +1,29 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import './App.css'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { log } from './common/Logger.ts'
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  // Increment count handler
-  const handleClick = () => setCount(count + 1)
+  const userRef = useRef<HTMLInputElement>(null)
+  const [val, setVal] = useState('')
+  const handleClick = () => {
+    userRef.current?.focus()
+    setVal(userRef.current?.value || '')
+    log.debug(userRef.current?.className)
+    log.debug(userRef.current?.id)
+  }
 
   return (
     <>
       <div className={'App'}>
         <p>Welcome to Lejing Dashboard Pro</p>
-        <p>
-          <span>Count value: {count}</span>
-          <button onClick={handleClick}>Increment</button>
-        </p>
+        <input type="text"
+               ref={userRef}
+               className="red"
+               id="user"
+        />
+        <button type="submit" onClick={handleClick}>Change Val</button>
+        <p>Value: {val}</p>
       </div>
     </>
   )
