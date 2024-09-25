@@ -4,6 +4,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
   const levels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'] as const
   const levelIndex = levels.indexOf(level)
 
+  // eslint-disable-next-line no-unused-vars
   const levelColors: { [key in (typeof levels)[number]]: string } = {
     trace: 'color: gray',
     debug: 'color: blue',
@@ -16,6 +17,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
   const logMethod = (method: (typeof levels)[number], ...args: unknown[]) => {
     if (levels.indexOf(method) >= levelIndex) {
       const color = levelColors[method]
+      // eslint-disable-next-line no-console
       console.log(`%c[${method.toUpperCase()}]%c`, color, '', ...args)
     }
   }
