@@ -23,9 +23,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true }
       ],
-      'no-console': 'off',
-      'no-unused-vars': 'off',
+      'no-unused-vars': 'error',
       'no-debugger': 'error',
+      'no-console': 'error',
       'no-var': 'error'
     }
   }
