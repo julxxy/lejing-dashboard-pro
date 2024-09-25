@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className={'App'}>
-      <h1>Welcome to Lejing Admin</h1>
+      <h1>Welcome to Lejing Dashboard Pro</h1>
       <p>
         Count: {count}, Total: {total}
       </p>
