@@ -40,14 +40,15 @@ function App() {
   }
 
   return (
-    <div className={'App'}>
-      <h1>Welcome to Lejing Admin</h1>
-      <p>
-        <span>Username: {name}</span>
-        <span style={{ marginLeft: 10 }}>User age: {user.age}</span>
-      </p>
-      <p>Count: {count}</p>
-      <p>
+    <>
+      <div className={'App'}>
+        <h1>Welcome to Lejing Admin</h1>
+        <p>
+          <span>Username: {name}</span>
+          <span style={{ marginLeft: 10 }}>User age: {user.age}</span>
+        </p>
+        <p>Count: {count}</p>
+        <p>
         <span>
           {list.map((item, index) => {
             return (
@@ -57,14 +58,15 @@ function App() {
             )
           })}
         </span>
-      </p>
-      <p>
-        <button onClick={handleUpdate}>Change Name</button>
-        <button onClick={handleUserUpdate}>Update User Age</button>
-        <button onClick={handlerListUpdate}>Update List</button>
-        <button onClick={handlerCountUpdate}>Update Count</button>
-      </p>
-    </div>
+        </p>
+        <p>
+          <button onClick={handleUpdate}>Change Name</button>
+          <button onClick={handleUserUpdate}>Update User Age</button>
+          <button onClick={handlerListUpdate}>Update List</button>
+          <button onClick={handlerCountUpdate}>Update Count</button>
+        </p>
+      </div>
+    </>
   )
 }
 
