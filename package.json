@@ -1,7 +1,7 @@
 {
-  "name": "lejing-admin-react",
+  "name": "lejing-dashboard-pro",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --mode development --port 8080 --host",
