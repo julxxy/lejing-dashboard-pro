@@ -1,8 +1,8 @@
-# Lejing Admin React
+# 1 Lejing Dashboard Pro
 
 The admin-dashboard for [**lejing-mall**](https://github.com/Weasley-J/lejing-mall).
 
-# React + TypeScript + Vite
+# 2 React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
