@@ -38,7 +38,9 @@ function App() {
       <p>
         Count: {count}, Total: {total}
       </p>
-      <p>Window width: {size.width}, Window height: {size.height}</p>
+      <p>
+        Window width: {size.width}, Window height: {size.height}
+      </p>
     </div>
   )
 }
