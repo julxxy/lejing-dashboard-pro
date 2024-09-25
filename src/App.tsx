@@ -42,7 +42,7 @@ function App() {
   return (
     <>
       <div className={'App'}>
-        <h1>Welcome to Lejing Admin</h1>
+        <h1>Welcome to Lejing Dashboard Pro</h1>
         <p>
           <span>Username: {name}</span>
           <span style={{ marginLeft: 10 }}>User age: {user.age}</span>
