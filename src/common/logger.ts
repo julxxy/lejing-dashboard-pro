@@ -12,7 +12,6 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
     error: 'color: red',
     fatal: 'color: magenta'
   }
-
   const logMethod = (method: (typeof levels)[number], ...args: unknown[]) => {
     if (levels.indexOf(method) >= levelIndex) {
       const color = levelColors[method]
