@@ -1,4 +1,4 @@
-import isTrue from './IsTrue.ts'
+import isTrue from './isTrue.ts'
 
 /**
  * This function is used to check if the debug mode is enabled.

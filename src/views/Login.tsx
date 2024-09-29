@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { log } from '@/common/Logger.ts'
+import { log } from '@/common/logger.ts'
 import request from '@/utils/request.ts'
 
 export default function Login() {

@@ -1,8 +1,8 @@
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom'
 import Login from '@/views/Login.tsx'
 import Welcome from '@/views/Welcom.tsx'
-import PageNotFound from '@/views/404.tsx'
-import NoPermission from '@/views/403.tsx'
+import PageNotFound from '@/views/Error404.tsx'
+import NoPermission from '@/views/Error403.tsx'
 
 const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },

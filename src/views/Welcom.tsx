@@ -1,10 +1,9 @@
 import { Button } from 'antd'
 import request from '@/utils/request.ts'
-import { log } from '@/common/Logger.ts'
+import { log } from '@/common/logger.ts'
 import { useEffect, useState } from 'react'
 import storage from '@/utils/storage.ts'
 
-log.info(import.meta.env)
 export default function Welcome() {
   const [val, setVal] = useState('')
 
