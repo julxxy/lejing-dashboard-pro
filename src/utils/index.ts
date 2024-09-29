@@ -13,7 +13,6 @@ export const formatMoneyCNY = (amount: string | number | bigint): string => {
   return isNaN(numericAmount) ? 'Invalid amount' : formater.format(numericAmount)
 }
 
-
 // Format date to date string
 export const formatDateToLocalString = (date?: Date, pattern?: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss') => {
   const _date = date ? date : new Date()
