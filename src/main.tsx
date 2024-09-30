@@ -1,14 +1,23 @@
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
 import { isDebugEnable } from './common/debugEnable.ts'
 import { log } from './common/logger.ts'
+import { StrictMode } from 'react'
+import App from '@/App.tsx'
+
+const mode = import.meta.env.MODE
+const root = createRoot(document.getElementById('root')!)
 
 if (isDebugEnable) {
-  log.debug('Debug mode is enabled.')
+  log.debug(`Debug is enabled on ${mode} mode.`)
 }
 
-createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
-  <App />
-  // </StrictMode>
-)
+const appElement =
+  mode === 'production' ? (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  ) : (
+    <App />
+  )
+
+root.render(appElement)

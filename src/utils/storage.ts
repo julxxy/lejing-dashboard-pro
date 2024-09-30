@@ -10,7 +10,9 @@ export default {
    * @param value 值
    */
   set: <T>(key: string, value: T): void => {
-    localStorage.setItem(key, JSON.stringify(value))
+    if (value) {
+      localStorage.setItem(key, JSON.stringify(value))
+    }
   },
 
   /**

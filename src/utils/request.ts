@@ -2,6 +2,11 @@ import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 import { message } from 'antd'
 import { hideLoading, showLoading } from '@/utils/loading'
 import storage from '@/utils/storage.ts'
+import { Result } from '@/types/apiTypes.ts'
+import { log } from '@/common/logger.ts'
+import { isDebugEnable } from '@/common/debugEnable.ts'
+
+const apiToken = import.meta.env.VITE_API_TOKEN as string
 
 /**
  * 实例化 axios 实例
@@ -21,8 +26,9 @@ instance.interceptors.request.use(
     showLoading()
     const token = storage.get<string>('token')
     if (token) {
-      config.headers.Authorization = `Token:: ${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
+    config.headers.icode = apiToken
     return config
   },
   (error: AxiosError) => {
@@ -37,8 +43,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => {
     hideLoading()
-    const { data } = response
+    const { data }: { data: Result } = response
     const { code, msg } = data
+    if (isDebugEnable) log.debug(data)
     switch (code) {
       case 500001:
         message.error(msg)

@@ -36,15 +36,17 @@ export default function Welcome() {
 
   return (
     <>
-      <div className="welcome">Welcome to Lejing Dashboard Pro</div>
-      <p>
-        <Button onClick={handleClick}>点击事件</Button>
-        <Button onClick={handleClick1}>Set</Button>
-        <Button onClick={handleClick2}>Get</Button>
-        <Button onClick={handleClick3}>Delete</Button>
-        <Button onClick={handleClick4}>Clear</Button>
-      </p>
-      <p>{val ? val : ''}</p>
+      <div className="welcome">
+        Welcome to Lejing Dashboard Pro
+        <p>
+          <Button onClick={handleClick}>点击事件</Button>
+          <Button onClick={handleClick1}>Set</Button>
+          <Button onClick={handleClick2}>Get</Button>
+          <Button onClick={handleClick3}>Delete</Button>
+          <Button onClick={handleClick4}>Clear</Button>
+        </p>
+        <p>{val ? val : ''}</p>
+      </div>
     </>
   )
 }

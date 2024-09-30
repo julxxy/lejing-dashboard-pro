@@ -1,3 +1,10 @@
+/* 消除默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .welcome {
   font-size: 30px;
   margin-top: 200px;
