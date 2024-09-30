@@ -1,6 +1,6 @@
 # Lejing Dashboard Pro
 
-The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall).
+The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall), require node v20.x.x  or later.
 
 ![登陆](resources/md/login.png)
 
