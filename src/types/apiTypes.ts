@@ -6,6 +6,12 @@ export interface Result<T = any> {
   msg: string
 }
 
+export interface PageParams {
+  pageNum: number
+  pageSize: number
+  list: any[]
+}
+
 export namespace Login {
   export interface Request {
     userName: string
