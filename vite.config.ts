@@ -49,8 +49,6 @@ function encodeBase64(str: string, recursiveCount = 1, currentCount = 0) {
   return encodeBase64(base64String, recursiveCount, currentCount + 1)
 }
 
-encodeBase64('Hello, world!')
-
 function decodeBase64(encodedStr: string) {
   let decode = encodedStr
   if (isBase64(decode)) {
@@ -72,7 +70,7 @@ function utf8Decode(utf8String: string) {
  */
 function isTrue(value: unknown): boolean {
   if (typeof value === 'string') {
-    return value.toLowerCase() === 'true' || value.toLowerCase() === '1'
+    return value.toLowerCase() === 'true' || value.toLowerCase() === '1' || value.toLowerCase() === 'on'
   }
   return Boolean(value).valueOf()
 }
@@ -85,6 +83,8 @@ const APIs = (mode: string) => {
   const isDebugEnable = isTrue(env.VITE_IS_DEBUG_ENABLE)
   const apiUrls = [{ key: 'apiUrl', url: env.VITE_API_URL }]
 
+  encodeBase64('hello world') // test encodeBase64 function
+
   let encodeByBase64 = false
   apiUrls.forEach(api => {
     if (isBase64(api.url)) {
@@ -94,6 +94,7 @@ const APIs = (mode: string) => {
   })
 
   if (isDebugEnable && encodeByBase64) {
+    // eslint-disable-next-line no-console
     console.log(`Parsed APIs: ${apiUrls.map(api => api.url).join(', ')}\n`)
   }
 
