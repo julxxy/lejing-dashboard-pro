@@ -2,6 +2,8 @@
 
 The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall).
 
+![登陆](resources/md/login.png)
+
 # Tech Stack Links
 
 - [TypeScript](https://www.typescriptlang.org/)
