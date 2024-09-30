@@ -8,7 +8,7 @@ export default function LoginFC() {
   const isProduction = import.meta.env.MODE === 'production'
   const onFinish = async (values: any) => {
     const params = { userName: values.username, userPwd: values.password }
-    const data = await api.login(params) as unknown as string
+    const data = (await api.login(params)) as unknown as string
     if (data === '') {
       message.error('登录失败，token为空')
       log.error('Login failed:', params)
