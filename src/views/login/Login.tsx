@@ -3,14 +3,13 @@ import { Button, Form, Input, message } from 'antd'
 import { log } from '@/common/logger.ts'
 import api from '@/api'
 import storage from '@/utils/storage.ts'
-import { isDebugEnable } from '@/common/debugEnable.ts'
 
 export default function LoginFC() {
   const isProduction = import.meta.env.MODE === 'production'
   const onFinish = async (values: any) => {
     const params = { userName: values.username, userPwd: values.password }
     const data = await api.login(params) as unknown as string
-    if (data === '' && isDebugEnable) {
+    if (data === '') {
       message.error('登录失败，token为空')
       log.error('Login failed:', params)
       return
