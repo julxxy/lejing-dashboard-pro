@@ -2,7 +2,7 @@ import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import { App as AntdApp, ConfigProvider } from 'antd'
 import { router } from '@/router'
-import AntdGlobalHelper from '@/utils/AntdGlobalHelper.ts'
+import AntdHelper from '@/utils/AntdHelper.ts'
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         }}
       >
         <AntdApp>
-          <AntdGlobalHelper />
+          <AntdHelper />
           <RouterProvider router={router} />
         </AntdApp>
       </ConfigProvider>

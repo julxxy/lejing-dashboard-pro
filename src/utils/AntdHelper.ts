@@ -11,7 +11,7 @@ let message: MessageInstance
 let notification: NotificationInstance
 let modal: Omit<ModalStaticFunctions, 'warn'>
 
-export default function AntdGlobalHelper() {
+export default function AntdHelper() {
   const staticFunction = App.useApp()
   message = staticFunction.message
   modal = staticFunction.modal

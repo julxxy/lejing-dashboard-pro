@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
-import { message } from '@/utils/AntdGlobalHelper.ts'
+import { message } from '@/utils/AntdHelper.ts'
 import { hideLoading, showLoading } from '@/utils/loading'
 import storageUtils from '@/utils/storageUtils.ts'
 import { Result } from '@/types/apiTypes.ts'

@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
 import { useState } from 'react'
-import { useAntdMessage } from '@/utils/AntdGlobalHelper.ts'
+import { useAntdMessage } from '@/utils/AntdHelper.ts'
 import { utils } from '@/common/utils.ts'
 
 export default function LoginFC() {
