@@ -1,5 +1,6 @@
-// API 入参定义
-
+/**
+ * API 入参定义
+ */
 export interface Result<T = any> {
   code: number
   data: T

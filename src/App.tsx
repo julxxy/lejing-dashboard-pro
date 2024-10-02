@@ -1,7 +1,8 @@
 import './App.css'
-import { BrowserRouter } from 'react-router-dom'
-import Router from '@/router'
-import { ConfigProvider } from 'antd'
+import { RouterProvider } from 'react-router-dom'
+import { App as AntdApp, ConfigProvider } from 'antd'
+import { router } from '@/router'
+import AntdGlobalHelper from '@/utils/AntdGlobalHelper.ts'
 
 function App() {
   return (
@@ -9,22 +10,18 @@ function App() {
       <ConfigProvider
         theme={{
           token: {
-            // Seed Token，影响范围大
-            // colorPrimary: '#00b96b',
             colorPrimary: '#4096ff',
-            borderRadius: 6
-            // 派生变量，影响范围小
-            // colorBgContainer: '#f6ffed'
+            borderRadius: 8
           }
         }}
       >
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
+        <AntdApp>
+          <AntdGlobalHelper />
+          <RouterProvider router={router} />
+        </AntdApp>
       </ConfigProvider>
     </>
   )
-  // return (<RouterProvider router={router} />)
 }
 
 export default App

@@ -20,8 +20,8 @@
     "baseUrl": "./",
     "paths": {
       /* Allow absolute imports */
-      "@/*": ["src/*"]
+      "@/*": ["src/*", "types/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "types/axios-conf.d.ts"]
 }

@@ -1,21 +1,26 @@
 import styles from './login.module.less'
-import { Button, Form, Input, message } from 'antd'
-import { log } from '@/common/logger.ts'
+import { Button, Form, Input } from 'antd'
 import api from '@/api'
-import storage from '@/utils/storage.ts'
+import storageUtils from '@/utils/storageUtils.ts'
+import { useState } from 'react'
+import { useAntdMessage } from '@/utils/AntdGlobalHelper.ts'
+import { utils } from '@/common/utils.ts'
 
 export default function LoginFC() {
+  const { message } = useAntdMessage()
+  const [loading, setLoading] = useState(false)
   const isProduction = import.meta.env.MODE === 'production'
   const onFinish = async (values: any) => {
+    setLoading(true)
     const params = { userName: values.username, userPwd: values.password }
-    const data = (await api.login(params)) as unknown as string
-    if (data === '') {
-      message.error('登录失败，token为空')
-      log.error('Login failed:', params)
+    const data: any = await api.login(params)
+    setLoading(false)
+    if (!utils.hasValue(data, 'data')) {
+      message.error('用户名或密码错误')
       return
     }
-    storage.set('token', data)
     message.success('登录成功')
+    storageUtils.set('token', data)
     const urlSearchParams = new URLSearchParams(window.location.search)
     location.href = urlSearchParams.get('callback') || '/welcome'
   }
@@ -43,7 +48,7 @@ export default function LoginFC() {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" block={true} htmlType="submit">
+              <Button type="primary" block={true} htmlType="submit" loading={loading}>
                 登录
               </Button>
             </Form.Item>

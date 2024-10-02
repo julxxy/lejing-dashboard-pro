@@ -10,9 +10,11 @@ export default {
    * @param value 值
    */
   set: <T>(key: string, value: T): void => {
-    if (value) {
-      localStorage.setItem(key, JSON.stringify(value))
+    if (null === value || undefined === value || '' === value) {
+      log.warn(`Cannot set localStorage value for key ${key} with falsy value ${value}`)
+      return
     }
+    localStorage.setItem(key, JSON.stringify(value))
   },
 
   /**

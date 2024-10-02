@@ -1,19 +1,13 @@
 import { Button } from 'antd'
-import request from '@/utils/request.ts'
 import { log } from '@/common/logger.ts'
-import { useEffect, useState } from 'react'
-import storage from '@/utils/storage.ts'
+import { useState } from 'react'
+import storage from '@/utils/storageUtils.ts'
 
 export default function Welcome() {
   const [val, setVal] = useState('')
 
-  useEffect(() => {
-    handleClick()
-  }, [])
-
   async function handleClick() {
-    const response = await request.post<string>('/users/login', {})
-    log.info(response)
+    log.info('Handle Click')
   }
 
   function handleClick1() {

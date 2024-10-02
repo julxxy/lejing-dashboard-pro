@@ -11,16 +11,17 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src')
+        '@': path.resolve(__dirname, 'src'),
+        '@types': path.resolve(__dirname, 'types')
       }
     },
     server: {
-      open: true,
+      open: false,
       proxy: {
         '/api': {
           target: apiUrl,
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, '')
+          changeOrigin: true
+          // rewrite: path => path.replace(/^\/api/, '/') // rewrite path to remove /api prefix
         }
       }
     }

@@ -1,9 +1,12 @@
-import { Navigate, RouteObject, useRoutes } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
 import Welcome from '@/views/Welcom.tsx'
 import PageNotFound from '@/views/Error404.tsx'
 import NoPermission from '@/views/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 
+/**
+ * 路由配置
+ */
 const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
   { path: '/login', element: <LoginFC /> },
@@ -12,8 +15,5 @@ const routes: RouteObject[] = [
   { path: '/403', element: <NoPermission /> }
 ]
 
-// export const router = createBrowserRouter(routes)
-
-export default function Router() {
-  return useRoutes(routes)
-}
+// 创建路由实例
+export const router = createBrowserRouter(routes)
