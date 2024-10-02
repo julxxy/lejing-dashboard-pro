@@ -8,7 +8,7 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 
 import { isFalse } from '@/common/isTrue.ts'
 import { IRequestConfig } from '@/axios-conf'
-import { base64Utils } from '@/common/base64Utils.ts'
+import { base64Utils } from '@/utils/base64Utils.ts'
 
 /**
  * API Token

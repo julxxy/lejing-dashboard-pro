@@ -1,13 +1,22 @@
 import { Button } from 'antd'
 import { log } from '@/common/logger.ts'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import storage from '@/utils/storageUtils.ts'
+import { utils } from '@/common/utils.ts'
 
 export default function Welcome() {
   const [val, setVal] = useState('')
 
+  useEffect(() => {
+    // api.login({ userName: 'admin', userPwd: '123456' })
+  }, [])
+
   async function handleClick() {
     log.info('Handle Click')
+    const token = storage.get<string>('token')
+    if (!utils.hasData(token)) {
+      location.href = '/login'
+    }
   }
 
   function handleClick1() {
