@@ -1,12 +1,12 @@
 import styles from '@/views/wlecome/index.module.less'
 
-export default function Welcome() {
+const Welcome = () => {
   return (
     <div className={styles.welcome}>
       <div className={styles.content}>
-        <div className={styles.welcomeWord}>欢迎使用</div>
+        <div className={styles.greeting}>欢迎使用</div>
         <div className={styles.title}>
-          <span style={{ display: 'none' }}>React 通用后台管理系统： </span>乐璟电商运营管理后台专业版
+          <span style={{ display: 'none' }}>React 通用后台管理系统： </span>乐璟电商运营后台专业版
         </div>
         <div className={styles.desc}>
           <span style={{ fontSize: 18 }}>技术栈：</span> React v18.3, ReactRouter v6.26.x, AntD v5.21.x, TypeScript
@@ -17,3 +17,5 @@ export default function Welcome() {
     </div>
   )
 }
+
+export default Welcome

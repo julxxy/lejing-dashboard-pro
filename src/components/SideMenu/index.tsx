@@ -50,7 +50,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = ({ collapsed }) => {
       <div className={styles.menu}>
         <div className={styles.logo} onClick={() => navigate('/welcome')}>
           <img src={'/images/ops-logo.jpeg'} alt={'ops-logo'} className={styles.logoImg} />
-          <span>乐璟 OPS</span>
+          <span>乐璟OPS</span>
         </div>
         <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={'dark'} inlineCollapsed={collapsed} items={items} />
       </div>

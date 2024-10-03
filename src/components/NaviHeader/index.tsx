@@ -49,7 +49,7 @@ const NaviHeader = () => {
         <div className="right">
           <Switch checkedChildren={'暗黑'} unCheckedChildren={'默认'} style={{ marginRight: 10 }} />
           <Dropdown menu={menuProps} trigger={['click']}>
-            <Button icon={<UserOutlined />}>
+            <Button color={'primary'} variant={'solid'} icon={<UserOutlined />}>
               <span className={styles.nickname}>Weasley</span>
               <DownOutlined />
             </Button>

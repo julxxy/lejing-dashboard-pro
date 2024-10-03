@@ -3,6 +3,7 @@
 The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall), require node v20.x.x or later.
 
 ![登陆](resources/md/login.png)
+![首页](resources/md/home.png)
 
 # Tech Stack Links
 
