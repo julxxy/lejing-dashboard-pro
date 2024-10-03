@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
-import Welcome from '@/views/Welcom.tsx'
+import Welcome from '@/views/wlecome'
 import PageNotFound from '@/views/Error404.tsx'
 import NoPermission from '@/views/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'

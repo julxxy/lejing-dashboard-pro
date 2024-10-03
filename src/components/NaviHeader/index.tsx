@@ -1,11 +1,19 @@
-import { DownOutlined, MenuFoldOutlined, UserOutlined } from '@ant-design/icons'
+import { DownOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button, Dropdown, MenuProps, Switch } from 'antd'
-import styles from './idnex.module.less'
+import styles from '@/components/NaviHeader/idnex.module.less'
 import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { message } from '@/utils/AntdHelper.ts'
+import { useState } from 'react'
 
 const NaviHeader = () => {
+  const [collapsed, setCollapsed] = useState(false)
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed)
+    sessionStorage.setItem('collapsed', `${!collapsed}`)
+  }
+
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     {
@@ -31,9 +39,11 @@ const NaviHeader = () => {
 
   return (
     <>
-      <div className={styles.navHeader}>
+      <div className={styles.header}>
         <div className={styles.left}>
-          <MenuFoldOutlined />
+          <Button type="text" onClick={toggleCollapsed}>
+            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+          </Button>
           <Breadcrumb items={breadItems} style={{ marginLeft: 10 }} />
         </div>
         <div className="right">

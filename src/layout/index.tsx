@@ -1,49 +1,35 @@
-import React from 'react'
-import { Layout, theme, Watermark } from 'antd'
-import { log } from '@/common/logger.ts'
-import { isDebugEnable } from '@/common/debugEnable.ts'
+import React, { useEffect, useState } from 'react'
+import { Layout, Watermark } from 'antd'
 import NaviHeader from '@/components/NaviHeader'
+import NavFooter from '@/components/NavFooter'
+import LeftSideMenu from '@/components/SideMenu'
+import { Outlet } from 'react-router-dom'
+import Welcome from '@/views/wlecome'
+import styles from '@/layout/index.module.less'
 
-const { Header, Content, Footer, Sider } = Layout
+const { Content, Sider } = Layout
 const App: React.FC = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken()
+  const [collapsed, setCollapsed] = useState(false)
+
+  useEffect(() => {
+    const _collapsed = sessionStorage.getItem('collapsed') as unknown as boolean
+    setCollapsed(_collapsed)
+  }, [])
 
   return (
     <Watermark content={['lejing-mall']}>
       <Layout>
-        <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          onBreakpoint={broken => {
-            if (isDebugEnable) log.debug(broken)
-          }}
-          onCollapse={(collapsed, type) => {
-            if (isDebugEnable) log.debug(collapsed, type)
-          }}
-        >
-          侧边栏
+        <Sider>
+          <LeftSideMenu collapsed={collapsed} />
         </Sider>
         <Layout>
-          <Header style={{ height: 50, padding: 0, background: colorBgContainer }}>
-            <NaviHeader />
-          </Header>
-          <Content style={{ margin: '24px 16px 0' }}>
-            <div
-              style={{
-                padding: 24,
-                minHeight: 360,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG
-              }}
-            >
-              <span>Content</span>
+          <NaviHeader />
+          <Content className={styles.content}>
+            <div className={styles.wrapper}>
+              <Outlet context={<Welcome />} />
             </div>
+            <NavFooter />
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Lejing Dashboard Pro ©{new Date().getFullYear()} Created by Weasley
-          </Footer>
         </Layout>
       </Layout>
     </Watermark>

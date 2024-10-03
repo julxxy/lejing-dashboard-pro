@@ -19,3 +19,7 @@ export namespace Login {
     userPwd: string
   }
 }
+
+export interface SideMenuProps {
+  collapsed: boolean
+}
