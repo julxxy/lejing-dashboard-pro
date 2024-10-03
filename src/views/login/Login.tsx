@@ -5,11 +5,12 @@ import storageUtils from '@/utils/storageUtils.ts'
 import { useState } from 'react'
 import { useAntdMessage } from '@/utils/AntdHelper.ts'
 import { utils } from '@/common/utils.ts'
+import { Environment } from '@/types/enums.ts'
 
 export default function LoginFC() {
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
-  const isProduction = import.meta.env.MODE === 'production'
+  const isProduction = Environment.isProduction()
   const onFinish = async (values: any) => {
     setLoading(true)
     const params = { userName: values.username, userPwd: values.password }

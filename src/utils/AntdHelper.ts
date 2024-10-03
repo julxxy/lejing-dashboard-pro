@@ -21,6 +21,7 @@ export default function AntdHelper() {
 
 export { message, notification, modal }
 
+// Hooks to use Antd global message, notification and modal
 export const useAntdMessage = () => {
   return {
     message: message,

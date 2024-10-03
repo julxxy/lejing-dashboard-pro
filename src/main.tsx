@@ -3,21 +3,20 @@ import { isDebugEnable } from './common/debugEnable.ts'
 import { log } from './common/logger.ts'
 import { StrictMode } from 'react'
 import App from '@/App.tsx'
+import { Environment } from '@/types/enums.ts'
 
-const mode = import.meta.env.MODE
 const root = createRoot(document.getElementById('root')!)
 
 if (isDebugEnable) {
-  log.debug(`Debug is enabled on ${mode} mode.`)
+  log.debug(`Debug enabled on '${Environment.current}' mode.`)
 }
 
-const appElement =
-  mode === 'production' ? (
-    <StrictMode>
-      <App />
-    </StrictMode>
-  ) : (
+const appElement = Environment.isProduction() ? (
+  <StrictMode>
     <App />
-  )
+  </StrictMode>
+) : (
+  <App />
+)
 
 root.render(appElement)

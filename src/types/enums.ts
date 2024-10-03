@@ -1,0 +1,29 @@
+/**
+ * App environment
+ */
+export const Environment = {
+  prod: 'production',
+  dev: 'development',
+  local: 'developer_local',
+  current: import.meta.env.MODE,
+  isProduction: (): boolean => Environment.current === Environment.prod,
+  isNotProduction: (): boolean => Environment.current !== Environment.prod
+} as const
+
+/**
+ * User roles
+ */
+export enum UserRoles {
+  Admin = 'ADMIN',
+  User = 'USER',
+  Guest = 'GUEST'
+}
+
+/**
+ * User status
+ */
+export enum UserStatus {
+  Active = 'ACTIVE',
+  Inactive = 'INACTIVE',
+  Suspended = 'SUSPENDED'
+}

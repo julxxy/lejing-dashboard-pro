@@ -9,6 +9,18 @@ export default defineConfig(({ mode }) => {
   const { apiUrl } = hosts
   return {
     plugins: [react()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return 'vendor'
+            }
+          }
+        }
+      },
+      chunkSizeWarningLimit: 1000
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
@@ -20,8 +32,8 @@ export default defineConfig(({ mode }) => {
       proxy: {
         '/api': {
           target: apiUrl,
-          changeOrigin: true
-          // rewrite: path => path.replace(/^\/api/, '/') // rewrite path to remove /api prefix
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, '/api')
         }
       }
     }

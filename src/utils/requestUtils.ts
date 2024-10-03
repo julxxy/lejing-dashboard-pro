@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
-import { message } from '@/utils/AntdHelper.ts'
 import { hideLoading, showLoading } from '@/utils/loading'
 import storageUtils from '@/utils/storageUtils.ts'
 import { Result } from '@/types/apiTypes.ts'
@@ -8,7 +7,8 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 
 import { isFalse } from '@/common/isTrue.ts'
 import { IRequestConfig } from '@/axios-conf'
-import { base64Utils } from '@/utils/base64Utils.ts'
+import { base64Utils } from '@/common/base64Utils.ts'
+import { message } from '@/utils/AntdHelper.ts'
 
 /**
  * API Token
@@ -33,10 +33,12 @@ instance.interceptors.request.use(
   config => {
     if (config.showLoading) showLoading()
     const token = storageUtils.get<string>('token')
+    const apiTokenIsBase64 = base64Utils.isBase64(apiToken)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
-    config.headers.icode = base64Utils.isBase64(apiToken)
+    if (isDebugEnable) log.debug(`apiTokenIsBase64: ${apiTokenIsBase64}, apiToken: ${apiToken}`)
+    config.headers.icode = apiTokenIsBase64
       ? base64Utils.decodeBase64(apiToken, base64Utils.defaultRecursiveCount)
       : apiToken
     return config

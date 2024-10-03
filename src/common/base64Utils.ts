@@ -1,8 +1,14 @@
 export const base64Utils = {
   defaultRecursiveCount: 15,
   isBase64(str: string): boolean {
-    const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
-    if (!base64Regex.test(str)) return false
+    if (str.length % 4 !== 0) return false
+    const base64RegexArr = [
+      /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/,
+      /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z0-9+/]+={0,2}$/
+    ]
+    for (const base64Regex of base64RegexArr) {
+      if (!base64Regex.test(str)) return false
+    }
     try {
       atob(str)
       return true
@@ -10,7 +16,6 @@ export const base64Utils = {
       return false
     }
   },
-
   encodeBase64(str: string, recursiveCount = 1, currentCount = 0): string {
     if (currentCount >= recursiveCount) return str
     const utf8Bytes = new TextEncoder().encode(str)

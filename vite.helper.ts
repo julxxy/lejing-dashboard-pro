@@ -1,49 +1,9 @@
 import { loadEnv } from 'vite'
+import { base64Utils } from './src/common/base64Utils.ts'
 
 /**
  * Vite config helper functions
  */
-export const base64Utils = {
-  defaultRecursiveCount: 15,
-  isBase64(str: string): boolean {
-    const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
-    if (!base64Regex.test(str)) return false
-    try {
-      atob(str)
-      return true
-    } catch {
-      return false
-    }
-  },
-
-  encodeBase64(str: string, recursiveCount = 1, currentCount = 0): string {
-    if (currentCount >= recursiveCount) return str
-    const utf8Bytes = new TextEncoder().encode(str)
-    const base64String = btoa(String.fromCharCode(...utf8Bytes))
-    return this.encodeBase64(base64String, recursiveCount, currentCount + 1)
-  },
-
-  decodeBase64(encodedStr: string, recursiveCount = 1, currentCount = 0): string {
-    if (currentCount >= recursiveCount) return encodedStr
-
-    if (this.isBase64(encodedStr)) {
-      try {
-        const decoded = atob(encodedStr)
-        const utf8Decoded = this.utf8Decode(decoded)
-        return this.decodeBase64(utf8Decoded, recursiveCount, currentCount + 1)
-      } catch {
-        return encodedStr
-      }
-    } else {
-      return encodedStr
-    }
-  },
-
-  utf8Decode(utf8String: string): string {
-    const bytes = new Uint8Array([...utf8String].map(char => char.charCodeAt(0)))
-    return new TextDecoder().decode(bytes)
-  }
-}
 
 export const booleanUtils = {
   isTrue(value: unknown): boolean {
