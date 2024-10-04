@@ -14,6 +14,7 @@ The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall),
 - [React-router-dom](https://v5.reactrouter.com/web/guides/quick-start)
 - [Ant Design](https://ant.design/docs/react/introduce)
 - [Axios](https://axios-http.com/docs/intro)
+- [Zustand](https://github.com/pmndrs/zustand)
 - [Resso](https://github.com/nanxiaobei/resso)
 - [Iconfont](https://www.iconfont.cn/)
 
@@ -22,8 +23,6 @@ The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall),
 ```bash
 npm run dev
 ```
-
-
 
 React + TypeScript + Vite: This template provides a minimal setup to get React working in Vite with HMR and some ESLint
 rules.

@@ -7,16 +7,17 @@ import { Outlet } from 'react-router-dom'
 import Welcome from '@/views/wlecome'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
-import store from '@/store/useResso.ts'
+import useUserStore from '@/store/useZustandStore.ts'
 
 const { Content, Sider } = Layout
 const watermarkContent = import.meta.env.VITE_APP_ID as string
 
 const LayoutFC: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
+  const { setUserInfo } = useUserStore() // 获取 store
   const getUserInfo = async () => {
     const [userInfo] = await Promise.all([api.getUserInfo()])
-    store.setUserInfo(userInfo)
+    setUserInfo(userInfo)
   }
 
   useEffect(() => {

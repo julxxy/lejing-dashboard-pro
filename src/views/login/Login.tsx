@@ -9,16 +9,17 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { URIs } from '@/router'
 import { utils } from '@/common/utils.ts'
-import store from '@/store/useResso.ts'
+import useUserStore from '@/store/useZustandStore.ts'
 
 export default function LoginFC() {
+  const { setToken } = useUserStore()
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
   const isProduction = Environment.isProduction()
   const redirectToWelcome = (data: string) => {
     message.success('登录成功').then(() => {})
     storageUtils.set('token', data)
-    store.token = data
+    setToken(data)
     setTimeout(() => {
       const urlSearchParams = new URLSearchParams(window.location.search)
       location.href = urlSearchParams.get('callback') || URIs.welcome

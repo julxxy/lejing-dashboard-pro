@@ -7,7 +7,7 @@ import { message } from '@/utils/AntdHelper.ts'
 import { useState } from 'react'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
-import store from '@/store/useResso.ts'
+import useUserStore from '@/store/useZustandStore.ts'
 
 const NaviHeader = () => {
   const [collapsed, setCollapsed] = useState(false)
@@ -15,11 +15,11 @@ const NaviHeader = () => {
     setCollapsed(!collapsed)
     sessionStorage.setItem('collapsed', `${!collapsed}`)
   }
-
+  const { userInfo } = useUserStore()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     {
-      label: `邮箱：${store.userInfo?.userEmail}`,
+      label: `邮箱：${userInfo?.userEmail}`,
       key: '1'
     },
     {
@@ -71,7 +71,7 @@ const NaviHeader = () => {
           <Switch checkedChildren={'暗黑'} unCheckedChildren={'默认'} style={{ marginRight: 10 }} />
           <Dropdown menu={menuProps} trigger={['click']}>
             <Button color={'primary'} variant={'solid'} icon={<UserOutlined />}>
-              <span className={styles.nickname}>{store.userInfo.userName}</span>
+              <span className={styles.nickname}>{userInfo.userName}</span>
               <DownOutlined />
             </Button>
           </Dropdown>
