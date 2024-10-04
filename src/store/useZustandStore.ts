@@ -9,7 +9,7 @@ import { User } from '@/types/apiTypes.ts'
 
 // Log meta update
 function logUpdate(data: any) {
-  if (isDebugEnable) log.debug('zustand meta data update:', data)
+  if (isDebugEnable) log.debug('Zustand meta data update:', data)
 }
 
 const useUserStore = create<{
