@@ -15,6 +15,9 @@ import { Menu, MenuProps } from 'antd'
 import React from 'react'
 import { SideMenuProps } from '@/types/apiTypes.ts'
 import { useNavigate } from 'react-router-dom'
+import { URIs } from '@/router'
+import useZustandStore from '@/store/useZustandStore.ts'
+import Sider from 'antd/es/layout/Sider'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -44,17 +47,18 @@ const items: MenuItem[] = [
 ]
 
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
+  const { collapsed } = useZustandStore()
   const navigate = useNavigate()
   return (
-    <>
+    <Sider trigger={null} collapsible collapsed={collapsed} className={styles.sider}>
       <div className={styles.menu}>
-        <div className={styles.logo} onClick={() => navigate('/welcome')}>
+        <div className={styles.logo} onClick={() => navigate(URIs.welcome)}>
           <img src={'/images/ops-logo.jpeg'} alt={'ops-logo'} className={styles.logoImg} />
-          <span>乐璟OPS</span>
+          <span className={collapsed ? styles.logoTextHidden : styles.logoTextVisible}>乐璟OPS</span>
         </div>
         <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={'dark'} items={items} />
       </div>
-    </>
+    </Sider>
   )
 }
 

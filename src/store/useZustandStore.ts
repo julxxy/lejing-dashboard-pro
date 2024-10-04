@@ -6,25 +6,39 @@ import { User } from '@/types/apiTypes.ts'
 /**
  * This is the store for the app. implemented using Zustand library.
  */
-
-// Log meta update
-function logUpdate(data: any) {
-  if (isDebugEnable) log.debug('Zustand meta data update:', data)
-}
-
-const useUserStore = create<{
+const useZustandStore = create<{
+  /* state */
   token: string
   userInfo: User.Information
+  collapsed: boolean
+
+  /* setters */
   setToken: (token: string) => void
   setUserInfo: (userInfo: User.Information) => void
+  setCollapsed: () => void
 }>(set => ({
+  /* state */
   token: '',
   userInfo: {} as User.Information,
+  collapsed: false,
+
+  /* setters */
   setToken: (token: string) => set(() => ({ token })),
   setUserInfo: (userInfo: User.Information) => {
     set(() => ({ userInfo }))
     logUpdate(userInfo) // Call logUpdate after setting userInfo
+  },
+  setCollapsed: () => {
+    set(state => {
+      const collapsed = state.collapsed
+      logUpdate(collapsed)
+      return { collapsed: !collapsed }
+    })
   }
 }))
 
-export default useUserStore
+function logUpdate(data: any) {
+  if (isDebugEnable) log.debug('Zustand meta data update:', data)
+}
+
+export default useZustandStore

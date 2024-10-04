@@ -9,10 +9,10 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { URIs } from '@/router'
 import { utils } from '@/common/utils.ts'
-import useUserStore from '@/store/useZustandStore.ts'
+import useZustandStore from '@/store/useZustandStore.ts'
 
 export default function LoginFC() {
-  const { setToken } = useUserStore()
+  const { setToken } = useZustandStore()
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
   const isProduction = Environment.isProduction()

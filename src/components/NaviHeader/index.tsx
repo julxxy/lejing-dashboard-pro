@@ -4,18 +4,16 @@ import styles from '@/components/NaviHeader/idnex.module.less'
 import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { message } from '@/utils/AntdHelper.ts'
-import { useState } from 'react'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
-import useUserStore from '@/store/useZustandStore.ts'
+import useZustandStore from '@/store/useZustandStore.ts'
 
 const NaviHeader = () => {
-  const [collapsed, setCollapsed] = useState(false)
+  const { userInfo, collapsed, setCollapsed } = useZustandStore()
+  // 控制侧边栏收缩
   const toggleCollapsed = () => {
-    setCollapsed(!collapsed)
-    sessionStorage.setItem('collapsed', `${!collapsed}`)
+    setCollapsed()
   }
-  const { userInfo } = useUserStore()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     {
@@ -68,7 +66,7 @@ const NaviHeader = () => {
           <Breadcrumb items={breadItems} style={{ marginLeft: 10 }} />
         </div>
         <div className="right">
-          <Switch checkedChildren={'暗黑'} unCheckedChildren={'默认'} style={{ marginRight: 10 }} />
+          <Switch title={'切热主题'} checkedChildren={'暗黑'} unCheckedChildren={'默认'} style={{ marginRight: 10 }} />
           <Dropdown menu={menuProps} trigger={['click']}>
             <Button color={'primary'} variant={'solid'} icon={<UserOutlined />}>
               <span className={styles.nickname}>{userInfo.userName}</span>

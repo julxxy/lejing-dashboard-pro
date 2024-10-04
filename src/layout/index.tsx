@@ -7,14 +7,15 @@ import { Outlet } from 'react-router-dom'
 import Welcome from '@/views/wlecome'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
-import useUserStore from '@/store/useZustandStore.ts'
+import useZustandStore from '@/store/useZustandStore.ts'
+import Demo from '@/views/Demo.tsx'
 
-const { Content, Sider } = Layout
+const { Content } = Layout
 const watermarkContent = import.meta.env.VITE_APP_ID as string
 
 const LayoutFC: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
-  const { setUserInfo } = useUserStore() // 获取 store
+  const { setUserInfo } = useZustandStore() // 获取 store
   const getUserInfo = async () => {
     const [userInfo] = await Promise.all([api.getUserInfo()])
     setUserInfo(userInfo)
@@ -27,20 +28,16 @@ const LayoutFC: React.FC = () => {
   return (
     <Watermark content={[watermarkContent]}>
       <Layout style={{ minHeight: '100vh' }}>
-        {/* LeftSideMenu 铺满屏幕左侧 */}
-        <Sider className={styles.sider}>
-          <LeftSideMenu />
-        </Sider>
-        {/* Right content area with NaviHeader and NavFooter */}
-        <Layout className={styles.rightContentArea}>
-          {/* NaviHeader 放在 Content 的顶部 */}
+        <LeftSideMenu />
+        <Layout ref={wrapperRef} className={styles.rightContentArea}>
           <NaviHeader />
           <Content className={styles.content}>
-            <div ref={wrapperRef} className={styles.wrapper}>
+            <div className={styles.wrapper}>
               <Outlet context={<Welcome />} />
+              {/*<Demo/>  内容超出 <Content/> 区域，撑最外层的，我希望滚动条出现在 <Content> 区域*/}
+              <Demo />
             </div>
           </Content>
-          {/* NavFooter 放在 Content 的底部 */}
           <NavFooter />
         </Layout>
       </Layout>
