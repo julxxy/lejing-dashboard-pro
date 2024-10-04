@@ -1,0 +1,61 @@
+.dashboardWrapper {
+  background-color: #fff;
+  padding: 20px;
+
+  .userInfo {
+    display: flex;
+    align-items: center;
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+}
+
+.reportWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
+  .card {
+    flex: 1;
+    height: 100px;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #ffffff;
+
+    &:first-child {
+      background-color: #f4864f;
+    }
+
+    &:nth-child(2) {
+      background-color: #887edc;
+    }
+
+    &:nth-child(3) {
+      background-color: #4f96f4;
+    }
+
+    &:last-child {
+      background-color: #6dc3dc;
+      margin-right: 0;
+    }
+  }
+
+  .title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px 0 3px 5px;
+  }
+
+  .count {
+    font-size: 24px;
+    text-align: center;
+  }
+}

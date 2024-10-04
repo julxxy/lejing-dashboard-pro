@@ -1,4 +1,4 @@
-import styles from '@/views/wlecome/index.module.less'
+import styles from '@/views/welcome/index.module.less'
 
 const Welcome = () => {
   return (

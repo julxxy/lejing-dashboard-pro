@@ -6,14 +6,14 @@ import LeftSideMenu from '@/components/SideMenu'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
-import Welcome from '@/views/wlecome'
+import Welcome from '@/views/welcome'
 import { Outlet } from 'react-router-dom'
 
 const { Content } = Layout
-const watermarkContent = import.meta.env.VITE_APP_ID as string
-
 const LayoutFC: React.FC = () => {
+  const watermarks = import.meta.env.VITE_APP_WATERMARKS.split(',') || [] // 获取水印配置
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
+  const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
   const { setUserInfo } = useZustandStore() // 获取 store
   const getUserInfo = async () => {
     const [userInfo] = await Promise.all([api.getUserInfo()])
@@ -23,8 +23,6 @@ const LayoutFC: React.FC = () => {
   useEffect(() => {
     getUserInfo()
   }, [])
-
-  const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
 
   // 动态计算内容区域的的高度
   useEffect(() => {
@@ -41,7 +39,7 @@ const LayoutFC: React.FC = () => {
   }, [])
 
   return (
-    <Watermark content={[watermarkContent]}>
+    <Watermark content={watermarks}>
       <Layout style={{ minHeight: '100vh' }}>
         <LeftSideMenu />
         <Layout ref={wrapperRef} className={styles.rightContentArea}>

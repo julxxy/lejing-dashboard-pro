@@ -10,10 +10,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 
 const NaviHeader = () => {
   const { userInfo, collapsed, setCollapsed } = useZustandStore()
-  // 控制侧边栏收缩
-  const toggleCollapsed = () => {
-    setCollapsed()
-  }
+  const toggleCollapsed = () => setCollapsed() // 控制侧边栏收缩
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     {
@@ -34,7 +31,6 @@ const NaviHeader = () => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
     }, 1500)
   }
-
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (isDebugEnable) log.debug(e)
     const { key } = e
