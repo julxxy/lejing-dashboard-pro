@@ -5,10 +5,12 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { message } from '@/utils/AntdHelper.ts'
 import { useState } from 'react'
+import storageUtils from '@/utils/storageUtils.ts'
+import { URIs } from '@/router'
+import store from '@/store/userResso.ts'
 
 const NaviHeader = () => {
   const [collapsed, setCollapsed] = useState(false)
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed)
     sessionStorage.setItem('collapsed', `${!collapsed}`)
@@ -17,17 +19,36 @@ const NaviHeader = () => {
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     {
-      label: 'weasley1024@gmail.com',
+      label: `邮箱：${store.userInfo?.userEmail}`,
       key: '1'
     },
     {
-      label: '退出',
+      label: '安全退出',
       key: '2'
     }
   ]
+
+  function logout() {
+    if (isDebugEnable) log.debug('logout')
+    storageUtils.remove('token')
+    message.success('退出成功').then(() => {})
+    setTimeout(() => {
+      location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
+    }, 1500)
+  }
+
   const handleMenuClick: MenuProps['onClick'] = e => {
-    message.info('Click on menu item.')
     if (isDebugEnable) log.debug(e)
+    const { key } = e
+    switch (key) {
+      case '1':
+        break
+      case '2':
+        logout()
+        break
+      default:
+        break
+    }
   }
 
   const menuProps = {
@@ -50,7 +71,7 @@ const NaviHeader = () => {
           <Switch checkedChildren={'暗黑'} unCheckedChildren={'默认'} style={{ marginRight: 10 }} />
           <Dropdown menu={menuProps} trigger={['click']}>
             <Button color={'primary'} variant={'solid'} icon={<UserOutlined />}>
-              <span className={styles.nickname}>Weasley</span>
+              <span className={styles.nickname}>{store.userInfo.userName}</span>
               <DownOutlined />
             </Button>
           </Dropdown>

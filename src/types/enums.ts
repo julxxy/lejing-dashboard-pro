@@ -27,3 +27,10 @@ export enum UserStatus {
   Inactive = 'INACTIVE',
   Suspended = 'SUSPENDED'
 }
+
+/**
+ * HTTP result status
+ */
+export enum ResultStatus {
+  Success = '0'
+}

@@ -6,14 +6,23 @@ import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
 
 /**
+ * URIs in the app
+ */
+export const URIs = {
+  home: '/',
+  login: '/login',
+  welcome: '/welcome'
+}
+
+/**
  * 路由配置
  */
 const routes: RouteObject[] = [
-  { path: '/', element: <Navigate to={'/welcome'} /> },
-  { path: '/login', element: <LoginFC /> },
+  { path: '/', element: <Navigate to={URIs.welcome} /> },
+  { path: URIs.login, element: <LoginFC /> },
   {
     element: <Layout />,
-    children: [{ path: '/welcome', element: <Welcome /> }]
+    children: [{ path: URIs.welcome, element: <Welcome /> }]
   },
   { path: '*', element: <Navigate to="/404" /> },
   { path: '/404', element: <PageNotFound /> },

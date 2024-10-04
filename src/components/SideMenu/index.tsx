@@ -43,7 +43,7 @@ const items: MenuItem[] = [
   }
 ]
 
-const LeftSideMenu: React.FC<SideMenuProps> = ({ collapsed }) => {
+const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const navigate = useNavigate()
   return (
     <>
@@ -52,7 +52,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = ({ collapsed }) => {
           <img src={'/images/ops-logo.jpeg'} alt={'ops-logo'} className={styles.logoImg} />
           <span>乐璟OPS</span>
         </div>
-        <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={'dark'} inlineCollapsed={collapsed} items={items} />
+        <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={'dark'} items={items} />
       </div>
     </>
   )

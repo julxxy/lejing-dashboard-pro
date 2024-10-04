@@ -13,6 +13,7 @@ The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall),
 - [React-router-dom](https://v5.reactrouter.com/web/guides/quick-start)
 - [Ant Design](https://ant.design/docs/react/introduce)
 - [Axios](https://axios-http.com/docs/intro)
+- [Resso](https://github.com/nanxiaobei/resso)
 - [Iconfont](https://www.iconfont.cn/)
 
 # Getting Started

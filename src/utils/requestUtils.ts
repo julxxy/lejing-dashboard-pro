@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosError, AxiosInstance } from 'axios'
 import { hideLoading, showLoading } from '@/utils/loading'
 import storageUtils from '@/utils/storageUtils.ts'
 import { Result } from '@/types/apiTypes.ts'
@@ -16,7 +16,7 @@ import { message } from '@/utils/AntdHelper.ts'
 const apiUriPrefix = import.meta.env.VITE_API_URI_PREFIX as string
 let apiToken = import.meta.env.VITE_API_TOKEN as string
 const tokenIsBase64 = base64Utils.isBase64(apiToken)
-if (isDebugEnable) log.debug(`apiTokenIsBase64: ${tokenIsBase64}, apiToken: ${apiToken}`)
+if (isDebugEnable) log.debug(`API token is base64: ${tokenIsBase64}, apiToken: ${apiToken}`)
 apiToken = tokenIsBase64 ? base64Utils.decodeBase64(apiToken, base64Utils.defaultRecursiveCount) : apiToken
 
 /**
@@ -39,7 +39,7 @@ instance.interceptors.request.use(
   config => {
     if (config.showLoading) showLoading()
     const token = storageUtils.get<string>('token')
-    if (token) config.headers.Authorization = `Token::${token}`
+    if (token) config.headers.Authorization = `Bearer ${token}`
     return config
   },
   (error: AxiosError) => {
@@ -49,7 +49,7 @@ instance.interceptors.request.use(
 )
 
 /**
- * Response interceptor
+ * Information interceptor
  */
 instance.interceptors.response.use(
   response => {
@@ -93,16 +93,16 @@ function handleSessionExpired(msg: string, data: any) {
  * Encapsulating axios requests
  */
 export default {
-  get<T>(url: string, params?: any, options?: IRequestConfig): Promise<AxiosResponse<T>> {
-    return instance.get<T>(url, { params, ...options })
+  get<T>(url: string, params?: any, options?: IRequestConfig): T {
+    return instance.get<T>(url, { params, ...options }) as T
   },
-  post<T>(url: string, data?: object, options?: IRequestConfig): Promise<AxiosResponse<T>> {
-    return instance.post<T>(url, data, options)
+  post<T>(url: string, data?: object, options?: IRequestConfig): T {
+    return instance.post<T>(url, data, options) as T
   },
-  delete<T>(url: string, data?: any): Promise<AxiosResponse<T>> {
-    return instance.delete<T>(url, { data })
+  delete<T>(url: string, data?: any): T {
+    return instance.delete<T>(url, { data }) as T
   },
-  put<T>(url: string, data?: any): Promise<AxiosResponse<T>> {
-    return instance.put<T>(url, data)
+  put<T>(url: string, data?: any): T {
+    return instance.put<T>(url, data) as T
   }
 }

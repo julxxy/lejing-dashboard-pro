@@ -14,10 +14,23 @@ export const utils = {
     }
     return false
   },
-  hasKey(data: Record<string, unknown>, key: string): boolean {
-    return data != null && key in data
+  hasKey(data: unknown, key: string): boolean {
+    if (data === null || data === undefined) {
+      return false
+    }
+    if (typeof data === 'object') {
+      return key in data
+    }
+    if (Array.isArray(data)) {
+      return data.includes(key)
+    }
+    return false
   },
-  hasValue(data: Record<string, unknown>, key: string): boolean {
-    return this.hasKey(data, key) && (Array.isArray(data[key]) ? data[key].length > 0 : !!data[key])
+  hasValue(data: unknown, key: unknown): boolean {
+    if (Array.isArray(data) && typeof key === 'number') {
+      return Array.isArray(data[key]) ? data[key].length > 0 : !!data[key]
+    } else {
+      return this.hasKey(data, key as string)
+    }
   }
 }

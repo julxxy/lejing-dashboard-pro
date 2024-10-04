@@ -20,6 +20,24 @@ export namespace Login {
   }
 }
 
+export namespace User {
+  export interface Information {
+    userImg: string
+    _id: string
+    userId: number
+    userName: string
+    userEmail: string
+    mobile: string
+    deptId: string
+    deptName: string
+    job: string
+    state: number
+    role: number
+    createId: number
+    roleList: string
+  }
+}
+
 export interface SideMenuProps {
-  collapsed: boolean
+  collapsed?: boolean
 }

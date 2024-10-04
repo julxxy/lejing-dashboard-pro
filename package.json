@@ -19,7 +19,8 @@
     "less": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2"
+    "react-router-dom": "^6.26.2",
+    "resso": "^0.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
