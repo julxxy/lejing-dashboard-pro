@@ -7,7 +7,7 @@ import { message } from '@/utils/AntdHelper.ts'
 import { useState } from 'react'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
-import store from '@/store/userResso.ts'
+import store from '@/store/useResso.ts'
 
 const NaviHeader = () => {
   const [collapsed, setCollapsed] = useState(false)

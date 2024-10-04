@@ -9,7 +9,7 @@ import { isDebugEnable } from '@/common/debugEnable.ts'
 import { log } from '@/common/logger.ts'
 import { URIs } from '@/router'
 import { utils } from '@/common/utils.ts'
-import store from '@/store/userResso.ts'
+import store from '@/store/useResso.ts'
 
 export default function LoginFC() {
   const { message } = useAntdMessage()

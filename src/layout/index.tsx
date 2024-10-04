@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom'
 import Welcome from '@/views/wlecome'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
-import store from '@/store/userResso.ts'
+import store from '@/store/useResso.ts'
 
 const { Content, Sider } = Layout
 const watermarkContent = import.meta.env.VITE_APP_ID as string
