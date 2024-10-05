@@ -42,7 +42,7 @@ const Dashboard: React.FC = () => {
       <div className={styles.dashboardWrapper}>
         <div className={styles.userInfo}>
           <img
-            src={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}
+            src={'https://img.bugela.com/uploads/2021/09/04/TX10008_02.jpg'}
             className={styles.avatar}
             alt={'avatar'}
           />

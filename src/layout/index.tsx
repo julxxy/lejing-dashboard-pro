@@ -28,6 +28,7 @@ const LayoutFC: React.FC = () => {
 
   useEffect(() => {
     getUserInfo()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 动态计算内容区域的的高度
