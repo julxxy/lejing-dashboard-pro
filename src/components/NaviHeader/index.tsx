@@ -18,7 +18,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, setCollapsed, setToken, setEnableDarkTheme } = useZustandStore()
+  const { userInfo, collapsed, setCollapsed, setToken, setDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed() // 控制侧边栏收缩
   const navigate = useNavigate()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
@@ -71,11 +71,6 @@ const NaviHeader = () => {
     }, 1500)
   }
 
-  function onThemeSwitchClick(event: any) {
-    if (isDebugEnable) log.debug('On theme switch clicked: ', typeof event, event)
-    setEnableDarkTheme()
-  }
-
   return (
     <div className={styles.header}>
       <div className={styles.left}>
@@ -90,7 +85,7 @@ const NaviHeader = () => {
           checkedChildren={'明亮'}
           unCheckedChildren={'暗黑'}
           defaultChecked={true}
-          onClick={onThemeSwitchClick}
+          onClick={() => setDarkEnable()}
         />
         <Dropdown.Button
           menu={menuProps}
