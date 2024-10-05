@@ -1,8 +1,12 @@
 import styles from '@/views/dashboard/index.module.less'
 import React from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
+import useZustandStore from '@/store/useZustandStore.ts'
+import { log } from '@/common/logger.ts'
 
 const Dashboard: React.FC = () => {
+  const { isDarkThemeEnable } = useZustandStore()
+  log.info("isDarkThemeEnable", isDarkThemeEnable)
   const username = 'Weasley'
   const items: DescriptionsProps['items'] = [
     {
@@ -57,19 +61,19 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       <div className={styles.reportWrapper}>
-        <div className={styles.card}>
-          <div className={styles.title}>货运人员</div>
+        <div className={isDarkThemeEnable ? styles.cardDarkTheme : styles.cardLightTheme}>
+          <div className={styles.title}>货运司机</div>
           <div className={styles.count}>110 个</div>
         </div>
-        <div className={styles.card}>
+        <div className={isDarkThemeEnable ? styles.cardDarkTheme : styles.cardLightTheme}>
           <div className={styles.title}>总流水</div>
           <div className={styles.count}>11000 元</div>
         </div>
-        <div className={styles.card}>
-          <div className={styles.title}>总订单</div>
+        <div className={isDarkThemeEnable ? styles.cardDarkTheme : styles.cardLightTheme}>
+          <div className={styles.title}>总单量</div>
           <div className={styles.count}>110 单</div>
         </div>
-        <div className={styles.card}>
+        <div className={isDarkThemeEnable ? styles.cardDarkTheme : styles.cardLightTheme}>
           <div className={styles.title}>开通城市</div>
           <div className={styles.count}>110 个</div>
         </div>

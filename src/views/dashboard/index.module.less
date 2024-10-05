@@ -21,7 +21,7 @@
   align-items: center;
   margin-top: 20px;
 
-  .card {
+  .cardLightTheme {
     flex: 1;
     height: 100px;
     padding: 10px;
@@ -31,15 +31,15 @@
     color: #ffffff;
 
     &:first-child {
-      background-color: #631faa
+      background-color: #631faa;
     }
 
     &:nth-child(2) {
-      background-color: #ff3da5
+      background-color: #ff3da5;
     }
 
     &:nth-child(3) {
-      background-color: #ff7ed4
+      background-color: #ff7ed4;
     }
 
     &:last-child {
@@ -48,14 +48,30 @@
     }
   }
 
-  .title {
+  .cardDarkTheme {
+    flex: 1;
+    height: 100px;
+    padding: 10px;
+    margin-right: 20px;
+    border-radius: 8px;
     font-size: 14px;
-    font-weight: bold;
-    margin: 5px 0 3px 5px;
-  }
+    color: #ffffff;
 
-  .count {
-    font-size: 24px;
-    text-align: center;
+    &:first-child {
+      background-color: #372f6b;
+    }
+
+    &:nth-child(2) {
+      background-color: #65337f;
+    }
+
+    &:nth-child(3) {
+      background-color: #9e4683;
+    }
+
+    &:last-child {
+      background-color: #d27584;
+      margin-right: 0;
+    }
   }
 }

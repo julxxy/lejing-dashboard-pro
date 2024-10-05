@@ -11,17 +11,18 @@ const useZustandStore = create<{
   token: string
   userInfo: User.Information
   collapsed: boolean
-
+  isDarkThemeEnable: boolean
   /* setters */
   setToken: (token: string) => void
   setUserInfo: (userInfo: User.Information) => void
   setCollapsed: () => void
+  setEnableDarkTheme: () => void
 }>(set => ({
   /* state */
   token: '',
   userInfo: {} as User.Information,
   collapsed: false,
-
+  isDarkThemeEnable: false,
   /* setters */
   setToken: (token: string) => set(() => ({ token })),
   setUserInfo: (userInfo: User.Information) => {
@@ -33,6 +34,13 @@ const useZustandStore = create<{
       const collapsed = state.collapsed
       logUpdate(collapsed)
       return { collapsed: !collapsed }
+    })
+  },
+  setEnableDarkTheme: () => {
+    set(state => {
+      const enable = !state.isDarkThemeEnable
+      logUpdate(enable)
+      return { isDarkThemeEnable: enable }
     })
   }
 }))

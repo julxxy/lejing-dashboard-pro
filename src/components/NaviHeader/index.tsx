@@ -18,7 +18,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, setCollapsed, setToken } = useZustandStore()
+  const { userInfo, collapsed, setCollapsed, setToken, setEnableDarkTheme } = useZustandStore()
   const toggleCollapsed = () => setCollapsed() // 控制侧边栏收缩
   const navigate = useNavigate()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
@@ -55,7 +55,8 @@ const NaviHeader = () => {
   function logout() {
     if (isDebugEnable) log.debug('logout')
     storageUtils.remove('token')
-    message.success('退出成功').then(() => {})
+    message.success('退出成功').then(() => {
+    })
     setTimeout(() => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
     }, 1500)
@@ -65,10 +66,16 @@ const NaviHeader = () => {
     setToken('')
     storageUtils.remove('token')
     if (isDebugEnable) log.debug('switchAccount')
-    message.success('前往登录页').then(() => {})
+    message.success('前往登录页').then(() => {
+    })
     setTimeout(() => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
     }, 1500)
+  }
+
+  function onThemeSwitchClick(event: any) {
+    if (isDebugEnable) log.debug('On theme switch clicked: ', typeof event, event)
+    setEnableDarkTheme()
   }
 
   return (
@@ -85,6 +92,7 @@ const NaviHeader = () => {
           checkedChildren={'明亮'}
           unCheckedChildren={'暗黑'}
           defaultChecked={true}
+          onClick={onThemeSwitchClick}
         />
         <Dropdown.Button
           menu={menuProps}
