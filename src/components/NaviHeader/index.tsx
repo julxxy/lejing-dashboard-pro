@@ -25,7 +25,7 @@ const NaviHeader = () => {
   const items: MenuProps['items'] = [
     { key: '1', label: '个人中心', icon: <ProfileFilled /> },
     { key: '2', label: '切换账号', icon: <UserSwitchOutlined /> },
-    { key: '3', label: '安全退出', icon: <LoginOutlined /> }
+    { key: '3', label: '退出登录', icon: <LoginOutlined /> }
   ]
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (isDebugEnable) log.debug(e)
