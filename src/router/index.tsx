@@ -27,7 +27,7 @@ const Welcome = lazy(() => import('@/views/welcome'))
  * 路由配置
  */
 const routes: RouteObject[] = [
-  { path: '/', element: <Navigate to={URIs.welcome} /> },
+  { path: URIs.home, element: <Navigate to={URIs.welcome} /> },
   { path: URIs.login, element: <LoginFC /> },
   {
     element: <Layout />,
