@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
     {
       key: '3',
       label: '状态',
-      children: '在职'
+      children: '离职'
     },
     {
       key: '4',
@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
     {
       key: '6',
       label: '部门',
-      children: '架构组'
+      children: '中台架构'
     }
   ]
 
@@ -46,12 +46,19 @@ const Dashboard: React.FC = () => {
             className={styles.avatar}
             alt={'avatar'}
           />
-          <Descriptions title={`欢迎新 ${username}，开心每一天！`} items={items} />
+          <Descriptions
+            title={
+              <div>
+                欢迎 <span style={{ fontStyle: 'italic' }}>{username}</span>，开心每一天！
+              </div>
+            }
+            items={items}
+          />
         </div>
       </div>
       <div className={styles.reportWrapper}>
         <div className={styles.card}>
-          <div className={styles.title}>司机数量</div>
+          <div className={styles.title}>货运人员</div>
           <div className={styles.count}>110 个</div>
         </div>
         <div className={styles.card}>

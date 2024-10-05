@@ -6,6 +6,7 @@ import NoPermission from '@/views/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
 import OverflowDemo from '@/views/OverflowDemo.tsx'
+import LazyLoading from '@/views/LazyLoading.tsx'
 
 /**
  * URIs in the app
@@ -22,14 +23,6 @@ export const URIs = {
 const Dashboard = lazy(() => import('@/views/dashboard'))
 const Welcome = lazy(() => import('@/views/welcome'))
 
-function Loading() {
-  return (
-    <div className="loading-spinner">
-      <div>加载中...</div>
-    </div>
-  )
-}
-
 /**
  * 路由配置
  */
@@ -42,7 +35,7 @@ const routes: RouteObject[] = [
       {
         path: URIs.welcome,
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<LazyLoading />}>
             <Welcome />
           </Suspense>
         )
@@ -50,7 +43,7 @@ const routes: RouteObject[] = [
       {
         path: URIs.dashboard,
         element: (
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<LazyLoading />}>
             <Dashboard />
           </Suspense>
         )

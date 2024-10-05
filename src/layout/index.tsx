@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Layout, Watermark } from 'antd'
 import NaviHeader from '@/components/NaviHeader'
 import NavFooter from '@/components/NavFooter'
@@ -6,12 +6,18 @@ import LeftSideMenu from '@/components/SideMenu'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
-import Welcome from '@/views/welcome'
 import { Outlet } from 'react-router-dom'
+import isTrue from '@/common/isTrue.ts'
+import LazyLoading from '@/views/LazyLoading.tsx'
 
 const { Content } = Layout
+const Welcome = lazy(() => import('@/views/welcome'))
 const LayoutFC: React.FC = () => {
-  const watermarks = import.meta.env.VITE_APP_WATERMARKS.split(',') || [] // 获取水印配置
+  // 获取水印配置
+  const watermark = (): string[] => {
+    const showWatermark = isTrue(import.meta.env.VITE_SHOW_WATERMARK)
+    return showWatermark ? import.meta.env.VITE_APP_WATERMARKS.split(',') : []
+  }
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
   const { setUserInfo } = useZustandStore() // 获取 store
@@ -39,14 +45,16 @@ const LayoutFC: React.FC = () => {
   }, [])
 
   return (
-    <Watermark content={watermarks}>
+    <Watermark content={watermark()}>
       <Layout style={{ minHeight: '100vh' }}>
         <LeftSideMenu />
         <Layout ref={wrapperRef} className={styles.rightContentArea}>
           <NaviHeader />
           <Content className={styles.content} style={{ height: contentHeight }}>
             <div className={styles.wrapper}>
-              <Outlet context={<Welcome />} />
+              <Suspense fallback={<LazyLoading />}>
+                <Outlet context={<Welcome />} />
+              </Suspense>
             </div>
           </Content>
           <NavFooter />
