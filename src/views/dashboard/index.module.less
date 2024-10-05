@@ -1,18 +1,30 @@
+:root {
+  --bg-light-1: #631faa;
+  --bg-light-2: #ff3da5;
+  --bg-light-3: #ff7ed4;
+  --bg-light-4: #ffb5da;
+  --bg-dark-1: #120059;
+  --bg-dark-2: #00327c;
+  --bg-dark-3: #1c82ad;
+  --bg-dark-4: #03c988;
+  --text-color: #ffffff;
+}
+
 .dashboardWrapper {
   background-color: #fff;
   padding: 20px;
+}
 
-  .userInfo {
-    display: flex;
-    align-items: center;
-  }
+.userInfo {
+  display: flex;
+  align-items: center;
+}
 
-  .avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
 }
 
 .reportWrapper {
@@ -20,58 +32,63 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 20px;
+}
 
-  .lightCard {
-    flex: 1;
-    height: 100px;
-    padding: 10px;
-    margin-right: 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #ffffff;
+.title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 5px 0 3px 5px;
+}
 
-    &:first-child {
-      background-color: #631faa;
-    }
+.count {
+  font-size: 24px;
+  text-align: center;
+}
 
-    &:nth-child(2) {
-      background-color: #ff3da5;
-    }
+.card {
+  flex: 1;
+  height: 100px;
+  padding: 10px;
+  margin-right: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-color);
 
-    &:nth-child(3) {
-      background-color: #ff7ed4;
-    }
-
-    &:last-child {
-      background-color: #ffb5da;
-      margin-right: 0;
-    }
+  &:last-child {
+    margin-right: 0;
   }
+}
 
-  .darkCard {
-    flex: 1;
-    height: 100px;
-    padding: 10px;
-    margin-right: 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    color: #ffffff;
+/* Light cards */
+.lightCard:nth-child(1) {
+  background-color: var(--bg-light-1);
+}
 
-    &:first-child {
-      background-color: #120059;
-    }
+.lightCard:nth-child(2) {
+  background-color: var(--bg-light-2);
+}
 
-    &:nth-child(2) {
-      background-color: #00327c;
-    }
+.lightCard:nth-child(3) {
+  background-color: var(--bg-light-3);
+}
 
-    &:nth-child(3) {
-      background-color: #1c82ad;
-    }
+.lightCard:nth-child(4) {
+  background-color: var(--bg-light-4);
+}
 
-    &:last-child {
-      background-color: #03c988;
-      margin-right: 0;
-    }
-  }
+/* Dark cards */
+.darkCard:nth-child(1) {
+  background-color: var(--bg-dark-1);
+}
+
+.darkCard:nth-child(2) {
+  background-color: var(--bg-dark-2);
+}
+
+.darkCard:nth-child(3) {
+  background-color: var(--bg-dark-3);
+}
+
+.darkCard:nth-child(4) {
+  background-color: var(--bg-dark-4);
 }

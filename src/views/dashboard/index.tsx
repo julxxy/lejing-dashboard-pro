@@ -40,6 +40,12 @@ const Dashboard: React.FC = () => {
       children: '中台架构'
     }
   ]
+  const cardData = [
+    { title: '货运司机', count: '110 个' },
+    { title: '总流水', count: '11000 元' },
+    { title: '总单量', count: '110 单' },
+    { title: '开通城市', count: '110 个' }
+  ]
 
   return (
     <>
@@ -61,22 +67,12 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
       <div className={styles.reportWrapper}>
-        <div className={isDarkEnable ? styles.darkCard : styles.lightCard}>
-          <div className={styles.title}>货运司机</div>
-          <div className={styles.count}>110 个</div>
-        </div>
-        <div className={isDarkEnable ? styles.darkCard : styles.lightCard}>
-          <div className={styles.title}>总流水</div>
-          <div className={styles.count}>11000 元</div>
-        </div>
-        <div className={isDarkEnable ? styles.darkCard : styles.lightCard}>
-          <div className={styles.title}>总单量</div>
-          <div className={styles.count}>110 单</div>
-        </div>
-        <div className={isDarkEnable ? styles.darkCard : styles.lightCard}>
-          <div className={styles.title}>开通城市</div>
-          <div className={styles.count}>110 个</div>
-        </div>
+        {cardData.map(({ title, count }, index) => (
+          <div key={index} className={`${styles.card} ${isDarkEnable ? styles.darkCard : styles.lightCard}`}>
+            <div className={styles.title}>{title}</div>
+            <div className={styles.count}>{count}</div>
+          </div>
+        ))}
       </div>
     </>
   )
