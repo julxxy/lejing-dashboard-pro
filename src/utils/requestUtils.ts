@@ -13,7 +13,6 @@ import { message } from '@/utils/AntdHelper.ts'
 /**
  * API Token
  */
-const apiUriPrefix = import.meta.env.VITE_API_URI_PREFIX as string
 let apiToken = import.meta.env.VITE_API_TOKEN as string
 const tokenIsBase64 = base64Utils.isBase64(apiToken)
 if (isDebugEnable) log.debug(`API token is base64: ${tokenIsBase64}, apiToken: ${apiToken}`)
@@ -23,7 +22,7 @@ apiToken = tokenIsBase64 ? base64Utils.decodeBase64(apiToken, base64Utils.defaul
  * Instantiate an axios instance
  */
 const instance: AxiosInstance = axios.create({
-  baseURL: apiUriPrefix || '/api',
+  baseURL: '/api',
   timeout: 8000,
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true,
