@@ -14,7 +14,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const NaviHeader = () => {
@@ -53,9 +53,8 @@ const NaviHeader = () => {
   }
 
   function logout() {
-    if (isDebugEnable) log.debug('logout')
     storageUtils.remove('token')
-    message.success('退出成功').then(() => {})
+    message.success('退出成功')
     setTimeout(() => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
     }, 1500)
@@ -63,12 +62,13 @@ const NaviHeader = () => {
 
   function switchAccount() {
     setToken('')
-    storageUtils.remove('token')
-    if (isDebugEnable) log.debug('switchAccount')
-    setTimeout(() => {
-      location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
-    }, 1500)
+    storageUtils.clear()
+    location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
   }
+
+  useEffect(() => {
+    if (storageUtils.get('isDarkEnable') as boolean | false) setDarkEnable()
+  }, [])
 
   return (
     <div className={styles.header}>
@@ -83,7 +83,7 @@ const NaviHeader = () => {
           className={`${styles.switch} ${isDarkEnable ? styles.switchDarkColor : styles.switchBrightColor}`}
           checkedChildren={'明亮'}
           unCheckedChildren={'暗黑'}
-          defaultChecked={true}
+          checked={!isDarkEnable}
           onClick={() => setDarkEnable()}
         />
         <Dropdown.Button

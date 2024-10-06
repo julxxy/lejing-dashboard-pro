@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { log } from '@/common/logger.ts'
 import { isDebugEnable } from '@/common/debugEnable.ts'
 import { User } from '@/types/apiTypes.ts'
+import storageUtils from '@/utils/storageUtils.ts'
 
 /**
  * This is the store for the app. implemented using Zustand library.
@@ -40,6 +41,7 @@ const useZustandStore = create<{
     set(state => {
       const enable = !state.isDarkEnable
       logUpdate(enable)
+      storageUtils.set('isDarkEnable', enable)
       return { isDarkEnable: enable }
     })
   },
