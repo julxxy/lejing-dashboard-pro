@@ -3,6 +3,7 @@ import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
 import { useState } from 'react'
+import Draggable from 'react-draggable'
 import { useAntdMessage } from '@/utils/AntdHelper.ts'
 import { Environment, ResultStatus } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugEnable.ts'
@@ -42,10 +43,10 @@ export default function LoginFC() {
   }
 
   return (
-    <>
-      <div className={styles.login}>
+    <div className={styles.login}>
+      <Draggable handle=".drag-handle" bounds="parent">
         <div className={styles.loginWrapper}>
-          <p className={styles.title}>系统登录</p>
+          <p className={`${styles.title} drag-handle`}>系统登录</p>
           <Form name="basic" onFinish={onFinish} autoComplete="off">
             <Form.Item
               name="username"
@@ -70,7 +71,7 @@ export default function LoginFC() {
             </Form.Item>
           </Form>
         </div>
-      </div>
-    </>
+      </Draggable>
+    </div>
   )
 }

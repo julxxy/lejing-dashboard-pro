@@ -1,26 +1,31 @@
 .login {
   height: 100vh;
+  display: flex;
   background-image: url(@/assets/images/login-bg.webp);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+  position: relative; /* Make it the reference for absolute positioning */
 }
 
 .title {
   font-size: 36px;
   line-height: 1.5;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  cursor: move;
 }
 
 .loginWrapper {
   position: absolute;
-  top: 45%;
+  right: 12%; /* Move to the right */
   padding: 50px;
-  right: 15%;
-  width: 520px;
+  width: 480px;
   border: 1px solid #ccc;
-  border-radius: 18px;
-  background-color: rgba(255, 255, 255, 1); /* 半透明白色背景 */
-  transform: translateY(-50%);
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 1); /* White background */
+  transform: translate(-50%); /* Centering the element horizontally */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Softer shadow */
 }
