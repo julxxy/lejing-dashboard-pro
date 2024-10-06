@@ -8,7 +8,7 @@ import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { Outlet } from 'react-router-dom'
 import isTrue from '@/common/isTrue.ts'
-import LazyLoading from '@/views/LazyLoading.tsx'
+import Loading from '@/views/loading'
 
 const { Content } = Layout
 const Welcome = lazy(() => import('@/views/welcome'))
@@ -53,7 +53,7 @@ const LayoutFC: React.FC = () => {
           <NaviHeader />
           <Content className={styles.content} style={{ height: contentHeight }}>
             <div className={styles.wrapper}>
-              <Suspense fallback={<LazyLoading />}>
+              <Suspense fallback={<Loading />}>
                 <Outlet context={<Welcome />} />
               </Suspense>
             </div>

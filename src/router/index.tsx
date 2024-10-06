@@ -5,8 +5,8 @@ import PageNotFound from '@/views/Error404.tsx'
 import NoPermission from '@/views/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
-import OverflowDemo from '@/views/OverflowDemo.tsx'
-import LazyLoading from '@/views/LazyLoading.tsx'
+import TestOverflow from '@/views/TestOverflow.tsx'
+import Loading from '@/views/loading'
 
 /**
  * URIs in the app
@@ -35,7 +35,7 @@ const routes: RouteObject[] = [
       {
         path: URIs.welcome,
         element: (
-          <Suspense fallback={<LazyLoading />}>
+          <Suspense fallback={<Loading />}>
             <Welcome />
           </Suspense>
         )
@@ -43,12 +43,12 @@ const routes: RouteObject[] = [
       {
         path: URIs.dashboard,
         element: (
-          <Suspense fallback={<LazyLoading />}>
+          <Suspense fallback={<Loading />}>
             <Dashboard />
           </Suspense>
         )
       },
-      { path: URIs.overflowDemo, element: <OverflowDemo /> }
+      { path: URIs.overflowDemo, element: <TestOverflow /> }
     ]
   },
   { path: '*', element: <Navigate to="/404" /> },

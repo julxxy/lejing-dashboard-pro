@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios'
-import { hideLoading, showLoading } from '@/utils/loading'
+import { hideLoading, showLoading } from '@/views/loading'
 import storageUtils from '@/utils/storageUtils.ts'
 import { Result } from '@/types/apiTypes.ts'
 import { log } from '@/common/logger.ts'

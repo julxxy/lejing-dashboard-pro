@@ -65,7 +65,6 @@ const NaviHeader = () => {
     setToken('')
     storageUtils.remove('token')
     if (isDebugEnable) log.debug('switchAccount')
-    message.success('前往登录页').then(() => {})
     setTimeout(() => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
     }, 1500)

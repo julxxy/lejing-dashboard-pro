@@ -1,10 +1,24 @@
 import styles from '@/views/dashboard/index.module.less'
-import React from 'react'
+import React, { Suspense, useRef } from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { log } from '@/common/logger.ts'
+import Loading from '@/views/loading'
 
+// Lazy loading for charts
+const DashboardLineChart = React.lazy<React.ComponentType<any>>(() => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(import('@/views/dashboard/DashboardLineChart.tsx'))
+    }, 3000) // 模拟延迟 3 秒
+  })
+})
+const DashboardPieChart = React.lazy(() => import('@/views/dashboard/DashboardPieChart.tsx'))
+const DashboardRadarChart = React.lazy(() => import('@/views/dashboard/DashboardRadarChart.tsx'))
+
+// Dashboard component
 const Dashboard: React.FC = () => {
+  useRef<HTMLDivElement>(null)
   const { isDarkEnable } = useZustandStore()
   log.info('is_dark_enable: ', isDarkEnable)
   const username = 'Weasley'
@@ -40,7 +54,6 @@ const Dashboard: React.FC = () => {
       children: '中台架构'
     }
   ]
-
   const cardData = [
     { title: '货运司机', count: '110 个' },
     { title: '总流水', count: '11000 元' },
@@ -74,6 +87,17 @@ const Dashboard: React.FC = () => {
             <div className={styles.count}>{count}</div>
           </div>
         ))}
+      </div>
+      <div className={styles.chartContainer}>
+        <Suspense fallback={<Loading />}>
+          <DashboardLineChart />
+        </Suspense>
+        <Suspense fallback={<Loading />}>
+          <DashboardPieChart />
+        </Suspense>
+        <Suspense fallback={<Loading />}>
+          <DashboardRadarChart />
+        </Suspense>
       </div>
     </>
   )

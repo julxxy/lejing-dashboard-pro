@@ -1,4 +1,4 @@
-import styles from './login.module.less'
+import styles from '@/views/login/Login.module.less'
 import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
