@@ -9,14 +9,12 @@ const DashboardRadarChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const radarRef = useRef<HTMLDivElement>(null)
   const eChartsOption = {
-    title: {
-      text: 'Basic Radar Chart',
-    },
+    title: {},
     legend: {
-      data: ['Allocated Budget', 'Actual Spending'],
+      data: ['城市', '年龄'],
     },
     radar: {
-      // shape: 'circle',
+      shape: 'circle',
       indicator: [
         { name: 'Sales', max: 6500 },
         { name: 'Administration', max: 16000 },
@@ -33,11 +31,11 @@ const DashboardRadarChart: React.FC = () => {
         data: [
           {
             value: [4200, 3000, 20000, 35000, 50000, 18000],
-            name: 'Allocated Budget',
+            name: '城市',
           },
           {
             value: [5000, 14000, 28000, 26000, 42000, 21000],
-            name: 'Actual Spending',
+            name: '年龄',
           },
         ],
       },

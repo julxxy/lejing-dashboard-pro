@@ -9,18 +9,87 @@ const DashboardPieChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const cityRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
+  const cityOption = {
+    title: { text: '城市分布', left: 'center', top: '50%' },
+    legend: {},
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        restore: { show: true },
+        saveAsImage: { show: true },
+      },
+    },
+    series: [
+      {
+        name: '城市分布',
+        type: 'pie',
+        radius: [50, 200], // 缩小内外半径
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 8,
+        },
+        data: [
+          { value: 40, name: 'rose 1' },
+          { value: 38, name: 'rose 2' },
+          { value: 32, name: 'rose 3' },
+          { value: 30, name: 'rose 4' },
+          { value: 28, name: 'rose 5' },
+          { value: 26, name: 'rose 6' },
+          { value: 22, name: 'rose 7' },
+          { value: 18, name: 'rose 8' },
+        ],
+      },
+    ],
+  }
+
+  const ageOption = {
+    title: { text: '年龄分布', left: 'center', top: '50%' },
+    legend: {},
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        restore: { show: true },
+        saveAsImage: { show: true },
+      },
+    },
+    series: [
+      {
+        name: '年龄分布',
+        type: 'pie',
+        radius: [50, 200], // 缩小内外半径
+        roseType: 'area',
+        itemStyle: {
+          borderRadius: 8,
+        },
+        data: [
+          { value: 40, name: 'rose 1' },
+          { value: 38, name: 'rose 2' },
+          { value: 32, name: 'rose 3' },
+          { value: 30, name: 'rose 4' },
+          { value: 28, name: 'rose 5' },
+          { value: 26, name: 'rose 6' },
+          { value: 22, name: 'rose 7' },
+          { value: 18, name: 'rose 8' },
+        ],
+      },
+    ],
+  }
   useEffect(() => {
     const resizeCityChart = () => {
       const instance = EChartsUtils.getInstance(cityRef)
       if (instance) {
-        instance.setOption({}) // todo
+        instance.setOption(cityOption)
         instance.resize()
       }
     }
     const resizeAgeChart = () => {
       const instance = EChartsUtils.getInstance(ageRef)
       if (instance) {
-        instance.setOption({}) // todo
+        instance.setOption(ageOption)
         instance.resize()
       }
     }
