@@ -14,7 +14,7 @@ export const EChartsManager = {
       console.warn('React 组件的 ECharts ref 对象不存在')
       return null
     }
-    // 复用已有的 ECharts 实例
+    // 尝试获取现有的 ECharts 实例，如果不存在则创建一个新的实例
     let instance = echarts.getInstanceByDom(chartRef.current)
     if (!instance) {
       instance = echarts.init(chartRef.current)
