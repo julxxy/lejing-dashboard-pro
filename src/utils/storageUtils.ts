@@ -1,4 +1,4 @@
-import { log } from '@/common/logger.ts'
+import { log } from '@/common/loggerProvider.ts'
 
 /**
  * localStorage 工具类

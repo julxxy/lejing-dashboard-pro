@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client'
-import { isDebugEnable } from './common/debugEnable.ts'
-import { log } from './common/logger.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
+import { log } from '@/common/loggerProvider.ts'
 import { StrictMode } from 'react'
 import App from '@/App.tsx'
 import { Environment } from '@/types/enums.ts'

@@ -8,14 +8,15 @@ import {
 } from '@ant-design/icons'
 import { Breadcrumb, Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
 import styles from '@/components/NaviHeader/idnex.module.less'
-import { isDebugEnable } from '@/common/debugEnable.ts'
-import { log } from '@/common/logger.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
+import { log } from '@/common/loggerProvider.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import isTrue from '@/common/booleanUtils.ts'
 
 const NaviHeader = () => {
   const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
@@ -25,7 +26,7 @@ const NaviHeader = () => {
   const items: MenuProps['items'] = [
     { key: '1', label: '个人中心', icon: <ProfileFilled /> },
     { key: '2', label: '切换账号', icon: <UserSwitchOutlined /> },
-    { key: '3', label: '退出登录', icon: <LoginOutlined /> },
+    { key: '3', label: '安全退出', icon: <LoginOutlined /> },
   ]
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (isDebugEnable) log.debug(e)
@@ -67,7 +68,7 @@ const NaviHeader = () => {
   }
 
   useEffect(() => {
-    if (storageUtils.get('darkEnable') as boolean | false) setDarkEnable()
+    if (isTrue(storageUtils.get('darkEnable'))) setDarkEnable()
   }, [])
 
   return (

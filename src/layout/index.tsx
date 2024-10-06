@@ -7,7 +7,7 @@ import styles from '@/layout/index.module.less'
 import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { Outlet } from 'react-router-dom'
-import isTrue from '@/common/isTrue.ts'
+import isTrue from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
 
 const { Content } = Layout

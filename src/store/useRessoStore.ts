@@ -1,7 +1,7 @@
 import resso from 'resso'
 import { User } from '@/types/apiTypes.ts'
-import { isDebugEnable } from '@/common/debugEnable.ts'
-import { log } from '@/common/logger.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
+import { log } from '@/common/loggerProvider.ts'
 
 /**
  * Log meta update

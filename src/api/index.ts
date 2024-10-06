@@ -1,6 +1,9 @@
 import { Login, User } from '@/types/apiTypes.ts'
 import request from '@/utils/requestUtils.ts'
 
+/**
+ * API Request Management
+ */
 export default {
   // 登录
   login(params: Login.Request) {

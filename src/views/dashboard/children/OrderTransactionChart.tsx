@@ -3,7 +3,7 @@ import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
-import { log } from '@/common/logger.ts'
+import { log } from '@/common/loggerProvider.ts'
 import * as echarts from 'echarts'
 
 const OrderTransactionChart: React.FC = () => {

@@ -6,10 +6,10 @@ import { useState } from 'react'
 import Draggable from 'react-draggable'
 import { useAntdMessage } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/enums.ts'
-import { isDebugEnable } from '@/common/debugEnable.ts'
-import { log } from '@/common/logger.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
+import { log } from '@/common/loggerProvider.ts'
 import { URIs } from '@/router'
-import { utils } from '@/common/utils.ts'
+import { commonUtils } from '@/common/commonUtils.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
 
 export default function LoginFC() {
@@ -31,7 +31,10 @@ export default function LoginFC() {
     const params = { userName: values.username, userPwd: values.password }
     try {
       const data: any = await api.login(params)
-      if (!utils.hasData(data) || (utils.hasKey(data, 'code') && (data.code as string) !== ResultStatus.Success)) {
+      if (
+        !commonUtils.hasData(data) ||
+        (commonUtils.hasKey(data, 'code') && (data.code as string) !== ResultStatus.Success)
+      ) {
         if (isDebugEnable) log.error('login failed: ', data)
         message.error('用户名或密码错误')
         return

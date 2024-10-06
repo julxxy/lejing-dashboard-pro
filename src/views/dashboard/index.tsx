@@ -2,7 +2,7 @@ import styles from '@/views/dashboard/index.module.less'
 import React, { Suspense, useRef } from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import useZustandStore from '@/store/useZustandStore.ts'
-import { log } from '@/common/logger.ts'
+import { log } from '@/common/loggerProvider.ts'
 import Loading from '@/views/loading'
 
 // Lazy loading for charts

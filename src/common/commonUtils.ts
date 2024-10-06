@@ -1,7 +1,7 @@
 /**
  * Common utility functions used across the project.
  */
-export const utils = {
+export const commonUtils = {
   hasData(data: unknown): boolean {
     if (Array.isArray(data)) {
       return data.length > 0

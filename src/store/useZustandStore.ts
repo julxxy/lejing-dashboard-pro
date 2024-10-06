@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { log } from '@/common/logger.ts'
-import { isDebugEnable } from '@/common/debugEnable.ts'
+import { log } from '@/common/loggerProvider.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
 import { User } from '@/types/apiTypes.ts'
 import storageUtils from '@/utils/storageUtils.ts'
 
