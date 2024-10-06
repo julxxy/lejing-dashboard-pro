@@ -5,7 +5,7 @@ import { EChartsUtils } from '@/utils/EChartsUtils.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
-const DashboardRadarChart: React.FC = () => {
+const ModelDiagnosticsRadarChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const radarRef = useRef<HTMLDivElement>(null)
   const eChartsOption = {
@@ -88,4 +88,4 @@ const DashboardRadarChart: React.FC = () => {
   )
 }
 
-export default DashboardRadarChart
+export default ModelDiagnosticsRadarChart

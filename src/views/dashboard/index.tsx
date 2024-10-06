@@ -6,15 +6,15 @@ import { log } from '@/common/logger.ts'
 import Loading from '@/views/loading'
 
 // Lazy loading for charts
-const DashboardLineChart = React.lazy<React.ComponentType<any>>(() => {
+const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve(import('@/views/dashboard/children/DashboardLineChart.tsx'))
+      resolve(import('@/views/dashboard/children/OrderTransactionChart.tsx'))
     }, 3000) // 模拟延迟 3 秒
   })
 })
-const DashboardPieChart = React.lazy(() => import('@/views/dashboard/children/DashboardPieChart.tsx'))
-const DashboardRadarChart = React.lazy(() => import('@/views/dashboard/children/DashboardRadarChart.tsx'))
+const DriverDistributionPieChart = React.lazy(() => import('@/views/dashboard/children/DriverDistributionPieChart.tsx'))
+const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
 // Dashboard component
 const Dashboard: React.FC = () => {
@@ -90,13 +90,13 @@ const Dashboard: React.FC = () => {
       </div>
       <div className={styles.chartContainer}>
         <Suspense fallback={<Loading />}>
-          <DashboardLineChart />
+          <OrderTransactionChart />
         </Suspense>
         <Suspense fallback={<Loading />}>
-          <DashboardPieChart />
+          <DriverDistributionPieChart />
         </Suspense>
         <Suspense fallback={<Loading />}>
-          <DashboardRadarChart />
+          <ModelDiagnosticsRadarChart />
         </Suspense>
       </div>
     </>

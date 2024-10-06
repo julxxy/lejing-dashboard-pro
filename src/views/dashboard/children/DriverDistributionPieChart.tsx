@@ -5,7 +5,7 @@ import { EChartsUtils } from '@/utils/EChartsUtils.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
-const DashboardPieChart: React.FC = () => {
+const DriverDistributionPieChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const cityRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
@@ -142,4 +142,4 @@ const DashboardPieChart: React.FC = () => {
   )
 }
 
-export default DashboardPieChart
+export default DriverDistributionPieChart
