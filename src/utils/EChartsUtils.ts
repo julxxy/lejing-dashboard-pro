@@ -24,7 +24,7 @@ export const EChartsUtils = {
 
   /**
    * 销毁 ECharts 实例
-   * @param instances ECharts 实例或 ref 对象
+   * @param instances ECharts 实例或 React ref 对象
    */
   destroy: (...instances: (EChartsType | RefObject<HTMLDivElement>)[]) => {
     instances.forEach(instance => {
