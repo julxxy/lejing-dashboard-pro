@@ -9,12 +9,12 @@ import Loading from '@/views/loading'
 const DashboardLineChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve(import('@/views/dashboard/DashboardLineChart.tsx'))
+      resolve(import('@/views/dashboard/children/DashboardLineChart.tsx'))
     }, 3000) // 模拟延迟 3 秒
   })
 })
-const DashboardPieChart = React.lazy(() => import('@/views/dashboard/DashboardPieChart.tsx'))
-const DashboardRadarChart = React.lazy(() => import('@/views/dashboard/DashboardRadarChart.tsx'))
+const DashboardPieChart = React.lazy(() => import('@/views/dashboard/children/DashboardPieChart.tsx'))
+const DashboardRadarChart = React.lazy(() => import('@/views/dashboard/children/DashboardRadarChart.tsx'))
 
 // Dashboard component
 const Dashboard: React.FC = () => {
