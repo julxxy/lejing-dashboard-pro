@@ -16,7 +16,7 @@ import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import isTrue from '@/common/booleanUtils.ts'
+import { isTrue } from '@/common/booleanUtils.ts'
 
 const NaviHeader = () => {
   const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()

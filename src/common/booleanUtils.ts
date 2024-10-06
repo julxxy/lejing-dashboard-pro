@@ -5,7 +5,7 @@
  * @param value - The value to be evaluated.
  * @returns True if the value represents a truthy state, false otherwise.
  */
-function isTrue(value: unknown): boolean {
+export const isTrue = (value: unknown): boolean => {
   if (typeof value === 'boolean') return value
   if (typeof value === 'string') {
     const lowerValue = value.toLowerCase()
@@ -14,5 +14,6 @@ function isTrue(value: unknown): boolean {
   return false
 }
 
-export default isTrue
-export const isFalse = (value: unknown): boolean => !isTrue(value)
+export const isFalse = (value: unknown): boolean => {
+  return !isTrue(value)
+}

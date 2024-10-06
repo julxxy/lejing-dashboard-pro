@@ -31,3 +31,4 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
 }
 
 export const log = createLogger(isDebugEnable ? 'debug' : 'info')
+export default log

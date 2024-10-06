@@ -1,22 +1,10 @@
 import { loadEnv } from 'vite'
 import { base64Utils } from './src/common/base64Utils.ts'
+import { isTrue } from './src/common/booleanUtils.ts'
 
 /**
  * Vite config helper functions
  */
-
-export function isTrue(value: unknown): boolean {
-  if (typeof value === 'boolean') return value
-  if (typeof value === 'string') {
-    const lowerValue = value.toLowerCase()
-    return ['true', '1', 'on', 'yes'].includes(lowerValue)
-  }
-  return false
-}
-
-export function isFalse(value: unknown) {
-  return !isTrue(value)
-}
 
 export function optimizeChunks(id: string): string | undefined {
   // Split large libraries into separate chunks
