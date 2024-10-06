@@ -51,14 +51,16 @@ const LayoutFC: React.FC = () => {
         <LeftSideMenu />
         <Layout ref={wrapperRef} className={styles.rightArea}>
           <NaviHeader />
-          <Content className={styles.content} style={{ height: contentHeight }}>
-            <div className={styles.contentWrapper}>
-              <Suspense fallback={<Loading />}>
-                <Outlet context={<Welcome />} />
-              </Suspense>
-            </div>
-          </Content>
-          <NavFooter />
+          <div className={styles.scrollWrapper}>
+            <Content className={styles.content} style={{ height: contentHeight }}>
+              <div className={styles.contentWrapper}>
+                <Suspense fallback={<Loading />}>
+                  <Outlet context={<Welcome />} />
+                </Suspense>
+              </div>
+              <NavFooter />
+            </Content>
+          </div>
         </Layout>
       </Layout>
     </Watermark>

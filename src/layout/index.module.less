@@ -2,21 +2,27 @@
   display: flex;
   flex-direction: column;
   height: 100vh; /* 设置为整个视口高度，防止背景滚动 */
+}
 
-  .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 14px 14px 0;
-    border-radius: var(--border-radius-default);
-    overflow-y: auto; /* 仅在 content 区域允许垂直滚动 */
 
-    .contentWrapper {
-      flex: 1;
-      padding: 24px;
-      background-color: #fff;
-      border-radius: var(--border-radius-default);
-      box-sizing: border-box; /* 确保 padding 不影响元素的整体尺寸 */
-    }
-  }
+.scrollWrapper {
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 14px 14px 0;
+  border-radius: var(--border-radius-default);
+  overflow-y: auto; /* 仅在 content 区域允许垂直滚动 */
+
+
+}
+
+.contentWrapper {
+  flex: 1;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: var(--border-radius-default);
+  box-sizing: border-box; /* 确保 padding 不影响元素的整体尺寸 */
 }
