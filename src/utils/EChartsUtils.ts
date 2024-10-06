@@ -3,7 +3,7 @@ import * as echarts from 'echarts'
 import { ECharts, EChartsType } from 'echarts'
 import { RefObject } from 'react'
 
-export const EchartsUtils = {
+export const EChartsUtils = {
   /**
    * 获取 ECharts 实例
    * @param chartRef React 组件的 ref 对象

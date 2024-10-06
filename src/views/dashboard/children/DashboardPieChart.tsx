@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
-import { EchartsUtils } from '@/utils/echartsUtils.ts'
+import { EChartsUtils } from '@/utils/EChartsUtils.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
@@ -11,14 +11,14 @@ const DashboardPieChart: React.FC = () => {
   const ageRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const resizeCityChart = () => {
-      const instance = EchartsUtils.getInstance(cityRef)
+      const instance = EChartsUtils.getInstance(cityRef)
       if (instance) {
         instance.setOption({}) // todo
         instance.resize()
       }
     }
     const resizeAgeChart = () => {
-      const instance = EchartsUtils.getInstance(ageRef)
+      const instance = EChartsUtils.getInstance(ageRef)
       if (instance) {
         instance.setOption({}) // todo
         instance.resize()
@@ -37,7 +37,7 @@ const DashboardPieChart: React.FC = () => {
     return () => {
       cancelAnimationFrame(cityAnimationFrameId)
       cancelAnimationFrame(ageAnimationFrameId)
-      EchartsUtils.destroy(cityRef, ageRef)
+      EChartsUtils.destroy(cityRef, ageRef)
       window.removeEventListener('resize', resizeCityChart)
       window.removeEventListener('resize', resizeAgeChart)
     }

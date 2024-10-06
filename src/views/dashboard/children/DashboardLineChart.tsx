@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
-import { EchartsUtils } from '@/utils/echartsUtils.ts'
+import { EChartsUtils } from '@/utils/EChartsUtils.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
@@ -33,7 +33,7 @@ const DashboardLineChart: React.FC = () => {
 
   useEffect(() => {
     const resizeChart = () => {
-      const instance = EchartsUtils.getInstance(chartRef)
+      const instance = EChartsUtils.getInstance(chartRef)
       if (instance) {
         instance.setOption(eChartsOption)
         instance.resize() // Resize the chart on window resize
@@ -43,7 +43,7 @@ const DashboardLineChart: React.FC = () => {
     window.addEventListener('resize', resizeChart) // Listen for window size changes
     return () => {
       cancelAnimationFrame(animationFrameId) // Clean up the animation frame
-      EchartsUtils.destroy(chartRef) // Destroy the chart instance when component unmounts
+      EChartsUtils.destroy(chartRef) // Destroy the chart instance when component unmounts
       window.removeEventListener('resize', resizeChart) // Remove the resize event listener
     }
   }, [])
