@@ -1,3 +1,70 @@
+/* Global Color Variables for Operation-Related Theme */
+:root {
+  /* Primary colors */
+  --color-primary-dark: #004085; /* 深蓝色：用于主要的导航栏背景 */
+  --color-primary-bright: #007bff; /* 亮蓝色：用于操作按钮或重要状态的突出 */
+
+  /* Accent colors */
+  --color-accent-orange: #ffa500; /* 橙色：用于呼吁行动（CTA）按钮 */
+  --color-accent-green: #28a745; /* 绿色：用于展示积极状态（如增长、成功等） */
+
+  /* Text colors */
+  --color-text-primary: #333333; /* 默认文本颜色 */
+  --color-text-secondary: #6c757d; /* 次要文本颜色 */
+
+  /* Background colors */
+  --color-background-light: #f8f9fa; /* 浅背景色，用于卡片背景等 */
+  --color-background-dark: #343a40; /* 深色背景，用于侧边栏等 */
+
+  /* Border and shadow */
+  --border-radius-default: 8px; /* 默认的圆角半径 */
+  --box-shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+}
+
+/* Sample usage in components */
+.btn-primary {
+  background-color: var(--color-primary-bright);
+  color: #fff;
+  border-radius: var(--border-radius-default);
+  box-shadow: var(--box-shadow-default);
+  padding: 8px 16px;
+  border: none;
+}
+
+/* Most buttons use */
+.btn-custom {
+  border-radius: var(--border-radius-default);
+  background-color: var(--color-primary-bright);
+  color: white;
+}
+
+.btn-custom:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.cta-button {
+  background-color: var(--color-accent-orange);
+  color: #fff;
+  border-radius: var(--border-radius-default);
+  box-shadow: var(--box-shadow-default);
+}
+
+.success-message {
+  color: var(--color-accent-green);
+}
+
+/* Background styling */
+.sidebar {
+  background-color: var(--color-primary-dark);
+  color: var(--color-text-primary);
+}
+
+.card {
+  background-color: var(--color-background-light);
+  box-shadow: var(--box-shadow-default);
+  border-radius: var(--border-radius-default);
+}
+
 /* 消除默认样式 */
 * {
   margin: 0;

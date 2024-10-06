@@ -18,7 +18,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, setCollapsed, setToken, setDarkEnable } = useZustandStore()
+  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed() // 控制侧边栏收缩
   const navigate = useNavigate()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
@@ -80,13 +80,14 @@ const NaviHeader = () => {
       </div>
       <div className={styles.right}>
         <Switch
-          className={styles.themeSwitch}
+          className={`${styles.switch} ${isDarkEnable ? styles.switchDarkColor : styles.switchBrightColor}`}
           checkedChildren={'明亮'}
           unCheckedChildren={'暗黑'}
           defaultChecked={true}
           onClick={() => setDarkEnable()}
         />
         <Dropdown.Button
+          className="btn-custom"
           menu={menuProps}
           icon={<UserOutlined />}
           placement={'bottomLeft'}

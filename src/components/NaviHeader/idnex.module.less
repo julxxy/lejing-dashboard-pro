@@ -5,13 +5,22 @@
   height: 50px;
   padding: 0 20px;
   margin: 14px 14px 0;
-  border-radius: 8px;
+  border-radius: var(--border-radius-default);
   background-color: #fff;
 }
 
-.themeSwitch {
-  margin-right: 8px;
+.switch {
   width: 100%;
+  margin-right: 18px;
+  transform: scale(1.25);
+}
+
+.switchDarkColor {
+  background-color: var(--color-primary-dark);
+}
+
+.switchBrightColor {
+  background-color: var(--color-primary-bright);
 }
 
 .left {

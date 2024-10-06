@@ -65,7 +65,7 @@ export default function LoginFC() {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" block={true} htmlType="submit" loading={loading}>
+              <Button type="primary" block={true} htmlType="submit" loading={loading} className="btn-custom">
                 登录
               </Button>
             </Form.Item>
