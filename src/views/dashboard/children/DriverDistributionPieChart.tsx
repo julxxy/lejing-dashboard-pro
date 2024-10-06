@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
-import { EChartsUtils } from '@/utils/EChartsUtils.ts'
+import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
@@ -80,14 +80,14 @@ const DriverDistributionPieChart: React.FC = () => {
   }
   useEffect(() => {
     const resizeCityChart = () => {
-      const instance = EChartsUtils.getInstance(cityRef)
+      const instance = EChartsManager.getInstanceIfNotPresent(cityRef)
       if (instance) {
         instance.setOption(cityOption)
         instance.resize()
       }
     }
     const resizeAgeChart = () => {
-      const instance = EChartsUtils.getInstance(ageRef)
+      const instance = EChartsManager.getInstanceIfNotPresent(ageRef)
       if (instance) {
         instance.setOption(ageOption)
         instance.resize()
@@ -106,7 +106,7 @@ const DriverDistributionPieChart: React.FC = () => {
     return () => {
       cancelAnimationFrame(cityAnimationFrameId)
       cancelAnimationFrame(ageAnimationFrameId)
-      EChartsUtils.destroy(cityRef, ageRef)
+      EChartsManager.destroy(cityRef, ageRef)
       window.removeEventListener('resize', resizeCityChart)
       window.removeEventListener('resize', resizeAgeChart)
     }

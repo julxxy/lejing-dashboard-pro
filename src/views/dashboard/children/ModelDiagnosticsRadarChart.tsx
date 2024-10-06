@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
-import { EChartsUtils } from '@/utils/EChartsUtils.ts'
+import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 
@@ -43,7 +43,7 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
   }
   useEffect(() => {
     const resizeChart = () => {
-      const instance = EChartsUtils.getInstance(radarRef)
+      const instance = EChartsManager.getInstanceIfNotPresent(radarRef)
       if (instance) {
         instance.setOption(eChartsOption)
         instance.resize()
@@ -54,7 +54,7 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
 
     return () => {
       cancelAnimationFrame(animationFrameId)
-      EChartsUtils.destroy(radarRef)
+      EChartsManager.destroy(radarRef)
       window.removeEventListener('resize', resizeChart)
     }
   }, [])

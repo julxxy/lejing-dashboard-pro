@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
-import { EChartsUtils } from '@/utils/EChartsUtils.ts'
+import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/logger.ts'
 import * as echarts from 'echarts'
@@ -92,7 +92,7 @@ const OrderTransactionChart: React.FC = () => {
 
   useEffect(() => {
     const resizeChart = () => {
-      const instance = EChartsUtils.getInstance(chartRef)
+      const instance = EChartsManager.getInstanceIfNotPresent(chartRef)
       if (instance) {
         instance.setOption(eChartsOption)
         instance.resize() // Resize the chart on window resize
@@ -102,7 +102,7 @@ const OrderTransactionChart: React.FC = () => {
     window.addEventListener('resize', resizeChart) // Listen for window size changes
     return () => {
       cancelAnimationFrame(animationFrameId) // Clean up the animation frame
-      EChartsUtils.destroy(chartRef) // Destroy the chart instance when component unmounts
+      EChartsManager.destroy(chartRef) // Destroy the chart instance when component unmounts
       window.removeEventListener('resize', resizeChart) // Remove the resize event listener
     }
   }, [])

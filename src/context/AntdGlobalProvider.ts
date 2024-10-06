@@ -1,5 +1,5 @@
 /**
- * 在 App.tsx 中导入了 AntdHelper.ts 文件，并在 ConfigProvider 组件中使用了自定义主题, 入口处初始化 一次
+ * 在 App.tsx 中导入了 AntdGlobalProvider.ts 文件，并在 ConfigProvider 组件中使用了自定义主题, 入口处初始化 一次
  * @file Antd global message, notification and modal
  */
 import { App } from 'antd'
@@ -11,7 +11,10 @@ let message: MessageInstance
 let notification: NotificationInstance
 let modal: Omit<ModalStaticFunctions, 'warn'>
 
-export default function AntdHelper() {
+/**
+ * 作为一个 Provider 组件，负责提供 Antd 全局的 message, notification, modal 实例
+ */
+export default function AntdGlobalProvider(): null {
   const staticFunction = App.useApp()
   message = staticFunction.message
   modal = staticFunction.modal
@@ -21,7 +24,9 @@ export default function AntdHelper() {
 
 export { message, notification, modal }
 
-// Hooks to use Antd global message, notification and modal
+/**
+ * Hooks to use Antd global message, notification and modal
+ */
 export const useAntdMessage = () => {
   return {
     message: message,

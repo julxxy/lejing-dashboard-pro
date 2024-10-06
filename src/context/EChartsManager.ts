@@ -3,13 +3,13 @@ import * as echarts from 'echarts'
 import { ECharts, EChartsType } from 'echarts'
 import { RefObject } from 'react'
 
-export const EChartsUtils = {
+export const EChartsManager = {
   /**
-   * 获取 ECharts 实例
+   * 获取 ECharts 实例，如果不存在则创建一个新实例
    * @param chartRef React 组件的 ref 对象
    * @returns ECharts 实例或 null
    */
-  getInstance: (chartRef: RefObject<HTMLDivElement>): ECharts | null => {
+  getInstanceIfNotPresent: (chartRef: RefObject<HTMLDivElement>): ECharts | null => {
     if (!chartRef.current) {
       console.warn('React 组件的 ECharts ref 对象不存在')
       return null
