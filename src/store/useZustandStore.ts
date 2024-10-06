@@ -41,7 +41,7 @@ const useZustandStore = create<{
     set(state => {
       const enable = !state.isDarkEnable
       logUpdate(enable)
-      storageUtils.set('isDarkEnable', enable)
+      storageUtils.set('darkEnable', enable)
       return { isDarkEnable: enable }
     })
   },

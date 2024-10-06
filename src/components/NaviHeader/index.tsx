@@ -67,7 +67,7 @@ const NaviHeader = () => {
   }
 
   useEffect(() => {
-    if (storageUtils.get('isDarkEnable') as boolean | false) setDarkEnable()
+    if (storageUtils.get('darkEnable') as boolean | false) setDarkEnable()
   }, [])
 
   return (
