@@ -27,8 +27,8 @@ const instance: AxiosInstance = axios.create({
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true,
   headers: {
-    icode: apiToken
-  }
+    icode: apiToken,
+  },
 })
 
 /**
@@ -103,5 +103,5 @@ export default {
   },
   put<T>(url: string, data?: any): T {
     return instance.put<T>(url, data) as T
-  }
+  },
 }

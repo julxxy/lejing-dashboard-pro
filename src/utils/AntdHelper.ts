@@ -26,6 +26,6 @@ export const useAntdMessage = () => {
   return {
     message: message,
     notification: modal,
-    modal: notification
+    modal: notification,
   }
 }

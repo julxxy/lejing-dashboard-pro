@@ -14,21 +14,44 @@ const DashboardLineChart: React.FC = () => {
   // Mock data for 12 months
   const eChartsOption = {
     title: {
-      text: null // No title
+      text: null, // No tit le
+    },
+    legend: {},
+    tooltip: {
+      trigger: 'axis',
+      formatter: function (params: any) {
+        return params
+          .map((item: { seriesName: any; value: any }) => {
+            const { seriesName, value } = item
+            let unit = ''
+            if (seriesName === '订单数量') unit = '单'
+            if (seriesName === '交易金额') unit = '元'
+            return `${seriesName}: ${value} ${unit}`
+          })
+          .join('<br/>')
+      },
     },
     xAxis: {
       type: 'category',
-      data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'] // 12 months
+      data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], // 12 months
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
     },
     series: [
       {
-        data: [820, 930, 1000, 1200, 1300, 1100, 950, 1400, 1500, 1600, 1700, 1800], // Mock data for each month
-        type: 'line'
-      }
-    ]
+        name: '订单数量',
+        type: 'line',
+        smooth: true,
+        data: [500, 863, 1000, 980, 1300, 1100, 950, 1400, 1500, 1600, 1700, 500], // Mock data for each month
+      },
+      {
+        name: '交易金额',
+        type: 'line',
+        smooth: true,
+        data: [820, 930, 400, 689, 1244, 3000, 788, 1600, 1944, 5600, 7900, 8000], // Mock data for each month
+      },
+    ],
   }
 
   useEffect(() => {

@@ -10,7 +10,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
     info: 'color: green',
     warn: 'color: orange',
     error: 'color: red',
-    fatal: 'color: magenta'
+    fatal: 'color: magenta',
   }
   const logMethod = (method: (typeof levels)[number], ...args: unknown[]) => {
     if (levels.indexOf(method) >= levelIndex) {
@@ -26,7 +26,7 @@ function createLogger(level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fa
     info: (...args: any[]) => logMethod('info', ...args),
     warn: (...args: any[]) => logMethod('warn', ...args),
     error: (...args: any[]) => logMethod('error', ...args),
-    fatal: (...args: any[]) => logMethod('fatal', ...args)
+    fatal: (...args: any[]) => logMethod('fatal', ...args),
   }
 }
 

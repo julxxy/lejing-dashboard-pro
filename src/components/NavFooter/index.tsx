@@ -4,20 +4,20 @@ const NavFooter = () => {
   const links = [
     {
       label: '中国电子口岸一站式加签方案',
-      href: 'https://github.com/Weasley-J/chinaport-data-signature'
+      href: 'https://github.com/Weasley-J/chinaport-data-signature',
     },
     {
       label: '乐璟商城（微服务）',
-      href: 'https://github.com/Weasley-J/lejing-mall'
+      href: 'https://github.com/Weasley-J/lejing-mall',
     },
     {
       label: '乐璟OPS（React）',
-      href: 'https://github.com/Weasley-J/lejing-dashboard-pro'
+      href: 'https://github.com/Weasley-J/lejing-dashboard-pro',
     },
     {
       label: 'Where to Go（Vue 3）',
-      href: 'https://github.com/Weasley-J/where-to-go'
-    }
+      href: 'https://github.com/Weasley-J/where-to-go',
+    },
   ]
   return (
     <div className={styles.footer}>

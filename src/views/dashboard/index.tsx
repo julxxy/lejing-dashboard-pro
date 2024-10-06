@@ -26,39 +26,39 @@ const Dashboard: React.FC = () => {
     {
       key: '1',
       label: '用户 ID',
-      children: `${username}`
+      children: `${username}`,
     },
     {
       key: '2',
       label: '邮箱',
-      children: 'weasley2023@outlook.com'
+      children: 'weasley2023@outlook.com',
     },
     {
       key: '3',
       label: '状态',
-      children: '离职'
+      children: '离职',
     },
     {
       key: '4',
       label: '手机号',
-      children: '181****2681'
+      children: '181****2681',
     },
     {
       key: '5',
       label: '职位',
-      children: '高级架构师'
+      children: '高级架构师',
     },
     {
       key: '6',
       label: '部门',
-      children: '中台架构'
-    }
+      children: '中台架构',
+    },
   ]
   const cardData = [
     { title: '货运司机', count: '110 个' },
     { title: '总流水', count: '11000 元' },
     { title: '总单量', count: '110 单' },
-    { title: '开通城市', count: '110 个' }
+    { title: '开通城市', count: '110 个' },
   ]
 
   return (

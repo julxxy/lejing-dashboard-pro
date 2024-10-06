@@ -4,7 +4,7 @@ export const base64Utils = {
     if (str.length % 4 !== 0) return false
     const base64RegexArr = [
       /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/,
-      /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z0-9+/]+={0,2}$/
+      /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z0-9+/]+={0,2}$/,
     ]
     for (const base64Regex of base64RegexArr) {
       if (!base64Regex.test(str)) return false
@@ -42,5 +42,5 @@ export const base64Utils = {
   utf8Decode(utf8String: string): string {
     const bytes = new Uint8Array([...utf8String].map(char => char.charCodeAt(0)))
     return new TextDecoder().decode(bytes)
-  }
+  },
 }

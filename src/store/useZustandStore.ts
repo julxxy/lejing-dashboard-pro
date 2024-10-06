@@ -42,7 +42,7 @@ const useZustandStore = create<{
       logUpdate(enable)
       return { isDarkEnable: enable }
     })
-  }
+  },
 }))
 
 function logUpdate(data: any) {

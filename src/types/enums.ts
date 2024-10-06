@@ -7,7 +7,7 @@ export const Environment = {
   local: 'developer_local',
   current: import.meta.env.MODE,
   isProduction: (): boolean => Environment.current === Environment.prod,
-  isNotProduction: (): boolean => Environment.current !== Environment.prod
+  isNotProduction: (): boolean => Environment.current !== Environment.prod,
 } as const
 
 /**
@@ -16,7 +16,7 @@ export const Environment = {
 export enum UserRoles {
   Admin = 'ADMIN',
   User = 'USER',
-  Guest = 'GUEST'
+  Guest = 'GUEST',
 }
 
 /**
@@ -25,12 +25,12 @@ export enum UserRoles {
 export enum UserStatus {
   Active = 'ACTIVE',
   Inactive = 'INACTIVE',
-  Suspended = 'SUSPENDED'
+  Suspended = 'SUSPENDED',
 }
 
 /**
  * HTTP result status
  */
 export enum ResultStatus {
-  Success = '0'
+  Success = '0',
 }

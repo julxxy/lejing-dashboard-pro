@@ -14,8 +14,8 @@ export default defineConfig(({ mode }) => {
       visualizer({
         open: isFalse(env.VITE_IS_PROD),
         filename: 'index-bundle-analysis.html',
-        template: 'sunburst'
-      })
+        template: 'sunburst',
+      }),
     ],
     build: {
       rollupOptions: {
@@ -23,16 +23,16 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             return optimizeChunks(id)
-          }
-        }
+          },
+        },
       },
-      chunkSizeWarningLimit: 1500
+      chunkSizeWarningLimit: 1500,
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
-        '@types': path.resolve(__dirname, 'types')
-      }
+        '@types': path.resolve(__dirname, 'types'),
+      },
     },
     server: {
       open: isTrue(env.VITE_OPEN_BROWSER),
@@ -40,9 +40,9 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: apiUrl,
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, '/api')
-        }
-      }
-    }
+          rewrite: path => path.replace(/^\/api/, '/api'),
+        },
+      },
+    },
   }
 })

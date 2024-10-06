@@ -45,5 +45,5 @@ export default {
    */
   clear: (): void => {
     localStorage.clear()
-  }
+  },
 }

@@ -16,7 +16,7 @@ export const URIs = {
   login: '/login',
   welcome: '/welcome',
   dashboard: '/dashboard',
-  overflowDemo: '/overflow'
+  overflowDemo: '/overflow',
 }
 
 // Lazy load views
@@ -38,7 +38,7 @@ const routes: RouteObject[] = [
           <Suspense fallback={<Loading />}>
             <Welcome />
           </Suspense>
-        )
+        ),
       },
       {
         path: URIs.dashboard,
@@ -46,14 +46,14 @@ const routes: RouteObject[] = [
           <Suspense fallback={<Loading />}>
             <Dashboard />
           </Suspense>
-        )
+        ),
       },
-      { path: URIs.overflowDemo, element: <TestOverflow /> }
-    ]
+      { path: URIs.overflowDemo, element: <TestOverflow /> },
+    ],
   },
   { path: '*', element: <Navigate to="/404" /> },
   { path: '/404', element: <PageNotFound /> },
-  { path: '/403', element: <NoPermission /> }
+  { path: '/403', element: <NoPermission /> },
 ]
 
 // Create routing instance

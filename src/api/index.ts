@@ -9,5 +9,5 @@ export default {
   // 获取用户信息
   getUserInfo(): User.Information {
     return request.get<User.Information>('/users/getUserInfo')
-  }
+  },
 }

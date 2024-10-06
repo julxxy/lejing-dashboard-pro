@@ -20,7 +20,7 @@ const store = resso({
   setUserInfo: (userInfo: User.Information) => {
     store.userInfo = userInfo
     logMetaUpdate(userInfo)
-  }
+  },
 })
 
 export default store // export the store instance

@@ -6,7 +6,7 @@
 export const formatMoneyCNY = (amount: string | number | bigint): string => {
   const formater = new Intl.NumberFormat('zh-Hans-CN', {
     style: 'currency',
-    currency: 'CNY'
+    currency: 'CNY',
   })
 
   const numericAmount = typeof amount === 'string' ? parseFloat(amount) : Number(amount)

@@ -57,6 +57,6 @@ export const API = (mode: string) => {
   return {
     env,
     isDebugEnable,
-    hosts: Object.fromEntries(apiUrls.map(api => [api.key, api.url]))
+    hosts: Object.fromEntries(apiUrls.map(api => [api.key, api.url])),
   }
 }

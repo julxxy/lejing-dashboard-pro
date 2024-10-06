@@ -4,7 +4,7 @@ import {
   MenuUnfoldOutlined,
   ProfileFilled,
   UserOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
 } from '@ant-design/icons'
 import { Breadcrumb, Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
 import styles from '@/components/NaviHeader/idnex.module.less'
@@ -25,7 +25,7 @@ const NaviHeader = () => {
   const items: MenuProps['items'] = [
     { key: '1', label: '个人中心', icon: <ProfileFilled /> },
     { key: '2', label: '切换账号', icon: <UserSwitchOutlined /> },
-    { key: '3', label: '退出登录', icon: <LoginOutlined /> }
+    { key: '3', label: '退出登录', icon: <LoginOutlined /> },
   ]
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (isDebugEnable) log.debug(e)
@@ -49,7 +49,7 @@ const NaviHeader = () => {
     items,
     selectable: true,
     defaultSelectedKeys: ['2'],
-    onClick: handleMenuClick
+    onClick: handleMenuClick,
   }
 
   function logout() {
@@ -96,7 +96,7 @@ const NaviHeader = () => {
             <Tooltip title={userInfo.job} key="leftButton">
               {leftButton}
             </Tooltip>,
-            React.cloneElement(rightButton as React.ReactElement<any, string>, { loading: false })
+            React.cloneElement(rightButton as React.ReactElement<any, string>, { loading: false }),
           ]}
         >
           <span className={styles.nickname}>{userInfo.userName}</span>

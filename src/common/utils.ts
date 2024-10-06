@@ -32,5 +32,5 @@ export const utils = {
     } else {
       return this.hasKey(data, key as string)
     }
-  }
+  },
 }

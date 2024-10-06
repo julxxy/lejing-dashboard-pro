@@ -11,8 +11,8 @@ function App() {
         theme={{
           token: {
             colorPrimary: '#4096ff',
-            borderRadius: 8
-          }
+            borderRadius: 8,
+          },
         }}
       >
         <AntdApp>

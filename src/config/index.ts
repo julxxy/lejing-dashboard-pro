@@ -15,7 +15,7 @@ const config = {
     apiUrl: 'http://localhost:3000',
     authUrl: 'http://localhost:3000/auth',
     uploadUrl: 'http://localhost:3000/upload',
-    mockApiUrl: 'https://dev.example.com/mock'
+    mockApiUrl: 'https://dev.example.com/mock',
   },
   test: {
     mock: false,
@@ -25,7 +25,7 @@ const config = {
     apiUrl: 'https://test.example.com',
     authUrl: 'https://test.example.com/auth',
     uploadUrl: 'https://test.example.com/upload',
-    mockApiUrl: 'https://test.example.com/mock'
+    mockApiUrl: 'https://test.example.com/mock',
   },
   prod: {
     mock: false,
@@ -34,12 +34,12 @@ const config = {
     cdn: 'https://cdn-prod.example.com',
     apiUrl: 'https://www.example.com',
     authUrl: 'https://www.example.com/auth',
-    uploadUrl: 'https://www.example.com/upload'
-  }
+    uploadUrl: 'https://www.example.com/upload',
+  },
 }
 
 // Export the configuration object.
 export default {
   env,
-  ...config[env]
+  ...config[env],
 }

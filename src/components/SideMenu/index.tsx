@@ -9,7 +9,7 @@ import {
   SettingOutlined,
   TeamOutlined,
   TruckOutlined,
-  UserSwitchOutlined
+  UserSwitchOutlined,
 } from '@ant-design/icons'
 import { Menu, MenuProps } from 'antd'
 import React from 'react'
@@ -31,8 +31,8 @@ const items: MenuItem[] = [
       { key: '101', label: '用户管理', icon: <TeamOutlined /> },
       { key: '102', label: '菜单管理', icon: <MenuOutlined /> },
       { key: '103', label: '角色管理', icon: <UserSwitchOutlined /> },
-      { key: '104', label: '部门管理', icon: <BarsOutlined /> }
-    ]
+      { key: '104', label: '部门管理', icon: <BarsOutlined /> },
+    ],
   },
   {
     key: '2',
@@ -41,9 +41,9 @@ const items: MenuItem[] = [
     children: [
       { key: '201', label: '订单列表', icon: <OrderedListOutlined /> },
       { key: '202', label: '订单聚合', icon: <GiftOutlined /> },
-      { key: '203', label: '货运人员', icon: <TruckOutlined /> }
-    ]
-  }
+      { key: '203', label: '货运人员', icon: <TruckOutlined /> },
+    ],
+  },
 ]
 
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
