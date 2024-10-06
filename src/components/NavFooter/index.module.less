@@ -1,12 +1,15 @@
 .footer {
+  line-height: 25px;
   text-align: center;
-  line-height: 28px;
+  font-size: 12px;
+  margin: 5px 14px 14px;
+  padding: 5px 0;
   color: #b0aeae;
-  font-size: 14px;
-  margin: 10px 0;
+  border-radius: var(--border-radius-default);
 
   :global(a) {
     color: #b0aeae;
+    text-decoration: none;
 
     &:hover {
       color: #4096ff;
@@ -14,6 +17,10 @@
   }
 
   :global(.gutter) {
-    margin: 0 10px;
+    margin: 0 8px;
+
+    &:first-child {
+      margin-right: 0;
+    }
   }
 }

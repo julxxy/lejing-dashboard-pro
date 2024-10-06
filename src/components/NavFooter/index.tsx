@@ -7,15 +7,15 @@ const NavFooter = () => {
       href: 'https://github.com/Weasley-J/chinaport-data-signature',
     },
     {
-      label: '乐璟商城（微服务）',
+      label: '乐璟商城（分布式微服务）',
       href: 'https://github.com/Weasley-J/lejing-mall',
     },
     {
-      label: '乐璟OPS（React）',
+      label: '乐璟OPS（React v18.3.x）',
       href: 'https://github.com/Weasley-J/lejing-dashboard-pro',
     },
     {
-      label: 'Where to Go（Vue 3）',
+      label: 'Where to Go（Vue v3.5.x）',
       href: 'https://github.com/Weasley-J/where-to-go',
     },
   ]
@@ -33,7 +33,7 @@ const NavFooter = () => {
       </div>
       <div>
         <a href="https://github.com/Weasley-J" target="_blank" rel="noreferrer">
-          Lejing Dashboard Pro ©{new Date().getFullYear()} Created by Weasley
+          Lejing Dashboard Pro ©{new Date().getFullYear()} Powered by Weasley
         </a>
       </div>
     </div>

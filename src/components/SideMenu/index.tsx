@@ -11,7 +11,7 @@ import {
   TruckOutlined,
   UserSwitchOutlined,
 } from '@ant-design/icons'
-import { Menu, MenuProps } from 'antd'
+import { Menu, MenuProps, Tooltip } from 'antd'
 import React from 'react'
 import { SideMenuProps } from '@/types/apiTypes.ts'
 import { useNavigate } from 'react-router-dom'
@@ -20,7 +20,6 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 
 type MenuItem = Required<MenuProps>['items'][number]
-
 const items: MenuItem[] = [
   { key: '0', icon: <DesktopOutlined />, label: '工作台' },
   {
@@ -47,16 +46,28 @@ const items: MenuItem[] = [
 ]
 
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
-  const { collapsed } = useZustandStore()
+  const { isDarkEnable, collapsed } = useZustandStore()
+  const theme = isDarkEnable ? 'dark' : 'light'
+  const platformText = import.meta.env.VITE_OPS_PLATFORM as string
+  const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
+
   const navigate = useNavigate()
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} className={styles.sider}>
+    <Sider trigger={null} collapsible collapsed={collapsed} className={styles.sider} theme={theme}>
       <div className={styles.menu}>
         <div className={styles.logo} onClick={() => navigate(URIs.welcome)}>
-          <img src={'/images/operations-icon.png'} alt={'ops-logo'} className={styles.logoImg} />
-          <span className={collapsed ? styles.logoTextHidden : styles.logoTextVisible}>乐璟OPS</span>
+          <Tooltip
+            title={platformText}
+            color="volcano"
+            mouseLeaveDelay={0.3}
+            trigger={collapsed ? 'hover' : 'contextMenu'}
+            placement="rightTop"
+          >
+            <img src="/images/operations-icon.png" alt={'ops-logo'} className={styles.logoImg} />
+          </Tooltip>
+          <span className={platformTextStyle}>{platformText}</span>
         </div>
-        <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={'dark'} items={items} />
+        <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={theme} items={items} />
       </div>
     </Sider>
   )

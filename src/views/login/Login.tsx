@@ -3,9 +3,8 @@ import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
 import { useState } from 'react'
-import Draggable from 'react-draggable'
 import { useAntdMessage } from '@/context/AntdGlobalProvider.ts'
-import { Environment, ResultStatus } from '@/types/enums.ts'
+import { ResultStatus } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 import { log } from '@/common/loggerProvider.ts'
 import { URIs } from '@/router'
@@ -16,7 +15,6 @@ export default function LoginFC() {
   const { setToken } = useZustandStore()
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
-  const isProduction = Environment.isProduction()
   const redirectToWelcome = (data: string) => {
     message.success('登录成功').then(() => {})
     storageUtils.set('token', data)
@@ -46,17 +44,17 @@ export default function LoginFC() {
   }
 
   return (
-    <div className={styles.login}>
-      <Draggable handle=".drag-handle" bounds="parent">
+    <>
+      <div className={styles.login}>
         <div className={styles.loginWrapper}>
-          <p className={`${styles.title} drag-handle`}>系统登录</p>
+          <p className={styles.title}>系统登录</p>
           <Form name="basic" onFinish={onFinish} autoComplete="off">
             <Form.Item
               name="username"
               initialValue={'JackMa'}
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
-              <Input placeholder={isProduction ? '' : '请输入用户名'} />
+              <Input placeholder={'请输入用户名'} />
             </Form.Item>
 
             <Form.Item
@@ -64,17 +62,17 @@ export default function LoginFC() {
               initialValue={'123456'}
               rules={[{ required: true, message: 'Please input your password!' }]}
             >
-              <Input.Password placeholder={isProduction ? '' : '请输入密码'} />
+              <Input.Password placeholder={'请输入密码'} />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" block={true} htmlType="submit" loading={loading} className="btn-custom">
+              <Button type="primary" block={true} htmlType="submit" loading={loading}>
                 登录
               </Button>
             </Form.Item>
           </Form>
         </div>
-      </Draggable>
-    </div>
+      </div>
+    </>
   )
 }

@@ -45,7 +45,7 @@ const DriverDistributionPieChart: React.FC = () => {
   }
 
   const ageOption = {
-    title: { text: '年龄分布', left: 'center', top: '50%' },
+    title: { text: '年龄', left: 'center', top: '50%' },
     legend: {},
     toolbox: {
       show: true,
@@ -58,7 +58,7 @@ const DriverDistributionPieChart: React.FC = () => {
     },
     series: [
       {
-        name: '年龄分布',
+        name: '年龄',
         type: 'pie',
         radius: [50, 200], // 缩小内外半径
         roseType: 'area',

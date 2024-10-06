@@ -49,10 +49,10 @@ const LayoutFC: React.FC = () => {
     <Watermark content={watermark()}>
       <Layout style={{ minHeight: '100vh' }}>
         <LeftSideMenu />
-        <Layout ref={wrapperRef} className={styles.rightContentArea}>
+        <Layout ref={wrapperRef} className={styles.rightArea}>
           <NaviHeader />
           <Content className={styles.content} style={{ height: contentHeight }}>
-            <div className={styles.wrapper}>
+            <div className={styles.contentWrapper}>
               <Suspense fallback={<Loading />}>
                 <Outlet context={<Welcome />} />
               </Suspense>

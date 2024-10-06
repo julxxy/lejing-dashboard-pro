@@ -10,6 +10,8 @@
 
   /* Text colors */
   --color-text-primary: #333333; /* 默认文本颜色 */
+  --color-text-primary-light: #add8e6; /* 亮文本颜色 */
+  --color-text-primary-dark: #003366; /* 深色文本颜色 */
   --color-text-secondary: #6c757d; /* 次要文本颜色 */
 
   /* Background colors */
@@ -19,6 +21,11 @@
   /* Border and shadow */
   --border-radius-default: 8px; /* 默认的圆角半径 */
   --box-shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+}
+
+/* 使用深蓝色 */
+.logo-text-dark-blue {
+  color: var(--color-text-primary-dark);
 }
 
 /* Sample usage in components */
