@@ -19,7 +19,7 @@ const OrderTransactionChart: React.FC = () => {
     tooltip: {
       trigger: 'axis',
 
-      formatter: function (params: any) {
+      formatter: (params: any) => {
         return params
           .map((item: { seriesName: any; value: any }) => {
             const { seriesName, value } = item

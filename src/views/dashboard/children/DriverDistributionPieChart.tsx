@@ -10,35 +10,25 @@ const DriverDistributionPieChart: React.FC = () => {
   const cityRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
   const cityOption = {
-    title: { text: '城市分布', left: 'center', top: '50%' },
-    legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        mark: { show: true },
-        dataView: { show: true, readOnly: false },
-        restore: { show: true },
-        saveAsImage: { show: true },
-      },
+    title: { text: '城市', left: 'center', top: '50%' },
+    legend: {
+      orient: 'vertical',
+      left: 'right',
     },
     series: [
       {
-        name: '城市分布',
+        name: '城市',
         type: 'pie',
-        radius: [50, 200], // 缩小内外半径
-        roseType: 'area',
+        radius: [50, 150],
         itemStyle: {
           borderRadius: 8,
         },
         data: [
-          { value: 40, name: 'rose 1' },
-          { value: 38, name: 'rose 2' },
-          { value: 32, name: 'rose 3' },
-          { value: 30, name: 'rose 4' },
-          { value: 28, name: 'rose 5' },
-          { value: 26, name: 'rose 6' },
-          { value: 22, name: 'rose 7' },
-          { value: 18, name: 'rose 8' },
+          { value: 38, name: '北京' },
+          { value: 40, name: '上海' },
+          { value: 28, name: '广州' },
+          { value: 18, name: '杭州' },
+          { value: 30, name: '武汉' },
         ],
       },
     ],
@@ -46,34 +36,25 @@ const DriverDistributionPieChart: React.FC = () => {
 
   const ageOption = {
     title: { text: '年龄', left: 'center', top: '50%' },
-    legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        mark: { show: true },
-        dataView: { show: true, readOnly: false },
-        restore: { show: true },
-        saveAsImage: { show: true },
-      },
+    legend: {
+      orient: 'vertical',
+      left: 'right',
     },
     series: [
       {
         name: '年龄',
         type: 'pie',
-        radius: [50, 200], // 缩小内外半径
-        roseType: 'area',
+        radius: [50, 150],
+        roseType: 'radius',
         itemStyle: {
           borderRadius: 8,
         },
         data: [
-          { value: 40, name: 'rose 1' },
-          { value: 38, name: 'rose 2' },
-          { value: 32, name: 'rose 3' },
-          { value: 30, name: 'rose 4' },
-          { value: 28, name: 'rose 5' },
-          { value: 26, name: 'rose 6' },
-          { value: 22, name: 'rose 7' },
-          { value: 18, name: 'rose 8' },
+          { value: 40, name: '北京' },
+          { value: 38, name: '上海' },
+          { value: 32, name: '广州' },
+          { value: 26, name: '杭州' },
+          { value: 30, name: '武汉' },
         ],
       },
     ],
@@ -135,8 +116,10 @@ const DriverDistributionPieChart: React.FC = () => {
           />
         }
       >
-        <div id="pieChartCity" ref={cityRef} className={styles.itemPie} />
-        <div id="pieChartAge" ref={ageRef} className={styles.itemPie} />
+        <div className={styles.pieContainer}>
+          <div id="pieChartCity" ref={cityRef} className={styles.pieItem} />
+          <div id="pieChartAge" ref={ageRef} className={styles.pieItem} />
+        </div>
       </Card>
     </div>
   )
