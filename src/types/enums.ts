@@ -8,6 +8,8 @@ export const Environment = {
   current: import.meta.env.MODE,
   isProduction: (): boolean => Environment.current === Environment.prod,
   isNotProduction: (): boolean => Environment.current !== Environment.prod,
+  isLocal: (): boolean => Environment.current === Environment.local,
+  isDevelopment: (): boolean => Environment.current === Environment.dev,
 } as const
 
 /**

@@ -10,7 +10,7 @@ const DriverDistributionPieChart: React.FC = () => {
   const cityRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
   const cityOption = {
-    title: { text: '城市', left: 'center', top: '50%' },
+    title: { text: '城市', left: 'center' },
     legend: {
       orient: 'vertical',
       left: 'right',
@@ -35,7 +35,7 @@ const DriverDistributionPieChart: React.FC = () => {
   }
 
   const ageOption = {
-    title: { text: '年龄', left: 'center', top: '50%' },
+    title: { text: '年龄', left: 'center' },
     legend: {
       orient: 'vertical',
       left: 'right',

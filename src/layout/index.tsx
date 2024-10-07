@@ -9,6 +9,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { Outlet } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
+import { Environment } from '@/types/enums.ts'
 
 const { Content } = Layout
 const Welcome = lazy(() => import('@/views/welcome'))
@@ -23,7 +24,7 @@ const LayoutFC: React.FC = () => {
   const { setUserInfo } = useZustandStore() // 获取 store
   const getUserInfo = async () => {
     const [userInfo] = await Promise.all([api.getUserInfo()])
-    userInfo.userName = 'admin' // TODO 上线后删除这行
+    userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除这行
     setUserInfo(userInfo)
   }
 
