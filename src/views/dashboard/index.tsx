@@ -6,6 +6,7 @@ import { log } from '@/common/loggerProvider.ts'
 import Loading from '@/views/loading'
 import dashboardUserInfo from '@/mockdata/dashboardUserInfo.json'
 import { Environment } from '@/types/enums.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
 
 // Lazy loading for charts
 const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
@@ -31,7 +32,7 @@ function getAvatar(avatar: string): string {
 const Dashboard: React.FC = () => {
   useRef<HTMLDivElement>(null)
   const { isDarkEnable } = useZustandStore()
-  log.info('is_dark_enable: ', isDarkEnable)
+  if (isDebugEnable) log.info('is_dark_enable: ', isDarkEnable)
   const username = 'Weasley'
   const items: DescriptionsProps['items'] = getItems()
   const cardData = [
