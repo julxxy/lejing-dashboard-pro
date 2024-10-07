@@ -23,6 +23,7 @@ const LayoutFC: React.FC = () => {
   const { setUserInfo } = useZustandStore() // 获取 store
   const getUserInfo = async () => {
     const [userInfo] = await Promise.all([api.getUserInfo()])
+    userInfo.userName = 'admin' // TODO 上线后删除这行
     setUserInfo(userInfo)
   }
 

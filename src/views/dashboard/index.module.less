@@ -10,6 +10,7 @@
   --bg-dark-4: #03c988;
 
   --text-color: #ffffff;
+  --chart-height: 400px;
 }
 
 .dashboardWrapper {
@@ -103,24 +104,32 @@
 }
 
 .itemLine {
-  height: 400px;
+  height: var(--chart-height);
   width: 100%;
 }
 
 .pieContainer {
   display: flex;
-}
 
-.pieItem {
-  flex: 1;
-  height: 400px;
+  .pieItem {
+    flex: 1;
+    height: var(--chart-height);
 
-  &:last-child {
-    margin-bottom: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
-.itemRadar {
-  height: 400px;
-  width: 100%;
+.radarContainer {
+  display: flex;
+
+  .radarIem {
+    flex: 1;
+    height: var(--chart-height);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

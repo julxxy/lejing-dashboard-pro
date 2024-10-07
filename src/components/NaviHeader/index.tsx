@@ -20,7 +20,7 @@ import { isTrue } from '@/common/booleanUtils.ts'
 
 const NaviHeader = () => {
   const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
-  const toggleCollapsed = () => setCollapsed() // 控制侧边栏收缩
+  const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
   const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
@@ -49,7 +49,7 @@ const NaviHeader = () => {
   const menuProps = {
     items,
     selectable: true,
-    defaultSelectedKeys: ['2'],
+    defaultSelectedKeys: ['0'],
     onClick: handleMenuClick,
   }
 
