@@ -53,7 +53,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
 
   const navigate = useNavigate()
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} className={styles.sider} theme={theme}>
+    <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} className={styles.sider} theme={theme}>
       <div className={styles.menu}>
         <div className={styles.logo} onClick={() => navigate(URIs.welcome)}>
           <Tooltip
@@ -63,7 +63,12 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
             trigger={collapsed ? 'hover' : 'contextMenu'}
             placement="rightTop"
           >
-            <img src="/images/operations-icon.png" alt={'ops-logo'} className={styles.logoImg} />
+            <img
+              src="/images/operations-icon.png"
+              alt={'ops-logo'}
+              className={`${styles.logoImg}`}
+              style={{ marginLeft: collapsed ? 16 : 28 }}
+            />
           </Tooltip>
           <span className={platformTextStyle}>{platformText}</span>
         </div>

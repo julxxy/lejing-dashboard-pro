@@ -88,11 +88,12 @@ const NaviHeader = () => {
           onClick={() => setDarkEnable()}
         />
         <Dropdown.Button
-          className="btn-custom"
+          className={'btn-custom'}
           menu={menuProps}
+          size={'middle'}
           icon={<UserOutlined />}
           placement={'bottomLeft'}
-          type={'primary'}
+          type={'text'}
           arrow={true}
           buttonsRender={([leftButton, rightButton]) => [
             <Tooltip title={userInfo.job} key="leftButton">

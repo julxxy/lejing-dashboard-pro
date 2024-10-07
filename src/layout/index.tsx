@@ -28,7 +28,6 @@ const LayoutFC: React.FC = () => {
 
   useEffect(() => {
     getUserInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // 动态计算内容区域的的高度
@@ -51,16 +50,14 @@ const LayoutFC: React.FC = () => {
         <LeftSideMenu />
         <Layout ref={wrapperRef} className={styles.rightArea}>
           <NaviHeader />
-          <div className={styles.scrollWrapper}>
-            <Content className={styles.content} style={{ height: contentHeight }}>
-              <div className={styles.contentWrapper}>
-                <Suspense fallback={<Loading />}>
-                  <Outlet context={<Welcome />} />
-                </Suspense>
-              </div>
-              <NavFooter />
-            </Content>
-          </div>
+          <Content className={styles.scrollWrapper} style={{ height: contentHeight }}>
+            <div className={styles.contentWrapper}>
+              <Suspense fallback={<Loading />}>
+                <Outlet context={<Welcome />} />
+              </Suspense>
+            </div>
+            <NavFooter />
+          </Content>
         </Layout>
       </Layout>
     </Watermark>
