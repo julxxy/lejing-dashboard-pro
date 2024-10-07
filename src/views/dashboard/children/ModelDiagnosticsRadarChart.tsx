@@ -37,7 +37,7 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
   // Render driver model radar chart
   const renderDriverModelChart = async () => {
     const [{ indicator, data }] = await Promise.all([api.getDriverRadarData()])
-    EChartsManager.getInstanceIfNotPresent(driverModelRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(driverModelRef)?.setOption({
       title: { text: '', left: 'right' },
       legend: { orient: 'vertical', left: '8px', data: ['司机模型诊断'] },
       toolTip: {},
@@ -63,7 +63,7 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
 
   // Render budget spending radar chart
   const renderBudgetSpending = async () => {
-    EChartsManager.getInstanceIfNotPresent(budgetSpendingRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(budgetSpendingRef)?.setOption({
       title: { text: '成本支出分析', left: 'center' },
       legend: { orient: 'vertical', left: '8px', data: ['预算成本', '实际支出'] },
       radar: {

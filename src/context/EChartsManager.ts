@@ -9,7 +9,7 @@ export const EChartsManager = {
    * @param chartRef React 组件的 ref 对象
    * @returns ECharts 实例或 null
    */
-  getInstanceIfNotPresent: (chartRef: RefObject<HTMLDivElement>): ECharts | null => {
+  getInstanceIfPresent: (chartRef: RefObject<HTMLDivElement>): ECharts | null => {
     if (!chartRef.current) {
       console.warn('React 组件的 ECharts ref 对象不存在')
       return null

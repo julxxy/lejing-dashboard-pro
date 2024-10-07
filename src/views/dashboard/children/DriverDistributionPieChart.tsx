@@ -55,7 +55,7 @@ const DriverDistributionPieChart: React.FC = () => {
   //  渲染数据
   const renderCityChart = async () => {
     const [data] = await Promise.all([api.getDriverCityData()])
-    EChartsManager.getInstanceIfNotPresent(cityRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(cityRef)?.setOption({
       title: { text: '司机城市分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
       toolbox: {
@@ -81,7 +81,7 @@ const DriverDistributionPieChart: React.FC = () => {
   }
   const renderAgeChart = async () => {
     const [data] = await Promise.all([api.getDriverAgeData()])
-    EChartsManager.getInstanceIfNotPresent(ageRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(ageRef)?.setOption({
       title: { text: '司机年龄分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
       toolbox: {
@@ -108,7 +108,7 @@ const DriverDistributionPieChart: React.FC = () => {
   }
   const renderVisitChart = () => {
     const data = generateNewVisitData()
-    EChartsManager.getInstanceIfNotPresent(visitSourceRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(visitSourceRef)?.setOption({
       title: { text: '用户访问来源', subtext: '', left: 'center' },
       tooltip: { trigger: 'item' },
       toolbox: {
@@ -142,7 +142,7 @@ const DriverDistributionPieChart: React.FC = () => {
   }
 
   const orderCompletionRateRadarChart = () => {
-    EChartsManager.getInstanceIfNotPresent(orderCompletionRateRef)?.setOption({
+    EChartsManager.getInstanceIfPresent(orderCompletionRateRef)?.setOption({
       title: { text: '订单完成率分析', left: 'center' },
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       legend: { data: ['完成率'], left: '8px' },
