@@ -41,6 +41,7 @@ export const EChartsManager = {
       }
     })
   },
+
   /**
    * 定义传入回调函数的 ECharts 配置项
    * @param onRefreshCallback 刷新按钮点击回调函数
