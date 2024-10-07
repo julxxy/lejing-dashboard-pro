@@ -20,7 +20,9 @@ export const hideLoading = () => {
   }
 }
 
-// 延迟加载时显示的组件
+/**
+ * 延迟加载时显示的组件
+ */
 const Loading: React.FC = () => {
   const [bgColor, setBgColor] = useState<string | null>(null) // 初始为 null，不影响第一次渲染
   const containerRef = useRef<HTMLDivElement | null>(null)
