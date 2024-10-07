@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
     {
       key: '3',
       label: '状态',
-      children: '离职',
+      children: undefined,
     },
     {
       key: '4',
