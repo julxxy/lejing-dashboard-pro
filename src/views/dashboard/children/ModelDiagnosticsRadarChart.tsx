@@ -4,6 +4,7 @@ import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/loggerProvider.ts'
+import { isDebugEnable } from '@/common/debugProvider.ts'
 
 const ModelDiagnosticsRadarChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
@@ -86,19 +87,24 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
         driverModelInstance.resize()
       }
     }
-    const animationFrameId = requestAnimationFrame(resizeChart)
+
+    window.addEventListener('resize', resizeChart)
+    resizeChart() // Initial resize after rendering
 
     return () => {
-      cancelAnimationFrame(animationFrameId)
-      EChartsManager.destroy(budgetSpendingRef, driverModelRef)
       window.removeEventListener('resize', resizeChart)
+      EChartsManager.destroy(budgetSpendingRef, driverModelRef)
     }
   }, [])
 
   function onReloadClicked() {
-    log.info('Reloading chart data')
+    if (isDebugEnable) log.info('Reloading chart data')
     setLoading(!loading)
-    setTimeout(() => setLoading(false), 1500) // Simulate loading time
+    setTimeout(() => {
+      EChartsManager.getInstanceIfNotPresent(budgetSpendingRef)?.setOption(budgetSpendingOption)
+      EChartsManager.getInstanceIfNotPresent(driverModelRef)?.setOption(driverOption)
+      setLoading(false)
+    }, 1500)
   }
 
   return (
