@@ -4,106 +4,178 @@ import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { log } from '@/common/loggerProvider.ts'
+import api from '@/api'
+import { isDebugEnable } from '@/common/debugProvider.ts'
+
+const generateNewVisitData = () => {
+  return [
+    { value: Math.random() * 500, name: '直接访问' },
+    { value: Math.random() * 500, name: '邮件营销' },
+    { value: Math.random() * 500, name: '联盟广告' },
+    { value: Math.random() * 500, name: '视频广告' },
+    { value: Math.random() * 1500, name: '搜索引擎' },
+  ]
+}
 
 const DriverDistributionPieChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
+
   const cityRef = useRef<HTMLDivElement>(null)
+  const visitSourceRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
-  const cityOption = {
-    title: { text: '城市', left: 'center' },
-    legend: {
-      orient: 'vertical',
-      left: 'right',
-    },
-    series: [
-      {
-        name: '城市',
-        type: 'pie',
-        radius: [50, 150],
-        itemStyle: {
-          borderRadius: 8,
-        },
-        data: [
-          { value: 38, name: '北京' },
-          { value: 40, name: '上海' },
-          { value: 28, name: '广州' },
-          { value: 18, name: '杭州' },
-          { value: 30, name: '武汉' },
-        ],
-      },
-    ],
-  }
+  const orderCompletionRateRef = useRef<HTMLDivElement>(null)
 
-  const ageOption = {
-    title: { text: '年龄', left: 'center' },
-    legend: {
-      orient: 'vertical',
-      left: 'right',
-    },
-    series: [
-      {
-        name: '年龄',
-        type: 'pie',
-        radius: [50, 150],
-        roseType: 'radius',
-        itemStyle: {
-          borderRadius: 8,
-        },
-        data: [
-          { value: 40, name: '北京' },
-          { value: 38, name: '上海' },
-          { value: 32, name: '广州' },
-          { value: 26, name: '杭州' },
-          { value: 30, name: '武汉' },
-        ],
-      },
-    ],
-  }
   useEffect(() => {
-    const resizeCityChart = () => {
-      const instance = EChartsManager.getInstanceIfNotPresent(cityRef)
-      if (instance) {
-        instance.setOption(cityOption)
-        instance.resize()
-      }
+    const resizeChart = () => {
+      renderCityChart()
+      renderAgeChart()
+      renderVisitChart()
+      orderCompletionRateRadarChart()
     }
-    const resizeAgeChart = () => {
-      const instance = EChartsManager.getInstanceIfNotPresent(ageRef)
-      if (instance) {
-        instance.setOption(ageOption)
-        instance.resize()
-      }
-    }
-
     // 防止闪烁
-    const cityAnimationFrameId = requestAnimationFrame(resizeCityChart)
-    const ageAnimationFrameId = requestAnimationFrame(resizeAgeChart)
-
+    const cityAnimationFrameId = requestAnimationFrame(resizeChart)
     // 监听窗口大小变化
-    window.addEventListener('resize', resizeCityChart)
-    window.addEventListener('resize', resizeAgeChart)
-
+    addEventListener('resize', resizeChart)
     // 防止内存泄露
     return () => {
       cancelAnimationFrame(cityAnimationFrameId)
-      cancelAnimationFrame(ageAnimationFrameId)
       EChartsManager.destroy(cityRef, ageRef)
-      window.removeEventListener('resize', resizeCityChart)
-      window.removeEventListener('resize', resizeAgeChart)
+      removeEventListener('resize', resizeChart)
     }
   }, [])
 
+  async function fetchAndRenderData() {
+    if (isDebugEnable) log.debug('Fetching and rendering chart data')
+    await renderCityChart()
+    await renderAgeChart()
+    renderVisitChart()
+    orderCompletionRateRadarChart()
+  }
+
+  //  渲染数据
+  const renderCityChart = async () => {
+    const [data] = await Promise.all([api.getDriverCityData()])
+    EChartsManager.getInstanceIfNotPresent(cityRef)?.setOption({
+      title: { text: '司机城市分布', left: 'center' },
+      legend: { orient: 'vertical', left: '8px' },
+      toolbox: {
+        feature: {
+          ...EChartsManager.getEChartsOptionWithRefresh(() => {
+            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            renderCityChart()
+          }),
+        },
+      },
+      series: [
+        {
+          name: '城市',
+          type: 'pie',
+          radius: [50, 130],
+          itemStyle: {
+            borderRadius: 8,
+          },
+          data,
+        },
+      ],
+    })
+  }
+  const renderAgeChart = async () => {
+    const [data] = await Promise.all([api.getDriverAgeData()])
+    EChartsManager.getInstanceIfNotPresent(ageRef)?.setOption({
+      title: { text: '司机年龄分布', left: 'center' },
+      legend: { orient: 'vertical', left: '8px' },
+      toolbox: {
+        feature: {
+          ...EChartsManager.getEChartsOptionWithRefresh(() => {
+            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            renderAgeChart()
+          }),
+        },
+      },
+      series: [
+        {
+          name: '年龄',
+          type: 'pie',
+          radius: [50, 130],
+          roseType: 'radius',
+          itemStyle: {
+            borderRadius: 8,
+          },
+          data,
+        },
+      ],
+    })
+  }
+  const renderVisitChart = () => {
+    const data = generateNewVisitData()
+    EChartsManager.getInstanceIfNotPresent(visitSourceRef)?.setOption({
+      title: { text: '用户访问来源', subtext: '', left: 'center' },
+      tooltip: { trigger: 'item' },
+      toolbox: {
+        feature: {
+          ...EChartsManager.getEChartsOptionWithRefresh(() => {
+            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            renderVisitChart()
+          }),
+        },
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left',
+      },
+      series: [
+        {
+          name: '访问来源',
+          type: 'pie',
+          radius: '60%',
+          data,
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)',
+            },
+          },
+        },
+      ],
+    })
+  }
+
+  const orderCompletionRateRadarChart = () => {
+    EChartsManager.getInstanceIfNotPresent(orderCompletionRateRef)?.setOption({
+      title: { text: '订单完成率分析', left: 'center' },
+      tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+      legend: { data: ['完成率'], left: '8px' },
+      xAxis: { type: 'category', data: ['北京', '上海', '广州', '深圳', '杭州', '武汉'] },
+      yAxis: { type: 'value', axisLabel: { formatter: '{value} %' } },
+      series: [
+        {
+          name: '完成率',
+          type: 'bar',
+          data: [92, 88, 85, 90, 87, 94], // 假设完成率数据
+          itemStyle: {
+            color: '#5470C6', // 自定义颜色
+          },
+          label: {
+            show: true,
+            position: 'top',
+            formatter: '{c} %',
+          },
+        },
+      ],
+    })
+  }
+
   function onReloadClicked() {
-    log.info('Reloading chart data')
     setLoading(!loading)
-    setTimeout(() => setLoading(false), 1500) // Simulate loading time
+    fetchAndRenderData().then(() => setTimeout(() => setLoading(false), 1500))
   }
 
   return (
     <div className={styles.chart}>
       <Card
         className={styles.chart}
-        title="司机分布"
+        title="业务数据概览"
         extra={
           <Button
             icon={<ReloadOutlined />}
@@ -119,6 +191,10 @@ const DriverDistributionPieChart: React.FC = () => {
         <div className={styles.pieContainer}>
           <div id="pieChartCity" ref={cityRef} className={styles.pieItem} />
           <div id="pieChartAge" ref={ageRef} className={styles.pieItem} />
+        </div>
+        <div className={styles.pieContainer}>
+          <div ref={visitSourceRef} className={styles.pieItem} />
+          <div ref={orderCompletionRateRef} className={styles.pieItem} />
         </div>
       </Card>
     </div>

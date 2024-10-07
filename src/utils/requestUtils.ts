@@ -9,6 +9,7 @@ import { IRequestConfig } from '@/axios-conf'
 import { base64Utils } from '@/common/base64Utils.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import { isFalse } from '@/common/booleanUtils.ts'
+import { URIs } from '@/router'
 
 /**
  * API Token
@@ -76,15 +77,15 @@ instance.interceptors.response.use(
 
 // Common error handling logic
 function handleError(messageText: string, errorData: any) {
-  message.error(messageText).then(() => {})
+  message.error(messageText)
   return Promise.reject(errorData)
 }
 
 // Logic for handling session expiration
 function handleSessionExpired(msg: string, data: any) {
-  message.error(msg).then(() => {})
+  message.error(msg)
   storageUtils.remove('token')
-  location.href = '/login'
+  location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
   return Promise.reject(data)
 }
 

@@ -38,6 +38,36 @@ export namespace User {
   }
 }
 
+export namespace UDashboard {
+  export interface Report {
+    driverCount: number
+    totalMoney: number
+    orderCount: number
+    cityNum: 80
+  }
+
+  export interface OrderChartEntity {
+    label: string[]
+    order: number[]
+    money: number[]
+  }
+
+  export interface CityChartEntity {
+    value: number
+    name: string
+  }
+
+  export interface AgeChartEntity {
+    value: number
+    name: string
+  }
+
+  export interface RadarChartEntity {
+    indicator: Array<{ name: string; max: number }>
+    data: [{ value: number[]; name: string }]
+  }
+}
+
 export interface SideMenuProps {
   collapsed?: boolean
 }

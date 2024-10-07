@@ -3,7 +3,8 @@
  */
 
 // Format CNY money amount
-export const formatMoneyCNY = (amount: string | number | bigint): string => {
+export const formatMoneyCNY = (amount?: string | number | bigint): string => {
+  if (!amount) amount = '0.00'
   const formater = new Intl.NumberFormat('zh-Hans-CN', {
     style: 'currency',
     currency: 'CNY',
@@ -11,6 +12,13 @@ export const formatMoneyCNY = (amount: string | number | bigint): string => {
 
   const numericAmount = typeof amount === 'string' ? parseFloat(amount) : Number(amount)
   return isNaN(numericAmount) ? 'Invalid amount' : formater.format(numericAmount)
+}
+
+// Format number to string with comma
+export const formatNumberWithComma = (num?: number | string): string => {
+  if (!num) return '0'
+  const numericNum = typeof num === 'string' ? parseFloat(num) : num
+  return isNaN(numericNum) ? 'Invalid number' : numericNum.toLocaleString()
 }
 
 // Format date to date string
@@ -24,4 +32,11 @@ export const formatDateToLocalString = (date?: Date, pattern?: 'yyyy-MM-dd' | 'H
     default:
       return _date.toLocaleString().replace(/\//g, '-')
   }
+}
+
+export const formatUserStatus = (status: number | undefined): string => {
+  if (status === 1) return '在职'
+  if (status === 3) return '试用期'
+  if (status === 2) return '离职'
+  return ''
 }
