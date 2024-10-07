@@ -75,11 +75,11 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
 
   useEffect(() => {
     const resizeChart = () => {
-      const instance = EChartsManager.getInstanceIfNotPresent(budgetSpendingRef)
+      const budgetSpending = EChartsManager.getInstanceIfNotPresent(budgetSpendingRef)
       const driverModelInstance = EChartsManager.getInstanceIfNotPresent(driverModelRef)
-      if (instance) {
-        instance.setOption(budgetSpendingOption)
-        instance.resize()
+      if (budgetSpending) {
+        budgetSpending.setOption(budgetSpendingOption)
+        budgetSpending.resize()
       }
       if (driverModelInstance) {
         driverModelInstance.setOption(driverOption)
