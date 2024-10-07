@@ -12,53 +12,33 @@ import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils
 import api from '@/api'
 
 // Lazy loading for charts
+const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import('@/views/dashboard/children/OrderTransactionChart.tsx')), 3000) // 模拟异步请求, 延迟加载
+  })
+})
 const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
-    setTimeout(() => resolve(import('@/views/dashboard/children/DriverDistributionPieChart.tsx')), 2000) // 延迟加载
+    setTimeout(() => resolve(import('@/views/dashboard/children/DriverDistributionPieChart.tsx')), 1000) // 延迟加载
   })
 })
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
-const OrderTransactionChart = React.lazy(() => import('@/views/dashboard/children/OrderTransactionChart.tsx'))
 
 function getCardItems(userInfo?: User.Information): DescriptionsProps['items'] {
   return Environment.isLocal()
     ? dashboardUserInfo
     : [
-        {
-          key: '1',
-          label: '用户 ID',
-          children: userInfo?.userId,
-        },
-        {
-          key: '2',
-          label: '邮箱',
-          children: userInfo?.userEmail,
-        },
-        {
-          key: '3',
-          label: '状态',
-          children: formatUserStatus(userInfo?.state),
-        },
-        {
-          key: '4',
-          label: '手机号',
-          children: userInfo?.mobile,
-        },
-        {
-          key: '5',
-          label: '职位',
-          children: userInfo?.job,
-        },
-        {
-          key: '6',
-          label: '部门',
-          children: userInfo?.deptName,
-        },
+        { key: '1', label: '用户 ID', children: userInfo?.userId },
+        { key: '2', label: '邮箱', children: userInfo?.userEmail },
+        { key: '3', label: '状态', children: formatUserStatus(userInfo?.state) },
+        { key: '4', label: '手机号', children: userInfo?.mobile },
+        { key: '5', label: '职位', children: userInfo?.job },
+        { key: '6', label: '部门', children: userInfo?.deptName },
       ]
 }
 
 function getAvatar(avatar: string): string {
-  return Environment.isLocal() ? 'https://img.bugela.com/uploads/2021/09/04/TX10008_02.jpg' : avatar
+  return Environment.isProduction() ? avatar : 'https://img.bugela.com/uploads/2021/09/04/TX10008_02.jpg'
 }
 
 // Dashboard component

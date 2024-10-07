@@ -61,7 +61,7 @@ const DriverDistributionPieChart: React.FC = () => {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            if (isDebugEnable) log.info(`Refreshing chart`)
             renderCityChart()
           }),
         },
@@ -87,7 +87,7 @@ const DriverDistributionPieChart: React.FC = () => {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            if (isDebugEnable) log.info(`Refreshing chart`)
             renderAgeChart()
           }),
         },
@@ -114,7 +114,7 @@ const DriverDistributionPieChart: React.FC = () => {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+            if (isDebugEnable) log.info(`Refreshing chart`)
             renderVisitChart()
           }),
         },
