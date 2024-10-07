@@ -12,15 +12,13 @@ import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils
 import api from '@/api'
 
 // Lazy loading for charts
-const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
+const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(import('@/views/dashboard/children/OrderTransactionChart.tsx'))
-    }, 1500) // 模拟延迟加载
+    setTimeout(() => resolve(import('@/views/dashboard/children/DriverDistributionPieChart.tsx')), 2000) // 延迟加载
   })
 })
-const DriverDistributionPieChart = React.lazy(() => import('@/views/dashboard/children/DriverDistributionPieChart.tsx'))
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
+const OrderTransactionChart = React.lazy(() => import('@/views/dashboard/children/OrderTransactionChart.tsx'))
 
 function getCardItems(userInfo?: User.Information): DescriptionsProps['items'] {
   return Environment.isLocal()
