@@ -82,7 +82,6 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const theme = isDarkEnable ? 'dark' : 'light'
   const platformText = import.meta.env.VITE_OPS_PLATFORM as string
   const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
-
   const navigate = useNavigate()
 
   return (
