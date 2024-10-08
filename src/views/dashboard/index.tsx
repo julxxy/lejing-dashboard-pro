@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
   const username = Environment.isLocal() ? 'Weasley' : userInfo?.userName
   const items: DescriptionsProps['items'] = getCardItems(userInfo)
   const cardData = [
-    { title: '货运司机', count: `${formatNumberWithComma(report?.driverCount)} 个` },
+    { title: '货运人员', count: `${formatNumberWithComma(report?.driverCount)} 个` },
     { title: '总流水', count: `${formatMoneyCNY(report?.totalMoney)} 元` },
     { title: '总单量', count: `${formatNumberWithComma(report?.orderCount)} 单` },
     { title: '开通城市', count: `${formatNumberWithComma(report?.cityNum)} 个` },
