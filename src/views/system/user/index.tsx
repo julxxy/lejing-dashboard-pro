@@ -83,7 +83,7 @@ export default function UserList() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10)
+          (args.pageNum ?? 1) * (args.pageSize ?? 10),
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })
@@ -131,7 +131,7 @@ export default function UserList() {
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type="primary" className={'btn-primary'} onClick={handleSearch} loading={loading}>
+            <Button type="primary" className={'btn-primary'} onClick={handleSearch}>
               搜索
             </Button>
             <Button type="default" htmlType={'reset'} onClick={handleReset}>
