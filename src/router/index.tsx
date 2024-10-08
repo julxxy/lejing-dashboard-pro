@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
-import PageNotFound from '@/views/Error404.tsx'
-import NoPermission from '@/views/Error403.tsx'
+import PageNotFound from '@/views/error/Error404.tsx'
+import NoPermission from '@/views/error/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
-import TestOverflow from '@/views/TestOverflow.tsx'
+import TestOverflow from '@/views/extra/TestOverflow.tsx'
 import Loading from '@/views/loading'
 
 /**
@@ -16,6 +16,8 @@ export const URIs = {
   login: '/login',
   welcome: '/welcome',
   dashboard: '/dashboard',
+  notFound: '/404',
+  noPermission: '/403',
   overflowDemo: '/overflow',
   // system-menu
   userList: '/user/list',
@@ -29,14 +31,14 @@ export const URIs = {
 }
 
 /* Lazy load views */
-const Dashboard = lazy(() => import('@/views/dashboard'))
 const Welcome = lazy(() => import('@/views/welcome'))
-// system-menu
+const Dashboard = lazy(() => import('@/views/dashboard'))
+/* system-menu */
 const UserList = lazy(() => import('@/views/system/user'))
 const DepartmentList = lazy(() => import('@/views/system/dept'))
 const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
-// order-menu
+/* order-menu */
 const OrderList = lazy(() => import('@/views/order/list'))
 const DriverList = lazy(() => import('@/views/order/driver'))
 const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
@@ -66,9 +68,9 @@ const routes: RouteObject[] = [
       { path: URIs.overflowDemo, element: <TestOverflow /> },
     ],
   },
-  { path: '*', element: <Navigate to="/404" /> },
-  { path: '/404', element: <PageNotFound /> },
-  { path: '/403', element: <NoPermission /> },
+  { path: '*', element: <Navigate to={URIs.notFound} /> },
+  { path: URIs.notFound, element: <PageNotFound /> },
+  { path: URIs.noPermission, element: <NoPermission /> },
 ]
 
 // Create routing instance

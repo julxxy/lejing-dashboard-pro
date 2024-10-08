@@ -6,7 +6,7 @@ import { log } from '@/common/loggerProvider.ts'
 /**
  * Log meta update
  */
-function logMetaUpdate(userInfo: User.Information) {
+function logMetaUpdate(userInfo: User.Info) {
   if (isDebugEnable) log.debug('Resso meta data update:', userInfo)
 }
 
@@ -16,8 +16,8 @@ function logMetaUpdate(userInfo: User.Information) {
  */
 const store = resso({
   token: '',
-  userInfo: {} as User.Information,
-  setUserInfo: (userInfo: User.Information) => {
+  userInfo: {} as User.Info,
+  setUserInfo: (userInfo: User.Info) => {
     store.userInfo = userInfo
     logMetaUpdate(userInfo)
   },

@@ -1,4 +1,4 @@
-import { Login, UDashboard, User } from '@/types/apiTypes.ts'
+import { Login, PageResult, UDashboard, User } from '@/types/apiTypes.ts'
 import request from '@/utils/requestUtils.ts'
 
 /**
@@ -10,8 +10,8 @@ export default {
     return request.post<string>(`/users/login`, params, { showLoading: false, showError: false })
   },
   // 获取用户信息
-  getUserInfo(): User.Information {
-    return request.get<User.Information>('/users/getUserInfo')
+  getUserInfo(): User.Info {
+    return request.get<User.Info>('/users/getUserInfo')
   },
   // 获取报表
   getReport(): UDashboard.Report {
@@ -32,5 +32,9 @@ export default {
   // 获取雷达图数据
   getDriverRadarData() {
     return request.get<UDashboard.RadarChartEntity>('/order/dashboard/getRadarData')
+  },
+  // 获取用户列表
+  getUserList(params: User.RequestArgs) {
+    return request.get<PageResult<User.UserItem>>('/users/list', params)
   },
 }

@@ -49,7 +49,7 @@ instance.interceptors.request.use(
 )
 
 /**
- * Information interceptor
+ * Info interceptor
  */
 instance.interceptors.response.use(
   response => {

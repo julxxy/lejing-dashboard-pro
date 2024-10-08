@@ -15,12 +15,31 @@
   --color-text-secondary: #6c757d; /* 次要文本颜色 */
 
   /* Background colors */
+  --color-bg-antd-default: #f5f5f5;
   --color-background-light: #f8f9fa; /* 浅背景色，用于卡片背景等 */
   --color-background-dark: #343a40; /* 深色背景，用于侧边栏等 */
+
+  /* Content area background colors */
+  --bg-color-default: #ffffff; /* 白色背景 */
+  --bg-color-breadcrumb-primary: #edf2f7; /* 浅蓝灰色 */
+  --bg-color-breadcrumb-secondary: #e0e7f1; /* 浅灰蓝色 */
+  --bg-color-breadcrumb-third: #e8e8e8; /* 淡灰色 */
 
   /* Border and shadow */
   --border-radius-default: 8px; /* 默认的圆角半径 */
   --box-shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+}
+
+/* 覆盖 Ant Design 的布局背景色 */
+.ant-layout {
+  background-color: var(--bg-color-breadcrumb-primary);
+}
+
+/* 消除默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* 使用深蓝色 */
@@ -66,21 +85,48 @@
   color: var(--color-text-primary);
 }
 
-.card {
-  background-color: var(--color-background-light);
-  box-shadow: var(--box-shadow-default);
-  border-radius: var(--border-radius-default);
-}
-
-/* 消除默认样式 */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* 项目 CSS 开始 */
 .welcome {
   font-size: 30px;
   margin-top: 200px;
   text-align: center;
+}
+
+/* 填满父容器 */
+.user-list {
+  width: 100%;
+}
+
+.search-box {
+  padding: 10px;
+  border-radius: var(--border-radius-default);
+  background-color: var(--bg-color-breadcrumb-secondary);
+  color: #000;
+}
+
+.base-table {
+  margin-top: 10px;
+  border-radius: var(--border-radius-default);
+  background-color: var(--bg-color-breadcrumb-secondary);
+  color: #000;
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+
+    .action-btn {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.search-box + .base-table {
+  margin-top: 15px;
 }

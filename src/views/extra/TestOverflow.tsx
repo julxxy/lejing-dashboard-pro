@@ -1,5 +1,5 @@
-// 测试内容溢出的情况
-const TestOverflow = () => {
+/* 测试内容溢出的情况 */
+export default function TestOverflow() {
   return (
     <>
       <div>
@@ -305,5 +305,3 @@ const TestOverflow = () => {
     </>
   )
 }
-
-export default TestOverflow

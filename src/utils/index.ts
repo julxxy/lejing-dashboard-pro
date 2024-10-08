@@ -22,7 +22,13 @@ export const formatNumberWithComma = (num?: number | string): string => {
 }
 
 // Format date to date string
-export const formatDateToLocalString = (date?: Date, pattern?: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss') => {
+export const formatDateToLocalString = (
+  date?: Date | string,
+  pattern?: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss'
+) => {
+  if (typeof date === 'string') {
+    date = new Date(date)
+  }
   const _date = date ? date : new Date()
   switch (pattern) {
     case 'yyyy-MM-dd':
@@ -33,10 +39,15 @@ export const formatDateToLocalString = (date?: Date, pattern?: 'yyyy-MM-dd' | 'H
       return _date.toLocaleString().replace(/\//g, '-')
   }
 }
-
 export const formatUserStatus = (status: number | undefined): string => {
   if (status === 1) return '在职'
   if (status === 3) return '试用期'
   if (status === 2) return '离职'
+  return ''
+}
+export const formatUserRole = (status: number | undefined): string => {
+  if (status === 0) return '超级管理员'
+  if (status === 1) return '管理员'
+  if (status === 2) return '体验管理员'
   return ''
 }

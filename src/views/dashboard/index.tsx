@@ -24,7 +24,7 @@ const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
 })
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
-function getCardItems(userInfo?: User.Information): DescriptionsProps['items'] {
+function getCardItems(userInfo?: User.Info): DescriptionsProps['items'] {
   return Environment.isLocal()
     ? dashboardUserInfo
     : [

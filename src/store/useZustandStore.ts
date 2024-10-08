@@ -10,23 +10,23 @@ import storageUtils from '@/utils/storageUtils.ts'
 const useZustandStore = create<{
   /* state */
   token: string
-  userInfo: User.Information
+  userInfo: User.Info
   collapsed: boolean
   isDarkEnable: boolean
   /* setters */
   setToken: (token: string) => void
-  setUserInfo: (userInfo: User.Information) => void
+  setUserInfo: (userInfo: User.Info) => void
   setCollapsed: () => void
   setDarkEnable: () => void
 }>(set => ({
   /* state */
   token: '',
-  userInfo: {} as User.Information,
+  userInfo: {} as User.Info,
   collapsed: false,
   isDarkEnable: false,
   /* setters */
   setToken: (token: string) => set(() => ({ token })),
-  setUserInfo: (userInfo: User.Information) => {
+  setUserInfo: (userInfo: User.Info) => {
     set(() => ({ userInfo }))
     logUpdate(userInfo) // Call logUpdate after setting userInfo
   },

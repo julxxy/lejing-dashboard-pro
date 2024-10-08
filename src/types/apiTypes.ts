@@ -7,10 +7,18 @@ export interface Result<T = any> {
   msg: string
 }
 
-export interface PageParams {
-  pageNum: number
-  pageSize: number
-  list: any[]
+export interface PageResult<T = any> {
+  list: T[]
+  page: {
+    pageNum: number
+    pageSize: number
+    total: number | 0
+  }
+}
+
+export interface PageArgs {
+  pageNum?: number | undefined
+  pageSize?: number | undefined
 }
 
 export namespace Login {
@@ -21,7 +29,13 @@ export namespace Login {
 }
 
 export namespace User {
-  export interface Information {
+  export interface RequestArgs extends PageArgs {
+    userId?: number
+    userName?: string
+    userEmail?: string
+  }
+
+  export interface Info {
     userImg: string
     _id: string
     userId: number
@@ -35,6 +49,25 @@ export namespace User {
     role: number
     createId: number
     roleList: string
+    regTime: string | null
+    lastRegTime: string | null
+  }
+
+  export interface UserItem {
+    userId: number
+    userName: string
+    userEmail: string
+    deptId: string
+    deptName: string
+    state: number
+    role: number
+    roleList: string
+    createId: number
+    userImg: string
+    createTime: string
+    lastLoginTime: string
+    job: string
+    mobile: string
   }
 }
 
