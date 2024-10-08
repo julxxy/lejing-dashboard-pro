@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
@@ -8,7 +8,7 @@ import * as echarts from 'echarts'
 import api from '@/api'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 
-const OrderTransactionChart: React.FC = () => {
+export default function OrderTransactionChart() {
   const chartRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(false)
 
@@ -132,5 +132,3 @@ const OrderTransactionChart: React.FC = () => {
     </div>
   )
 }
-
-export default OrderTransactionChart

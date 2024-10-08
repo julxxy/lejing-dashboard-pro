@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
@@ -7,7 +7,7 @@ import { log } from '@/common/loggerProvider.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 import api from '@/api'
 
-const ModelDiagnosticsRadarChart: React.FC = () => {
+export default function ModelDiagnosticsRadarChart() {
   const [loading, setLoading] = useState(false)
 
   const budgetSpendingRef = useRef<HTMLDivElement>(null)
@@ -121,5 +121,3 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
     </div>
   )
 }
-
-export default ModelDiagnosticsRadarChart

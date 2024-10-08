@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
@@ -17,7 +17,7 @@ const generateNewVisitData = () => {
   ]
 }
 
-const BusinessOverviewPieChart: React.FC = () => {
+export default function BusinessOverviewPieChart() {
   const [loading, setLoading] = useState(false)
 
   const cityRef = useRef<HTMLDivElement>(null)
@@ -200,5 +200,3 @@ const BusinessOverviewPieChart: React.FC = () => {
     </div>
   )
 }
-
-export default BusinessOverviewPieChart

@@ -18,7 +18,9 @@ import { useNavigate } from 'react-router-dom'
 import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
+import { NavigateFunction } from 'react-router/dist/lib/hooks'
 
+// 菜单项
 type MenuItem = Required<MenuProps>['items'][number]
 const items: MenuItem[] = [
   { key: '0', icon: <DesktopOutlined />, label: '工作台' },
@@ -45,6 +47,33 @@ const items: MenuItem[] = [
   },
 ]
 
+/**
+ * 点击菜单项时执行导航
+ */
+function onMenuClicked(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
+  const key = menuInfo?.key as string
+  switch (key) {
+    case '0':
+      return navigate(URIs.dashboard) // 跳转到工作台
+    case '101':
+      return navigate(URIs.userList) // 跳转到用户管理
+    case '102':
+      return navigate(URIs.menuManage) // 跳转到菜单管理
+    case '103':
+      return navigate(URIs.roleManage) // 跳转到角色管理
+    case '104':
+      return navigate(URIs.deptManage) // 跳转到部门管理
+    case '201':
+      return navigate(URIs.orderList) // 跳转到订单列表
+    case '202':
+      return navigate(URIs.orderAggregation) // 跳转到订单聚合
+    case '203':
+      return navigate(URIs.shipperManage) // 跳转到货运人员
+    default:
+      break
+  }
+}
+
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
@@ -52,6 +81,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
 
   const navigate = useNavigate()
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} className={styles.sider} theme={theme}>
       <div className={styles.menu}>
@@ -72,7 +102,13 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
           </Tooltip>
           <span className={platformTextStyle}>{platformText}</span>
         </div>
-        <Menu defaultSelectedKeys={['0']} mode={'inline'} theme={theme} items={items} />
+        <Menu
+          mode={'inline'}
+          theme={theme}
+          items={items}
+          defaultSelectedKeys={['0']}
+          onClick={e => onMenuClicked(e, navigate)}
+        />
       </div>
     </Sider>
   )
