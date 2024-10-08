@@ -4,19 +4,41 @@ import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
 import { useState } from 'react'
 import { useAntdMessage } from '@/context/AntdGlobalProvider.ts'
-import { ResultStatus } from '@/types/enums.ts'
+import { Environment, ResultStatus } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 import { log } from '@/common/loggerProvider.ts'
 import { URIs } from '@/router'
 import { commonUtils } from '@/common/commonUtils.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
+import { isTrue } from '@/common/booleanUtils.ts'
+import { base64Utils } from '@/common/base64Utils.ts'
+
+function getAccount(): { username: string; password: string } {
+  let account = { username: '', password: '' }
+  if (Environment.isProduction()) {
+    return account
+  }
+  let admin = import.meta.env.VITE_ACCOUNT_ADMIN as string
+  let readonly = import.meta.env.VITE_ACCOUNT_READONLY as string
+  admin = base64Utils.isBase64(admin) ? base64Utils.decodeBase64(admin) : admin
+  readonly = base64Utils.isBase64(readonly) ? base64Utils.decodeBase64(readonly) : readonly
+  if (isTrue(import.meta.env.VITE_USE_ADMIN_ACCOUNT)) {
+    const { name, pwd } = JSON.parse(admin)
+    account = { username: name, password: pwd }
+  } else {
+    const { name, pwd } = JSON.parse(readonly)
+    account = { username: name, password: pwd }
+  }
+  return account
+}
 
 export default function LoginFC() {
   const { setToken } = useZustandStore()
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
+  const { username, password } = getAccount()
   const redirectToWelcome = (data: string) => {
-    message.success('登录成功').then(() => {})
+    message.success('登录成功')
     storageUtils.set('token', data)
     setToken(data)
     setTimeout(() => {
@@ -51,7 +73,7 @@ export default function LoginFC() {
           <Form name="basic" onFinish={onFinish} autoComplete="off">
             <Form.Item
               name="username"
-              initialValue={'JackMa'}
+              initialValue={username}
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
               <Input placeholder={'请输入用户名'} />
@@ -59,7 +81,7 @@ export default function LoginFC() {
 
             <Form.Item
               name="password"
-              initialValue={'123456'}
+              initialValue={password}
               rules={[{ required: true, message: 'Please input your password!' }]}
             >
               <Input.Password placeholder={'请输入密码'} />
