@@ -17,7 +17,7 @@ const generateNewVisitData = () => {
   ]
 }
 
-const DriverDistributionPieChart: React.FC = () => {
+const BusinessDataPieChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
 
   const cityRef = useRef<HTMLDivElement>(null)
@@ -201,4 +201,4 @@ const DriverDistributionPieChart: React.FC = () => {
   )
 }
 
-export default DriverDistributionPieChart
+export default BusinessDataPieChart

@@ -64,7 +64,7 @@ const ModelDiagnosticsRadarChart: React.FC = () => {
   // Render budget spending radar chart
   const renderBudgetSpending = async () => {
     EChartsManager.getInstanceIfPresent(budgetSpendingRef)?.setOption({
-      title: { text: '成本支出分析', left: 'center' },
+      title: { text: '成本支出模型', left: 'center' },
       legend: { orient: 'vertical', left: '8px', data: ['预算成本', '实际支出'] },
       radar: {
         shape: 'circle',
