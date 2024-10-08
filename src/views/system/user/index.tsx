@@ -97,6 +97,10 @@ export default function UserList() {
     }
   }
 
+  function handlePaginationChange(current: number, pageSize: number) {
+    setPagination({ ...pagination, current, pageSize })
+  }
+
   function handleSearch() {
     setPagination({ ...pagination, current: 1 })
     fetchUsers({ pageNum: 1, pageSize: pagination.pageSize })
@@ -114,7 +118,7 @@ export default function UserList() {
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
         </Form.Item>
-        <Form.Item name="username" label={'用户名称'}>
+        <Form.Item name="userName" label={'用户名称'}>
           <Input placeholder={'请输入用户名称'} />
         </Form.Item>
         <Form.Item name="state" label={'状态'} style={{ width: 120 }}>
@@ -169,10 +173,7 @@ export default function UserList() {
               jump_to_confirm: '确定',
             },
             showTotal: total => `共 ${total} 条`,
-            // 更新分页状态
-            onChange: (current, pageSize) => {
-              setPagination({ ...pagination, current, pageSize })
-            },
+            onChange: (current, pageSize) => handlePaginationChange(current, pageSize),
           }}
         />
       </div>
