@@ -19,7 +19,7 @@ const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
 })
 const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
-    setTimeout(() => resolve(import('@/views/dashboard/children/BusinessDataOverviewPieChart.tsx')), 1000) // 延迟加载
+    setTimeout(() => resolve(import('@/views/dashboard/children/BusinessOverviewPieChart')), 1000) // 延迟加载
   })
 })
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))

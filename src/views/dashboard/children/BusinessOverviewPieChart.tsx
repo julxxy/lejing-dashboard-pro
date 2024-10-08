@@ -17,7 +17,7 @@ const generateNewVisitData = () => {
   ]
 }
 
-const BusinessDataOverviewPieChart: React.FC = () => {
+const BusinessOverviewPieChart: React.FC = () => {
   const [loading, setLoading] = useState(false)
 
   const cityRef = useRef<HTMLDivElement>(null)
@@ -201,4 +201,4 @@ const BusinessDataOverviewPieChart: React.FC = () => {
   )
 }
 
-export default BusinessDataOverviewPieChart
+export default BusinessOverviewPieChart
