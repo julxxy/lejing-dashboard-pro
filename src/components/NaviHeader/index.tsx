@@ -33,14 +33,11 @@ const NaviHeader = () => {
     const { key } = e
     switch (key) {
       case '1':
-        navigate(URIs.dashboard)
-        break
+        return navigate(URIs.dashboard)
       case '2':
-        switchAccount()
-        break
+        return switchAccount()
       case '3':
-        logout()
-        break
+        return logout()
       default:
         break
     }

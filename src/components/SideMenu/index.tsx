@@ -55,26 +55,14 @@ const items: MenuItem[] = [
 function onMenuClicked(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
   if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
   const key = menuInfo?.key as string | undefined
-  switch (key) {
-    case '0':
-      return navigate(URIs.dashboard) // 跳转到工作台
-    case '101':
-      return navigate(URIs.userList) // 跳转到用户管理
-    case '102':
-      return navigate(URIs.menuManage) // 跳转到菜单管理
-    case '103':
-      return navigate(URIs.roleManage) // 跳转到角色管理
-    case '104':
-      return navigate(URIs.deptManage) // 跳转到部门管理
-    case '201':
-      return navigate(URIs.orderList) // 跳转到订单列表
-    case '202':
-      return navigate(URIs.orderAggregation) // 跳转到订单聚合
-    case '203':
-      return navigate(URIs.shipperManage) // 跳转到货运人员
-    default:
-      break
-  }
+  if (key === '0') navigate(URIs.dashboard)
+  if (key === '101') navigate(URIs.userList)
+  if (key === '102') navigate(URIs.menuManage)
+  if (key === '103') navigate(URIs.roleManage)
+  if (key === '104') navigate(URIs.deptManage)
+  if (key === '201') navigate(URIs.orderList)
+  if (key === '202') navigate(URIs.orderAggregation)
+  if (key === '203') navigate(URIs.shipperManage)
 }
 
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
