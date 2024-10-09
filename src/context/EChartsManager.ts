@@ -50,7 +50,7 @@ export const EChartsManager = {
    *      toolbox: {
    *         feature: {
    *           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-   *             if (isDebugEnable) log.info(`Refreshing '用户访问来源' chart`)
+   *             if (isDebugEnable) log.info(`Refreshing chart`)
    *             renderVisitChart()
    *           }),
    *         },

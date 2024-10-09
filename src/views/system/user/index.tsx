@@ -88,7 +88,7 @@ export default function UserList() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10),
+          (args.pageNum ?? 1) * (args.pageSize ?? 10)
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })
@@ -179,7 +179,7 @@ export default function UserList() {
               next_page: '下一页',
               jump_to_confirm: '确定',
             },
-            showTotal: (total) => `共 ${total} 条`,
+            showTotal: total => `共 ${total} 条`,
             onChange: (current, pageSize) => handlePaginationChange(current, pageSize),
           }}
         />
