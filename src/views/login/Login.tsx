@@ -2,7 +2,7 @@ import styles from '@/views/login/Login.module.less'
 import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useAntdMessage } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
@@ -12,6 +12,7 @@ import { commonUtils } from '@/common/commonUtils.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { isTrue } from '@/common/booleanUtils.ts'
 import { base64Utils } from '@/common/base64Utils.ts'
+import Draggable from 'react-draggable'
 
 function getAccount(): { username: string; password: string } {
   let account = { username: '', password: '' }
@@ -37,6 +38,8 @@ export default function LoginFC() {
   const { message } = useAntdMessage()
   const [loading, setLoading] = useState(false)
   const { username, password } = getAccount()
+  const loginWrapperRef = useRef<HTMLDivElement>(null) // 创建 ref
+  const isDragEnable = true
   const redirectToWelcome = (data: string) => {
     message.success('登录成功')
     storageUtils.set('token', data)
@@ -66,17 +69,21 @@ export default function LoginFC() {
   }
 
   return (
-    <>
-      <div className={styles.login}>
-        <div className={styles.loginWrapper}>
-          <p className={styles.title}>系统登录</p>
+    <div className={styles.login}>
+      <Draggable nodeRef={loginWrapperRef} bounds="parent" handle=".drag-handle" disabled={!isDragEnable}>
+        <div
+          ref={loginWrapperRef}
+          className={`${styles.loginWrapper}`}
+          style={isDragEnable ? { right: '12%' } : { left: '50%' }}
+        >
+          <p className={`${styles.title} drag-handle`}>系统登录</p>
           <Form name="basic" onFinish={onFinish} autoComplete="off">
             <Form.Item
               name="username"
               initialValue={username}
               rules={[{ required: true, message: 'Please input your username!' }]}
             >
-              <Input placeholder={'请输入用户名'} />
+              <Input placeholder={'请输入用户名'} style={{ height: '40px', fontSize: '16px' }} />
             </Form.Item>
 
             <Form.Item
@@ -84,17 +91,23 @@ export default function LoginFC() {
               initialValue={password}
               rules={[{ required: true, message: 'Please input your password!' }]}
             >
-              <Input.Password placeholder={'请输入密码'} />
+              <Input.Password placeholder={'请输入密码'} style={{ height: '40px', fontSize: '16px' }} />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" block={true} htmlType="submit" loading={loading}>
+              <Button
+                type="primary"
+                block={true}
+                htmlType="submit"
+                loading={loading}
+                style={{ height: '40px', fontSize: '16px' }}
+              >
                 登录
               </Button>
             </Form.Item>
           </Form>
         </div>
-      </div>
-    </>
+      </Draggable>
+    </div>
   )
 }
