@@ -83,7 +83,7 @@ export default function UserList() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10),
+          (args.pageNum ?? 1) * (args.pageSize ?? 10)
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })
@@ -125,13 +125,13 @@ export default function UserList() {
           <Select>
             <Select.Option value={0}>所有</Select.Option>
             <Select.Option value={1}>在职</Select.Option>
-            <Select.Option value={2}>试用期</Select.Option>
-            <Select.Option value={3}>离职</Select.Option>
+            <Select.Option value={2}>离职</Select.Option>
+            <Select.Option value={3}>试用期</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type="primary" className={'btn-primary'} onClick={handleSearch}>
+            <Button type="primary" className={'-'} onClick={handleSearch}>
               搜索
             </Button>
             <Button type="default" htmlType={'reset'} onClick={handleReset}>
@@ -144,12 +144,12 @@ export default function UserList() {
         <div className="header-wrapper">
           <div className="title">用户列表</div>
           <div className="actions">
-            <Button type={'primary'} className="btn-primary action-btn">
-              添加
-            </Button>
-            <Button type={'primary'} className="btn-primary action-btn" danger={true}>
-              删除
-            </Button>
+            <Space>
+              <Button type={'primary'}>添加</Button>
+              <Button type={'primary'} danger={true}>
+                删除
+              </Button>
+            </Space>
           </div>
         </div>
         <Table<User.UserItem>

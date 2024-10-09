@@ -24,6 +24,20 @@ export default function AntdGlobalProvider(): null {
 
 export { message, notification, modal }
 
+// 获取全局主题变量
+export const themeToken = () => {
+  // 获取 CSS 变量值
+  const cssVariableValue = (variable: string) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
+  }
+  // 主题变量
+  const colorPrimary = cssVariableValue('--color-primary-bright')
+  const borderRadius = cssVariableValue('--border-radius-default')
+  return {
+    token: { colorPrimary, borderRadius },
+  }
+}
+
 /**
  * Hooks to use Antd global message, notification and modal
  */
