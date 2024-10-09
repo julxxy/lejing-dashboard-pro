@@ -47,7 +47,7 @@ const LayoutFC: React.FC = () => {
   }, [])
 
   return (
-    <Watermark content={watermark()}>
+    <Watermark content={watermark()} inherit={false}>
       <Layout style={{ minHeight: '100vh' }}>
         <LeftSideMenu />
         <Layout ref={wrapperRef} className={styles.rightArea}>
