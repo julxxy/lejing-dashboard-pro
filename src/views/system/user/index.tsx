@@ -5,6 +5,7 @@ import log from '@/common/loggerProvider.ts'
 import api from '@/api'
 import { useEffect, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
+import CreateUser from '@/views/system/user/CreateUser.tsx'
 
 export default function UserList() {
   const [form] = Form.useForm()
@@ -12,6 +13,10 @@ export default function UserList() {
   const [loading, setLoading] = useState(false)
   const [pagination, setPagination] = useState<TablePaginationConfig>({ current: 1, pageSize: 10, total: 0 })
   const isMockEnable = false
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const showModal = () => setIsModalOpen(true) // 打开弹窗
+  const closeModal = () => setIsModalOpen(false) // 关闭弹窗
 
   useEffect(() => {
     fetchUsers({ pageNum: pagination.current, pageSize: pagination.pageSize })
@@ -83,7 +88,7 @@ export default function UserList() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10)
+          (args.pageNum ?? 1) * (args.pageSize ?? 10),
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })
@@ -145,7 +150,9 @@ export default function UserList() {
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>
-              <Button type={'primary'}>添加</Button>
+              <Button type={'primary'} danger={false} onClick={showModal}>
+                添加
+              </Button>
               <Button type={'primary'} danger={true}>
                 删除
               </Button>
@@ -172,10 +179,12 @@ export default function UserList() {
               next_page: '下一页',
               jump_to_confirm: '确定',
             },
-            showTotal: total => `共 ${total} 条`,
+            showTotal: (total) => `共 ${total} 条`,
             onChange: (current, pageSize) => handlePaginationChange(current, pageSize),
           }}
         />
+        {/* 将控制弹窗的状态和关闭回调函数传递给 CreateUser 组件 */}
+        <CreateUser isOpen={isModalOpen} onClose={closeModal} />
       </div>
     </div>
   )

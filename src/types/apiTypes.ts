@@ -104,3 +104,8 @@ export namespace UDashboard {
 export interface SideMenuProps {
   collapsed?: boolean
 }
+
+export interface ModalOpenCloseProps {
+  isOpen: boolean // 接受父组件传递的状态
+  onClose: () => void // 接受父组件传递的关闭回调函数
+}
