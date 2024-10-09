@@ -4,12 +4,12 @@ import { Descriptions, DescriptionsProps } from 'antd'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { log } from '@/common/loggerProvider.ts'
 import Loading from '@/views/loading'
-import dashboardUserInfo from '@/mockdata/dashboardUserInfo.json'
 import { Environment } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 import { UDashboard, User } from '@/types/apiTypes.ts'
 import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils'
 import api from '@/api'
+import root from '@/mockdata/root.json'
 
 // Lazy loading for charts
 const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
@@ -25,20 +25,22 @@ const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
 function getCardItems(userInfo?: User.Info): DescriptionsProps['items'] {
-  return Environment.isLocal()
-    ? dashboardUserInfo
-    : [
-        { key: '1', label: '用户 ID', children: userInfo?.userId },
-        { key: '2', label: '邮箱', children: userInfo?.userEmail },
-        { key: '3', label: '状态', children: formatUserStatus(userInfo?.state) },
-        { key: '4', label: '手机号', children: userInfo?.mobile },
-        { key: '5', label: '职位', children: userInfo?.job },
-        { key: '6', label: '部门', children: userInfo?.deptName },
-      ]
+  if (Environment.isLocal()) {
+    return root.user.info
+  } else {
+    return [
+      { key: '1', label: '用户 ID', children: userInfo?.userId },
+      { key: '2', label: '邮箱', children: userInfo?.userEmail },
+      { key: '3', label: '状态', children: formatUserStatus(userInfo?.state) },
+      { key: '4', label: '手机号', children: userInfo?.mobile },
+      { key: '5', label: '职位', children: userInfo?.job },
+      { key: '6', label: '部门', children: userInfo?.deptName },
+    ]
+  }
 }
 
 function getAvatar(avatar: string): string {
-  return Environment.isProduction() ? avatar : 'https://img.bugela.com/uploads/2021/09/04/TX10008_02.jpg'
+  return Environment.isNotProduction() ? root.user.avatar : avatar
 }
 
 // Dashboard component

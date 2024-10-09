@@ -16,7 +16,7 @@ const Welcome = () => {
             </span>
           </div>
         </div>
-        <div className={styles.bgImage}></div>
+        <div className={styles.backgroundImage}></div>
       </div>
     </>
   )
