@@ -24,7 +24,9 @@ export default function AntdGlobalProvider(): null {
 
 export { message, notification, modal }
 
-// 获取全局主题变量
+/**
+ * 获取全局主题变量
+ */
 export const useThemeToken = () => {
   // 获取 CSS 变量值
   const cssVariableValue = (variable: string) => {
