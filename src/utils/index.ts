@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 /**
  * Helper function library
  */
@@ -24,21 +26,22 @@ export const formatNumberWithComma = (num?: number | string): string => {
 // Format date to date string
 export const formatDateToLocalString = (
   date?: Date | string,
-  pattern?: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss'
-) => {
-  if (typeof date === 'string') {
-    date = new Date(date)
+  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss'
+): string => {
+  const _date = date ? new Date(date) : new Date()
+
+  // 检查是否为有效日期
+  if (isNaN(_date.getTime())) {
+    throw new Error('Invalid date')
   }
-  const _date = date ? date : new Date()
-  switch (pattern) {
-    case 'yyyy-MM-dd':
-      return _date.toLocaleDateString().replace(/\//g, '-')
-    case 'HH:mm:ss':
-      return _date.toLocaleTimeString()
-    default:
-      return _date.toLocaleString().replace(/\//g, '-')
-  }
+
+  // 使用 date-fns 的 format 函数进行日期格式化
+  return format(
+    _date,
+    pattern.replace(/yyyy/g, 'yyyy').replace(/dd/g, 'dd').replace(/HH/g, 'HH').replace(/mm/g, 'mm').replace(/ss/g, 'ss')
+  )
 }
+
 export const formatUserStatus = (status: number | undefined): string => {
   if (status === 1) return '在职'
   if (status === 3) return '试用期'

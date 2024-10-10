@@ -14,14 +14,16 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
+    "ahooks": "^3.8.1",
     "antd": "^5.21.3",
     "axios": "^1.7.7",
+    "date-fns": "^4.1.0",
     "echarts": "^5.5.1",
     "less": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.2",
     "react-draggable": "^4.4.6",
+    "react-router-dom": "^6.26.2",
     "resso": "^0.17.0",
     "zustand": "^5.0.0-rc.2"
   },

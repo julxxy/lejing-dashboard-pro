@@ -3,7 +3,7 @@ import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
 import { useRef, useState } from 'react'
-import { useAntdMessage } from '@/context/AntdGlobalProvider.ts'
+import { useAntd } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/enums.ts'
 import { isDebugEnable } from '@/common/debugProvider.ts'
 import { log } from '@/common/loggerProvider.ts'
@@ -35,7 +35,7 @@ function getAccount(): { username: string; password: string } {
 
 export default function LoginFC() {
   const { setToken } = useZustandStore()
-  const { message } = useAntdMessage()
+  const { message } = useAntd()
   const [loading, setLoading] = useState(false)
   const { username, password } = getAccount()
   const loginWrapperRef = useRef<HTMLDivElement>(null) // 创建 ref
@@ -54,10 +54,7 @@ export default function LoginFC() {
     const params = { userName: values.username, userPwd: values.password }
     try {
       const data: any = await api.login(params)
-      if (
-        !commonUtils.hasData(data) ||
-        (commonUtils.hasKey(data, 'code') && (data.code as string) !== ResultStatus.Success)
-      ) {
+      if (!commonUtils.hasData(data) || (commonUtils.hasKey(data, 'code') && data.code !== ResultStatus.Success)) {
         if (isDebugEnable) log.error('login failed: ', data)
         message.error('用户名或密码错误')
         return

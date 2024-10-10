@@ -105,4 +105,10 @@ export default {
   put<T>(url: string, data?: any): T {
     return instance.put<T>(url, data) as T
   },
+  getAuthHeaders() {
+    return {
+      icode: apiToken,
+      Authorization: `Bearer ${storageUtils.get<string>('token')}`,
+    }
+  },
 }

@@ -17,7 +17,7 @@ export interface PageResult<T = any> {
 }
 
 export interface PageArgs {
-  pageNum?: number | undefined
+  pageNum?: number | 1
   pageSize?: number | undefined
 }
 
@@ -68,6 +68,21 @@ export namespace User {
     lastLoginTime: string
     job: string
     mobile: string
+  }
+
+  export interface UserAdd {
+    userName: string
+    userEmail: string
+    mobile?: string
+    deptId: string
+    state?: number
+    job?: string
+    roleList: string[]
+    userImg: string
+  }
+
+  export interface UserEdit extends UserAdd {
+    userId: number
   }
 }
 

@@ -25,7 +25,7 @@ export default function OrderTransactionChart() {
 
   // Update the chart with new options
   async function fetchAndRenderOrderChart() {
-    const [data] = await Promise.all([api.getOrderChartData()])
+    const data = await Promise.resolve(api.getOrderChartData())
     EChartsManager.getInstanceIfPresent(chartRef)?.setOption({
       color: ['#80FFA5', '#00DDFF'],
       title: { text: `${new Date().getFullYear()}`, left: 'right' },

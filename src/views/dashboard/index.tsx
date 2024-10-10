@@ -63,8 +63,8 @@ const Dashboard: React.FC = () => {
     getReport()
   }, [])
 
-  async function getReport() {
-    const [data] = await Promise.all([api.getReport()])
+  function getReport() {
+    const data = api.getReport()
     setReport(data)
   }
 

@@ -22,8 +22,8 @@ const LayoutFC: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
   const { setUserInfo } = useZustandStore() // 获取 store
-  const getUserInfo = async () => {
-    const [userInfo] = await Promise.all([api.getUserInfo()])
+  const getUserInfo = () => {
+    const userInfo = api.getUserInfo()
     userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除这行
     setUserInfo(userInfo)
   }

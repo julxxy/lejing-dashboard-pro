@@ -1,5 +1,5 @@
 import { Login, PageResult, UDashboard, User } from '@/types/apiTypes.ts'
-import request from '@/utils/requestUtils.ts'
+import request from '@/utils/httpUtils.ts'
 
 /**
  * API Request Management
@@ -36,5 +36,17 @@ export default {
   // 获取用户列表
   getUserList(params: User.RequestArgs) {
     return request.get<PageResult<User.UserItem>>('/users/list', params)
+  },
+  // Add new user
+  addUser(params: User.UserAdd) {
+    return request.post('/users/create', params)
+  },
+  // Edit User
+  editUser(params: User.UserEdit) {
+    return request.post('/users/edit', params)
+  },
+  // Delete user
+  deleteUser(userIds: number[]) {
+    return request.post('/users/delete', { userIds })
   },
 }

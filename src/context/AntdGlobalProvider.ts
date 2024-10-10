@@ -41,10 +41,10 @@ export const useThemeToken = () => {
 /**
  * Hooks to use Antd global message, notification and modal
  */
-export const useAntdMessage = () => {
+export const useAntd = () => {
   return {
-    message: message,
-    notification: modal,
-    modal: notification,
+    message,
+    modal,
+    notification,
   }
 }

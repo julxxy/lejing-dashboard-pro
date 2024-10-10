@@ -34,5 +34,5 @@ export enum UserStatus {
  * HTTP result status
  */
 export enum ResultStatus {
-  Success = '0',
+  Success = 0,
 }
