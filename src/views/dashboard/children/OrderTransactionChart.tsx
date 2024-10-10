@@ -6,19 +6,26 @@ import { ReloadOutlined } from '@ant-design/icons'
 import { debugEnable, log } from '@/common/loggerProvider.ts'
 import * as echarts from 'echarts'
 import api from '@/api'
+import { debounce } from 'lodash'
 
 export default function OrderTransactionChart() {
-  const chartRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(false)
+  const chartRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const resizeChart = () => fetchAndRenderOrderChart()
-    const animationFrameId = requestAnimationFrame(resizeChart) // To prevent flickering
-    window.addEventListener('resize', resizeChart) // Listen for window size changes
+    // 页面挂载后渲染1次数据
+    fetchAndRenderOrderChart().then(() => setLoading(false))
+
+    // 仅调整图表大小 + 300 毫秒防抖
+    const resizeChart = debounce(() => {
+      EChartsManager.resizeCharts(chartRef)
+    }, 300)
+
+    window.addEventListener('resize', resizeChart) // 监听窗口大小变化
+
     return () => {
-      cancelAnimationFrame(animationFrameId) // Clean up the animation frame
-      EChartsManager.destroy(chartRef) // Destroy the chart instance when component unmounts
-      window.removeEventListener('resize', resizeChart) // Remove the resize event listener
+      EChartsManager.destroy(chartRef) // 组件卸载时销毁图表实例
+      window.removeEventListener('resize', resizeChart) // 移除 resize 事件监听器
     }
   }, [])
 
@@ -104,12 +111,14 @@ export default function OrderTransactionChart() {
         },
       ],
     })
+
+    return instance
   }
 
   function onReload() {
     if (debugEnable) log.info('Reloading chart data')
     setLoading(true)
-    setTimeout(() => fetchAndRenderOrderChart().then(() => setLoading(false)), 1000)
+    setTimeout(() => fetchAndRenderOrderChart().then(() => setLoading(false)), 500)
   }
 
   return (

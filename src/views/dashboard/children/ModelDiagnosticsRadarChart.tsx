@@ -5,6 +5,7 @@ import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
+import { debounce } from 'lodash'
 
 export default function ModelDiagnosticsRadarChart() {
   const [loading, setLoading] = useState(false)
@@ -13,24 +14,21 @@ export default function ModelDiagnosticsRadarChart() {
   const driverModelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const resizeChart = () => {
-      renderDriverModelChart()
-      renderBudgetSpending()
-    }
-
+    renderAllCharts().then(() => setLoading(false))
+    const resizeChart = debounce(() => {
+      EChartsManager.resizeCharts(budgetSpendingRef, driverModelRef)
+    }, 300)
     window.addEventListener('resize', resizeChart)
-    resizeChart() // Initial resize after rendering
-
     return () => {
-      window.removeEventListener('resize', resizeChart)
       EChartsManager.destroy(budgetSpendingRef, driverModelRef)
+      window.removeEventListener('resize', resizeChart)
     }
   }, [])
 
-  function onReloadClicked() {
-    if (debugEnable) log.info('Reloading chart data')
-    setLoading(!loading)
-    renderDriverModelChart().then(() => setTimeout(() => setLoading(false), 1500))
+  // Render all charts
+  async function renderAllCharts() {
+    await renderDriverModelChart()
+    await renderBudgetSpending()
   }
 
   // Render driver model radar chart
@@ -99,6 +97,12 @@ export default function ModelDiagnosticsRadarChart() {
     })
   }
 
+  function onReload() {
+    if (debugEnable) log.info('Reloading chart data')
+    setLoading(true)
+    renderAllCharts().then(() => setTimeout(() => setLoading(false), 500))
+  }
+
   return (
     <div className={styles.chart}>
       <Card
@@ -112,7 +116,7 @@ export default function ModelDiagnosticsRadarChart() {
             size={'large'}
             color={'primary'}
             variant={'text'}
-            onClick={onReloadClicked}
+            onClick={onReload}
           />
         }
       >

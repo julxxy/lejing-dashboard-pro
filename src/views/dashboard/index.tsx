@@ -11,11 +11,7 @@ import api from '@/api'
 import root from '@/mockdata/root.json'
 
 // Lazy loading for charts
-const OrderTransactionChart = React.lazy<React.ComponentType<any>>(() => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(import('@/views/dashboard/children/OrderTransactionChart.tsx')), 3000) // 模拟异步请求, 延迟加载
-  })
-})
+const OrderTransactionChart = React.lazy(() => import('@/views/dashboard/children/OrderTransactionChart.tsx'))
 const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
   return new Promise(resolve => {
     setTimeout(() => resolve(import('@/views/dashboard/children/BusinessOverviewPieChart.tsx')), 1000) // 延迟加载

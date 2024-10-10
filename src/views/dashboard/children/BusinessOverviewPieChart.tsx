@@ -5,6 +5,7 @@ import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
 import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
+import { debounce } from 'lodash'
 
 const generateNewVisitData = () => {
   return [
@@ -20,25 +21,23 @@ export default function BusinessOverviewPieChart() {
   const [loading, setLoading] = useState(false)
 
   const cityRef = useRef<HTMLDivElement>(null)
-  const visitSourceRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
-  const orderCompletionRateRef = useRef<HTMLDivElement>(null)
+  const visitRef = useRef<HTMLDivElement>(null)
+  const orderRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const resizeChart = () => {
-      renderCityChart()
-      renderAgeChart()
-      renderVisitChart()
-      orderCompletionRateRadarChart()
-    }
-    // 防止闪烁
-    const cityAnimationFrameId = requestAnimationFrame(resizeChart)
-    // 监听窗口大小变化
-    addEventListener('resize', resizeChart)
-    // 防止内存泄露
+    fetchAndRenderData().then(() => setLoading(false)) // 页面挂载后渲染1次数据
+
+    // 仅调整图表大小 + 300 毫秒防抖
+    const resizeChart = debounce(() => {
+      EChartsManager.resizeCharts(cityRef, ageRef, visitRef, orderRef)
+    }, 300)
+
+    addEventListener('resize', resizeChart) // 监听窗口大小变化
+
+    // 组件卸载时销毁图表实例
     return () => {
-      cancelAnimationFrame(cityAnimationFrameId)
-      EChartsManager.destroy(cityRef, ageRef)
+      EChartsManager.destroy(cityRef, ageRef, visitRef, orderRef)
       removeEventListener('resize', resizeChart)
     }
   }, [])
@@ -51,11 +50,9 @@ export default function BusinessOverviewPieChart() {
     orderCompletionRateRadarChart()
   }
 
-  //  渲染数据
   const renderCityChart = async () => {
     const data = await api.getDriverCityData()
     const instance = EChartsManager.getInstanceIfPresent(cityRef)
-    instance?.resize()
     instance?.setOption({
       title: { text: '司机城市分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
@@ -83,7 +80,6 @@ export default function BusinessOverviewPieChart() {
   const renderAgeChart = async () => {
     const data = await api.getDriverAgeData()
     const instance = EChartsManager.getInstanceIfPresent(ageRef)
-    instance?.resize()
     instance?.setOption({
       title: { text: '司机年龄分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
@@ -111,8 +107,7 @@ export default function BusinessOverviewPieChart() {
   }
   const renderVisitChart = () => {
     const data = generateNewVisitData()
-    const instance = EChartsManager.getInstanceIfPresent(visitSourceRef)
-    instance?.resize()
+    const instance = EChartsManager.getInstanceIfPresent(visitRef)
     instance?.setOption({
       title: { text: '用户访问来源', subtext: '', left: 'center' },
       tooltip: { trigger: 'item' },
@@ -147,8 +142,7 @@ export default function BusinessOverviewPieChart() {
   }
 
   const orderCompletionRateRadarChart = () => {
-    const instance = EChartsManager.getInstanceIfPresent(orderCompletionRateRef)
-    instance?.resize()
+    const instance = EChartsManager.getInstanceIfPresent(orderRef)
     instance?.setOption({
       title: { text: '订单完成率分析', left: 'center' },
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
@@ -175,7 +169,7 @@ export default function BusinessOverviewPieChart() {
 
   function onReloadClicked() {
     setLoading(!loading)
-    fetchAndRenderData().then(() => setTimeout(() => setLoading(false), 1500))
+    fetchAndRenderData().then(() => setTimeout(() => setLoading(false), 500))
   }
 
   return (
@@ -200,8 +194,8 @@ export default function BusinessOverviewPieChart() {
           <div id="pieChartAge" ref={ageRef} className={styles.pieItem} />
         </div>
         <div className={styles.pieContainer}>
-          <div ref={visitSourceRef} className={styles.pieItem} />
-          <div ref={orderCompletionRateRef} className={styles.pieItem} />
+          <div ref={visitRef} className={styles.pieItem} />
+          <div ref={orderRef} className={styles.pieItem} />
         </div>
       </Card>
     </div>

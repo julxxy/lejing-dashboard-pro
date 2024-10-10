@@ -2,6 +2,7 @@
 import * as echarts from 'echarts'
 import { ECharts, EChartsType } from 'echarts'
 import { RefObject } from 'react'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 
 export const EChartsManager = {
   /**
@@ -16,10 +17,23 @@ export const EChartsManager = {
     }
     // 尝试获取现有的 ECharts 实例，如果不存在则创建一个新的实例
     let instance = echarts.getInstanceByDom(chartRef.current)
+    if (instance && debugEnable) log.debug('Use exists instance of ECharts, chartId: ', instance.getId())
     if (!instance) {
       instance = echarts.init(chartRef.current)
     }
     return instance
+  },
+
+  /**
+   * Resize charts
+   * @param chartRefs React 组件的 ref 对象数组
+   */
+  resizeCharts: (...chartRefs: RefObject<HTMLDivElement>[]) => {
+    chartRefs.forEach(chartRef => {
+      if (chartRef?.current) {
+        EChartsManager.getInstanceIfPresent(chartRef)?.resize()
+      }
+    })
   },
 
   /**
