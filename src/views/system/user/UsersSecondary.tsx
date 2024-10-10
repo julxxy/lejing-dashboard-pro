@@ -1,7 +1,6 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
 import { User } from '@/types/apiTypes.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
-import log from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
@@ -19,7 +18,7 @@ export default function UsersSecondary() {
   const [userIds, setUserIds] = useState<number[]>([])
   const userRef = useRef<ModalProps>({
     openModal: (action: Action, data?: User.UserItem) => {
-      if (isDebugEnable) log.info('开启弹窗显示: ', action, data)
+      if (debugEnable) log.info('开启弹窗显示: ', action, data)
     },
     closeModal: () => {},
   })

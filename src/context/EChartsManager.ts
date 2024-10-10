@@ -50,7 +50,7 @@ export const EChartsManager = {
    *      toolbox: {
    *         feature: {
    *           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-   *             if (isDebugEnable) log.info(`Refreshing chart`)
+   *             if (debugEnable) log.info(`Refreshing chart`)
    *             renderVisitChart()
    *           }),
    *         },

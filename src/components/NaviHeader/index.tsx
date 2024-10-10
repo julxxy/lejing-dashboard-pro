@@ -8,8 +8,7 @@ import {
 } from '@ant-design/icons'
 import { Breadcrumb, Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
 import styles from '@/components/NaviHeader/idnex.module.less'
-import { isDebugEnable } from '@/common/debugProvider.ts'
-import { log } from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import storageUtils from '@/utils/storageUtils.ts'
 import { URIs } from '@/router'
@@ -29,7 +28,7 @@ const NaviHeader = () => {
     { key: '3', label: '安全退出', icon: <LoginOutlined /> },
   ]
   const handleMenuClick: MenuProps['onClick'] = e => {
-    if (isDebugEnable) log.debug(e)
+    if (debugEnable) log.debug(e)
     const { key } = e
     switch (key) {
       case '1':

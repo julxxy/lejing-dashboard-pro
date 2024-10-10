@@ -3,9 +3,8 @@ import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
-import { log } from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
-import { isDebugEnable } from '@/common/debugProvider.ts'
 
 const generateNewVisitData = () => {
   return [
@@ -45,7 +44,7 @@ export default function BusinessOverviewPieChart() {
   }, [])
 
   async function fetchAndRenderData() {
-    if (isDebugEnable) log.debug('Fetching and rendering chart data')
+    if (debugEnable) log.debug('Fetching and rendering chart data')
     await renderCityChart()
     await renderAgeChart()
     renderVisitChart()
@@ -61,7 +60,7 @@ export default function BusinessOverviewPieChart() {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing chart`)
+            if (debugEnable) log.info(`Refreshing chart`)
             renderCityChart()
           }),
         },
@@ -87,7 +86,7 @@ export default function BusinessOverviewPieChart() {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing chart`)
+            if (debugEnable) log.info(`Refreshing chart`)
             renderAgeChart()
           }),
         },
@@ -114,7 +113,7 @@ export default function BusinessOverviewPieChart() {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (isDebugEnable) log.info(`Refreshing chart`)
+            if (debugEnable) log.info(`Refreshing chart`)
             renderVisitChart()
           }),
         },

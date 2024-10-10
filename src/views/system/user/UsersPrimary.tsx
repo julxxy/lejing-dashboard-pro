@@ -1,7 +1,6 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType, TablePaginationConfig } from 'antd'
 import { PageArgs, User } from '@/types/apiTypes.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
-import log from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useEffect, useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
@@ -23,7 +22,7 @@ export default function UsersPrimary() {
 
   const userRef = useRef<ModalProps>({
     openModal: (action: Action, data?: User.UserItem) => {
-      if (isDebugEnable) log.info('开启弹窗显示: ', action, data)
+      if (debugEnable) log.info('开启弹窗显示: ', action, data)
     },
     closeModal: () => {},
   })
@@ -118,11 +117,11 @@ export default function UsersPrimary() {
         pageSize: pageSize ?? pagination.pageSize ?? 10,
       }
 
-      if (isDebugEnable) log.info('搜索条件: ', params)
+      if (debugEnable) log.info('搜索条件: ', params)
 
       const [data] = await Promise.all([api.getUserList(params)])
       const { list } = data
-      if (isDebugEnable) log.info('搜索列表: ', list)
+      if (debugEnable) log.info('搜索列表: ', list)
 
       if (isMockEnable) {
         const totalItems = 9999 // 模拟总条数

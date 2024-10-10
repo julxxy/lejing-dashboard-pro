@@ -1,13 +1,12 @@
 import resso from 'resso'
 import { User } from '@/types/apiTypes.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
-import { log } from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 
 /**
  * Log meta update
  */
 function logMetaUpdate(userInfo: User.Info) {
-  if (isDebugEnable) log.debug('Resso meta data update:', userInfo)
+  if (debugEnable) log.debug('Resso meta data update:', userInfo)
 }
 
 /**

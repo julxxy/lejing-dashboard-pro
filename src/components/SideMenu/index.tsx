@@ -19,8 +19,7 @@ import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 import { NavigateFunction } from 'react-router/dist/lib/hooks'
-import log from '@/common/loggerProvider.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 
 // 菜单项
 type MenuItem = Required<MenuProps>['items'][number]
@@ -53,7 +52,7 @@ const items: MenuItem[] = [
  * 点击菜单项时执行导航
  */
 function onMenuClicked(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
-  if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
+  if (debugEnable) log.debug('菜单项导航:', menuInfo)
   const key = menuInfo?.key as string | undefined
   if (key === '0') navigate(URIs.dashboard)
   if (key === '101') navigate(URIs.userList)

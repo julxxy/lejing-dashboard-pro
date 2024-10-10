@@ -2,8 +2,7 @@ import axios, { AxiosError, AxiosInstance } from 'axios'
 import { hideLoading, showLoading } from '@/views/loading'
 import storageUtils from '@/utils/storageUtils.ts'
 import { Result } from '@/types/apiTypes.ts'
-import { log } from '@/common/loggerProvider.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 
 import { IRequestConfig } from '@/axios-conf'
 import { base64Utils } from '@/common/base64Utils.ts'
@@ -16,7 +15,7 @@ import { URIs } from '@/router'
  */
 let apiToken = import.meta.env.VITE_API_TOKEN as string
 const tokenIsBase64 = base64Utils.isBase64(apiToken)
-if (isDebugEnable) log.debug(`API token is base64: ${tokenIsBase64}, apiToken: ${apiToken}`)
+if (debugEnable) log.debug(`API token is base64: ${tokenIsBase64}, apiToken: ${apiToken}`)
 apiToken = tokenIsBase64 ? base64Utils.decodeBase64(apiToken, base64Utils.defaultRecursiveCount) : apiToken
 
 /**
@@ -59,7 +58,7 @@ instance.interceptors.response.use(
     const { data }: { data: Result } = response
     const { code, msg } = data
 
-    if (isDebugEnable) log.debug(data)
+    if (debugEnable) log.debug(data)
 
     if (code === 500001) {
       return handleSessionExpired(msg, data)

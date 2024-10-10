@@ -1,6 +1,5 @@
 import { Button, Form, Input, Modal, Select, Upload, UploadProps } from 'antd'
-import log from '@/common/loggerProvider.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import { useImperativeHandle, useState } from 'react'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { RcFile } from 'antd/es/upload'
@@ -28,7 +27,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
 
   // 开启当前组件的弹窗显示
   const openModal = (action: Action, data?: User.UserItem) => {
-    if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, JSON.stringify(data))
+    if (debugEnable) log.info('收到父组件的弹窗显示请求: ', action, JSON.stringify(data))
     if (action === 'edit' && data) {
       form.setFieldsValue(data)
       setImageUrl(data.userImg)
@@ -45,7 +44,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
   useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
 
   function onFinish(values: any) {
-    if (isDebugEnable) log.info('on_finish: ', values)
+    if (debugEnable) log.info('on_finish: ', values)
   }
 
   function handleReset() {
@@ -68,7 +67,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
       if (action === 'edit') {
         res = await api.editUser(args)
       }
-      if (isDebugEnable) log.info('提交结果', res)
+      if (debugEnable) log.info('提交结果', res)
       onRefreshed() // 调用父组件的刷新函数
       currentRef?.current.closeModal() // 调用父组件的关闭函数
     } finally {
@@ -78,7 +77,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
   }
 
   function handleCancel() {
-    if (isDebugEnable) log.info('取消')
+    if (debugEnable) log.info('取消')
     currentRef?.current?.closeModal() // 调用父组件的关闭函数
   }
 
@@ -89,7 +88,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
     }
     if (info.file.status === 'done') {
       const { code, msg, data } = info.file.response
-      if (isDebugEnable) log.info('图片上传', info.file.response)
+      if (debugEnable) log.info('图片上传', info.file.response)
       setLoading(false)
       if (ResultStatus.Success !== code) {
         message.error(msg)

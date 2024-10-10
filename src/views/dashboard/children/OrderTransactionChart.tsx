@@ -3,10 +3,9 @@ import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
-import { log } from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import * as echarts from 'echarts'
 import api from '@/api'
-import { isDebugEnable } from '@/common/debugProvider.ts'
 
 export default function OrderTransactionChart() {
   const chartRef = useRef<HTMLDivElement>(null)
@@ -106,7 +105,7 @@ export default function OrderTransactionChart() {
   }
 
   function onReload() {
-    if (isDebugEnable) log.info('Reloading chart data')
+    if (debugEnable) log.info('Reloading chart data')
     setLoading(true)
     setTimeout(() => fetchAndRenderOrderChart().then(() => setLoading(false)), 1000)
   }

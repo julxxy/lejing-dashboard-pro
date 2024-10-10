@@ -5,8 +5,7 @@ import storageUtils from '@/utils/storageUtils.ts'
 import { useRef, useState } from 'react'
 import { useAntd } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/enums.ts'
-import { isDebugEnable } from '@/common/debugProvider.ts'
-import { log } from '@/common/loggerProvider.ts'
+import { debugEnable, log } from '@/common/loggerProvider.ts'
 import { URIs } from '@/router'
 import { commonUtils } from '@/common/commonUtils.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
@@ -55,7 +54,7 @@ export default function LoginFC() {
     try {
       const data: any = await api.login(params)
       if (!commonUtils.hasData(data) || (commonUtils.hasKey(data, 'code') && data.code !== ResultStatus.Success)) {
-        if (isDebugEnable) log.error('login failed: ', data)
+        if (debugEnable) log.error('login failed: ', data)
         message.error('用户名或密码错误')
         return
       }
