@@ -7,7 +7,6 @@ import { isTrue } from './src/common/booleanUtils.ts'
  */
 
 export function optimizeChunks(id: string): string | undefined {
-  // Split large libraries into separate chunks
   if (id && id.includes('node_modules')) {
     // Split large libraries into separate chunks
     if (id.includes('echarts')) return 'echarts'
