@@ -6,19 +6,14 @@ import { RcFile } from 'antd/es/upload'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import requestUtils from '@/utils/httpUtils.ts'
 import { ResultStatus } from '@/types/enums.ts'
-import { Action, IModalProps } from '@/types/modal.ts'
+import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { User } from '@/types/apiTypes.ts'
 import api from '@/api'
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-}
 
 /**
  * 创建/编辑用户弹窗
  */
-export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
+export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
@@ -62,10 +57,10 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
     try {
       let res = null
       if (action === 'create') {
-        res = await api.addUser(args)
+        res = await api.user.addUser(args)
       }
       if (action === 'edit') {
-        res = await api.editUser(args)
+        res = await api.user.editUser(args)
       }
       if (debugEnable) log.info('提交结果', res)
       onRefreshed() // 调用父组件的刷新函数
@@ -122,7 +117,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
   return (
     <Modal
       title={action === 'create' ? '创建用户' : '编辑用户'}
-      width={800}
+      width={ModalVariables.width}
       open={modalOpen}
       okText={'确认'}
       cancelText={'取消'}
@@ -142,8 +137,7 @@ export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
         </Button>,
       ]}
     >
-      {' '}
-      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish} style={{ maxWidth: 600 }}>
+      <Form {...ModalVariables.layout} style={{ maxWidth: 600 }} form={form} name="control-hooks" onFinish={onFinish}>
         <Form.Item name="userId" label="用户ID" hidden={true}>
           <Input />
         </Form.Item>

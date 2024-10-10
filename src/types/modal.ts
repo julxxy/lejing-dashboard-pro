@@ -3,7 +3,7 @@ import React from 'react'
 /**
  * 组件的操作行为
  */
-export type Action = 'create' | 'edit' | 'delete'
+export type Action = 'create' | 'edit' | 'view'
 
 /**
  * 弹窗组件 Props
@@ -27,10 +27,19 @@ export interface ModalProps {
    * 开启弹窗
    * @param action 操作行为
    * @param data 编辑或新增的数据，用于编辑时传递，显示
+   * @param extra 额外数据
    */
-  openModal: (action: Action, data?: any) => void
+  openModal: (action: Action, data?: any, ...extra: any) => void
   /**
    * 关闭弹窗
    */
   closeModal: () => void
+}
+
+export const ModalVariables = {
+  width: 800,
+  layout: {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  },
 }

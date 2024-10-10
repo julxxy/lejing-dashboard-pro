@@ -5,7 +5,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { debugEnable, log } from '@/common/loggerProvider.ts'
 import Loading from '@/views/loading'
 import { Environment } from '@/types/enums.ts'
-import { UDashboard, User } from '@/types/apiTypes.ts'
+import { UcDashboard, User } from '@/types/apiTypes.ts'
 import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils'
 import api from '@/api'
 import root from '@/mockdata/root.json'
@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
   const { isDarkEnable, userInfo } = useZustandStore()
   if (debugEnable) log.info('isDarkEnable: ', isDarkEnable)
 
-  const [report, setReport] = useState<UDashboard.Report>()
+  const [report, setReport] = useState<UcDashboard.Report>()
   const username = Environment.isLocal() ? 'Weasley' : userInfo?.userName
   const items: DescriptionsProps['items'] = getCardItems(userInfo)
   const cardData = [

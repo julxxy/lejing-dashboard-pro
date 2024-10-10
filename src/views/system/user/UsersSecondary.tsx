@@ -4,7 +4,7 @@ import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
-import UserFC from '@/views/system/user/UserFC.tsx'
+import UserModal from '@/views/system/user/UserModal.tsx'
 import { Action, ModalProps } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
@@ -34,7 +34,7 @@ export default function UsersSecondary() {
     },
     formData: User.RequestArgs
   ) => {
-    const res = await api.getUserList({ ...formData, pageNum: current, pageSize })
+    const res = await api.user.getUserList({ ...formData, pageNum: current, pageSize })
     return {
       total: 9999, //API 有问题，这里先写死
       list: res.list,
@@ -64,7 +64,7 @@ export default function UsersSecondary() {
       content: '确认要删除所选用户吗？',
       onOk: async () => {
         try {
-          await api.deleteUser(userIds)
+          await api.user.deleteUser(userIds)
           search.reset()
           message.success('删除成功')
         } catch (e) {
@@ -185,7 +185,7 @@ export default function UsersSecondary() {
           rowKey="userId"
           {...tableProps}
         />
-        <UserFC currentRef={userRef} onRefreshed={() => search.reset()} />
+        <UserModal currentRef={userRef} onRefreshed={() => search.reset()} />
       </div>
     </div>
   )

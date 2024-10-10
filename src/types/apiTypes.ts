@@ -54,6 +54,7 @@ export namespace User {
   }
 
   export interface UserItem {
+    _id: string
     userId: number
     userName: string
     userEmail: string
@@ -86,7 +87,10 @@ export namespace User {
   }
 }
 
-export namespace UDashboard {
+/**
+ * Dashboard
+ */
+export namespace UcDashboard {
   export interface Report {
     driverCount: number
     totalMoney: number
@@ -116,11 +120,39 @@ export namespace UDashboard {
   }
 }
 
-export interface SideMenuProps {
-  collapsed?: boolean
-}
+/**
+ * 部门管理
+ */
+export namespace Department {
+  export interface SearchParams {
+    deptName?: string
+  }
 
-export interface ModalOpenCloseProps {
-  isOpen: boolean // 接受父组件传递的状态
-  onClose: () => void // 接受父组件传递的关闭回调函数
+  export interface Item {
+    _id: string
+    createTime: string
+    updateTime: string
+    deptName: string
+    parentId: string
+    userName: string
+    children: Item[]
+  }
+
+  export interface CreateParams {
+    deptName: string
+    parentId?: string
+    userName: string
+  }
+
+  export interface EditParams extends CreateParams {
+    _id: string
+  }
+
+  export interface DeleteParams {
+    _id: string
+  }
+
+  export interface SideMenuProps {
+    collapsed?: boolean
+  }
 }

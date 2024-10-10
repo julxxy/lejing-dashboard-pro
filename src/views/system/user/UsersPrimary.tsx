@@ -4,7 +4,7 @@ import { debugEnable, log } from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useEffect, useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
-import UserFC from '@/views/system/user/UserFC.tsx'
+import UserModal from '@/views/system/user/UserModal.tsx'
 import { Action, ModalProps } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
@@ -38,7 +38,7 @@ export default function UsersPrimary() {
       content: '确认要删除所选用户吗？',
       onOk: async () => {
         try {
-          await api.deleteUser(userIds)
+          await api.user.deleteUser(userIds)
           await getUsers({})
           message.success('删除成功')
         } catch (e) {
@@ -119,7 +119,7 @@ export default function UsersPrimary() {
 
       if (debugEnable) log.info('搜索条件: ', params)
 
-      const data = await api.getUserList(params)
+      const data = await api.user.getUserList(params)
       const { list } = data
       if (debugEnable) log.info('搜索列表: ', list)
 
@@ -247,7 +247,7 @@ export default function UsersPrimary() {
             onChange: (current, pageSize) => handlePageChange(current, pageSize),
           }}
         />
-        <UserFC currentRef={userRef} onRefreshed={() => getUsers({})} />
+        <UserModal currentRef={userRef} onRefreshed={() => getUsers({})} />
       </div>
     </div>
   )
