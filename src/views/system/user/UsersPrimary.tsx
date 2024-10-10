@@ -9,7 +9,7 @@ import { Action, ModalProps } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
 /**
- * 使用原生方式实现
+ * 使用原生方式实现用户列表
  * @constructor
  */
 export default function UsersPrimary() {

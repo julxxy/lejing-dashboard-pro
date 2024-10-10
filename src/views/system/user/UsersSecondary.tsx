@@ -10,7 +10,7 @@ import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
 
 /**
- * 使用 ahooks 实现
+ * 使用 ahooks 实现用户列表
  * @constructor
  */
 export default function UsersSecondary() {
