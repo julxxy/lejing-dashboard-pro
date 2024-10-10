@@ -10,15 +10,15 @@ export default {
     return request.post<string>(`/users/login`, params, { showLoading: false, showError: false })
   },
   // 获取用户信息
-  getUserInfo(): User.Info {
+  getUserInfo() {
     return request.get<User.Info>('/users/getUserInfo')
   },
   // 获取报表
-  getReport(): UDashboard.Report {
+  getReport() {
     return request.get<UDashboard.Report>('/order/dashboard/getReportData')
   },
   // 获取订单图表数据
-  getOrderChartData(): UDashboard.OrderChartEntity {
+  getOrderChartData() {
     return request.get<UDashboard.OrderChartEntity>('/order/dashboard/getLineData')
   },
   // 获取城市分布数据

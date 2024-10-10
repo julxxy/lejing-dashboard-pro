@@ -119,7 +119,7 @@ export default function UsersPrimary() {
 
       if (debugEnable) log.info('搜索条件: ', params)
 
-      const [data] = await Promise.all([api.getUserList(params)])
+      const data = await api.getUserList(params)
       const { list } = data
       if (debugEnable) log.info('搜索列表: ', list)
 

@@ -53,8 +53,10 @@ export default function BusinessOverviewPieChart() {
 
   //  渲染数据
   const renderCityChart = async () => {
-    const [data] = await Promise.all([api.getDriverCityData()])
-    EChartsManager.getInstanceIfPresent(cityRef)?.setOption({
+    const data = await api.getDriverCityData()
+    const instance = EChartsManager.getInstanceIfPresent(cityRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '司机城市分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
       toolbox: {
@@ -79,8 +81,10 @@ export default function BusinessOverviewPieChart() {
     })
   }
   const renderAgeChart = async () => {
-    const [data] = await Promise.all([api.getDriverAgeData()])
-    EChartsManager.getInstanceIfPresent(ageRef)?.setOption({
+    const data = await api.getDriverAgeData()
+    const instance = EChartsManager.getInstanceIfPresent(ageRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '司机年龄分布', left: 'center' },
       legend: { orient: 'vertical', left: '8px' },
       toolbox: {
@@ -107,7 +111,9 @@ export default function BusinessOverviewPieChart() {
   }
   const renderVisitChart = () => {
     const data = generateNewVisitData()
-    EChartsManager.getInstanceIfPresent(visitSourceRef)?.setOption({
+    const instance = EChartsManager.getInstanceIfPresent(visitSourceRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '用户访问来源', subtext: '', left: 'center' },
       tooltip: { trigger: 'item' },
       toolbox: {
@@ -141,7 +147,9 @@ export default function BusinessOverviewPieChart() {
   }
 
   const orderCompletionRateRadarChart = () => {
-    EChartsManager.getInstanceIfPresent(orderCompletionRateRef)?.setOption({
+    const instance = EChartsManager.getInstanceIfPresent(orderCompletionRateRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '订单完成率分析', left: 'center' },
       tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
       legend: { data: ['完成率'], left: '8px' },

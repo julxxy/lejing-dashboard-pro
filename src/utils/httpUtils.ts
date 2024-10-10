@@ -92,19 +92,19 @@ function handleSessionExpired(msg: string, data: any) {
  * Encapsulating axios requests
  */
 export default {
-  get<T>(url: string, params?: any, options?: IRequestConfig): T {
-    return instance.get<T>(url, { params, ...options }) as T
+  get: function <T>(url: string, params?: any, options?: IRequestConfig): Promise<T> {
+    return instance.get(url, { params, ...options })
   },
-  post<T>(url: string, data?: object, options?: IRequestConfig): T {
-    return instance.post<T>(url, data, options) as T
+  post: function <T>(url: string, data?: object, options?: IRequestConfig): Promise<T> {
+    return instance.post(url, data, options)
   },
-  delete<T>(url: string, data?: any): T {
-    return instance.delete<T>(url, { data }) as T
+  delete: function <T>(url: string, data?: any): Promise<T> {
+    return instance.delete(url, { data })
   },
-  put<T>(url: string, data?: any): T {
-    return instance.put<T>(url, data) as T
+  put: function <T>(url: string, data?: any): Promise<T> {
+    return instance.put(url, data)
   },
-  getAuthHeaders() {
+  getAuthHeaders: function () {
     return {
       icode: apiToken,
       Authorization: `Bearer ${storageUtils.get<string>('token')}`,

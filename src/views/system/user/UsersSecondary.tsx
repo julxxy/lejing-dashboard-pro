@@ -24,13 +24,21 @@ export default function UsersSecondary() {
   })
 
   // 1. 获取分页数据
-  const fetchTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: User.RequestArgs) => {
-    return Promise.resolve(api.getUserList({ ...formData, pageNum: current, pageSize })).then(res => {
-      return {
-        total: 9999, //API 有问题，这里先写死
-        list: res.list,
-      }
-    })
+  const fetchTableData = async (
+    {
+      current,
+      pageSize,
+    }: {
+      current: number
+      pageSize: number
+    },
+    formData: User.RequestArgs
+  ) => {
+    const res = await api.getUserList({ ...formData, pageNum: current, pageSize })
+    return {
+      total: 9999, //API 有问题，这里先写死
+      list: res.list,
+    }
   }
   // 2. 分页配置
   const { tableProps, search } = useAntdTable(fetchTableData, { form, defaultPageSize: 10 })

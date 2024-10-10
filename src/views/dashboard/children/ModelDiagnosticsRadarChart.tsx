@@ -35,8 +35,10 @@ export default function ModelDiagnosticsRadarChart() {
 
   // Render driver model radar chart
   const renderDriverModelChart = async () => {
-    const [{ indicator, data }] = await Promise.all([api.getDriverRadarData()])
-    EChartsManager.getInstanceIfPresent(driverModelRef)?.setOption({
+    const { indicator, data } = await api.getDriverRadarData()
+    const instance = EChartsManager.getInstanceIfPresent(driverModelRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '', left: 'right' },
       legend: { orient: 'vertical', left: '8px', data: ['司机模型诊断'] },
       toolTip: {},
@@ -62,7 +64,9 @@ export default function ModelDiagnosticsRadarChart() {
 
   // Render budget spending radar chart
   const renderBudgetSpending = async () => {
-    EChartsManager.getInstanceIfPresent(budgetSpendingRef)?.setOption({
+    const instance = EChartsManager.getInstanceIfPresent(budgetSpendingRef)
+    instance?.resize()
+    instance?.setOption({
       title: { text: '成本支出模型', left: 'center' },
       legend: { orient: 'vertical', left: '8px', data: ['预算成本', '实际支出'] },
       radar: {
