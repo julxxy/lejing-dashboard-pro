@@ -5,7 +5,7 @@ import log from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useEffect, useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
-import UserCreate from '@/views/system/user/UserCreate.tsx'
+import UserFC from '@/views/system/user/UserFC.tsx'
 import { Action, ModalProps } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
@@ -13,7 +13,7 @@ import { message, modal } from '@/context/AntdGlobalProvider.ts'
  * 使用原生方式实现
  * @constructor
  */
-export default function UserListPrimary() {
+export default function UsersPrimary() {
   const isMockEnable = false
   const [form] = Form.useForm()
   const [users, setUsers] = useState<User.UserItem[]>([])
@@ -248,7 +248,7 @@ export default function UserListPrimary() {
             onChange: (current, pageSize) => handlePageChange(current, pageSize),
           }}
         />
-        <UserCreate currentRef={userRef} onRefreshed={() => getUsers({})} />
+        <UserFC currentRef={userRef} onRefreshed={() => getUsers({})} />
       </div>
     </div>
   )

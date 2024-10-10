@@ -17,9 +17,9 @@ const layout = {
 }
 
 /**
- * 创建用户弹窗
+ * 创建/编辑用户弹窗
  */
-export default function UserCreate({ currentRef, onRefreshed }: IModalProps) {
+export default function UserFC({ currentRef, onRefreshed }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
@@ -122,7 +122,7 @@ export default function UserCreate({ currentRef, onRefreshed }: IModalProps) {
 
   return (
     <Modal
-      title="创建用户"
+      title={action === 'create' ? '创建用户' : '编辑用户'}
       width={800}
       open={modalOpen}
       okText={'确认'}
@@ -193,7 +193,6 @@ export default function UserCreate({ currentRef, onRefreshed }: IModalProps) {
             <Select.Option value={2}>离职</Select.Option>
             <Select.Option value={3}>试用期</Select.Option>
           </Select>
-          {/* todo 弹窗组件 */}
         </Form.Item>
         <Form.Item name="roleList" label="角色" rules={[{ required: false }]}>
           <Input placeholder={'请输入角色'} />

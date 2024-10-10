@@ -5,7 +5,7 @@ import log from '@/common/loggerProvider.ts'
 import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
-import UserCreate from '@/views/system/user/UserCreate.tsx'
+import UserFC from '@/views/system/user/UserFC.tsx'
 import { Action, ModalProps } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
@@ -14,7 +14,7 @@ import { useAntdTable } from 'ahooks'
  * 使用 ahooks 实现
  * @constructor
  */
-export default function UserListSecondary() {
+export default function UsersSecondary() {
   const [form] = Form.useForm()
   const [userIds, setUserIds] = useState<number[]>([])
   const userRef = useRef<ModalProps>({
@@ -76,6 +76,10 @@ export default function UserListSecondary() {
     setUserIds([])
   }
 
+  function onUserEdit(record: User.UserItem) {
+    userRef?.current?.openModal('edit', record)
+  }
+
   const columns: TableColumnsType<User.UserItem> = [
     { title: '用户ID', dataIndex: 'userId', key: 'userId' },
     { title: '用户名', dataIndex: 'userName', key: 'userName' },
@@ -100,13 +104,7 @@ export default function UserListSecondary() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button
-              size={'small'}
-              color="primary"
-              variant="dashed"
-              shape={'round'}
-              onClick={() => (record: User.UserItem) => userRef?.current?.openModal('edit', record)}
-            >
+            <Button size={'small'} color="primary" variant="dashed" shape={'round'} onClick={() => onUserEdit(record)}>
               编辑
             </Button>
             <Button
@@ -180,7 +178,7 @@ export default function UserListSecondary() {
           rowKey="userId"
           {...tableProps}
         />
-        <UserCreate currentRef={userRef} onRefreshed={() => search.reset()} />
+        <UserFC currentRef={userRef} onRefreshed={() => search.reset()} />
       </div>
     </div>
   )

@@ -1,8 +1,8 @@
 // UserList
-import UserListPrimary from '@/views/system/user/UserListPrimary.tsx'
-import UserListSecondary from '@/views/system/user/UserListSecondary.tsx'
+import UsersPrimary from '@/views/system/user/UsersPrimary.tsx'
+import UsersSecondary from '@/views/system/user/UsersSecondary.tsx'
 
 export default function UserList() {
   const usePrimary = false
-  return usePrimary ? <UserListPrimary /> : <UserListSecondary />
+  return usePrimary ? <UsersPrimary /> : <UsersSecondary />
 }
