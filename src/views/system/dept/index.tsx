@@ -21,8 +21,7 @@ export default function DepartmentFC() {
     openModal: (action: Action, data?: User.UserItem | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {
