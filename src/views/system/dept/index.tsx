@@ -28,11 +28,17 @@ export default function DepartmentFC() {
     getDepartments().then(() => setLoading(false))
   }, [])
 
+  /**
+   * 获取部门列表
+   */
   async function getDepartments() {
     const data = await api.dept.getDepartments(form.getFieldsValue())
     setDepartments(data)
   }
 
+  /**
+   * 删除部门
+   */
   function onDeptDelete(_id?: string) {
     log.info('删除部门')
     modal.confirm({
@@ -47,6 +53,9 @@ export default function DepartmentFC() {
     })
   }
 
+  /**
+   * 编辑部门
+   */
   function onDeptEdit(record?: Department.Item) {
     currentRef?.current?.openModal('edit', record) // 打开弹窗
   }
@@ -54,17 +63,31 @@ export default function DepartmentFC() {
   /**
    * 新增部门
    */
-  function onMainCreate() {
+  function handleMainCreate() {
     currentRef?.current?.openModal('create') // 打开弹窗
   }
 
+  /**
+   * 新增子部门
+   */
   const onSubCreate = (parentId?: string) => {
     currentRef?.current?.openModal('create', { parentId }) // 打开弹窗
   }
 
+  /**
+   * 搜索部门
+   */
   function onSearch() {
     setLoading(!loading)
     getDepartments().then(() => setLoading(false))
+  }
+
+  /**
+   * 重置
+   */
+  function handleReset() {
+    form.resetFields()
+    getDepartments()
   }
 
   const columns: TableColumnsType<Department.Item> = [
@@ -105,13 +128,7 @@ export default function DepartmentFC() {
             <Button type={'primary'} onClick={onSearch}>
               搜索
             </Button>
-            <Button
-              type={'default'}
-              onClick={() => {
-                form.resetFields()
-                getDepartments()
-              }}
-            >
+            <Button type={'default'} onClick={handleReset}>
               重置
             </Button>
           </Space>
@@ -121,7 +138,7 @@ export default function DepartmentFC() {
         <div className="header-wrapper">
           <div className="title">部门列表</div>
           <div className="action">
-            <Button type={'primary'} onClick={onMainCreate}>
+            <Button type={'primary'} onClick={handleMainCreate}>
               新增
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import { useEffect, useImperativeHandle, useState } from 'react'
+import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Input, Modal, Select, TreeSelect } from 'antd'
 import { Department, User } from '@/types/apiTypes.ts'
@@ -21,6 +21,7 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
   const openModal = (action: Action, data?: Department.EditParams | { parentId: string }) => {
     if (debugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
     fetchDeptList()
+    fetchAllUsers()
     setAction(action)
     setModalOpen(true)
     form.setFieldsValue(data)
@@ -29,14 +30,9 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
   // 关闭当前组件的弹窗显示
   const closeModal = () => {
     setModalOpen(false)
+    form.resetFields()
   }
   useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
-
-  // 弹框打开后渲染部门列表
-  useEffect(() => {
-    fetchAllUsers()
-  }, [])
-
   const fetchDeptList = async () => {
     const deptList = await api.dept.getDepartments()
     setDeptList(deptList)
@@ -47,12 +43,6 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
     const allUsers = await api.user.getAllUsers()
     setAllUsers(allUsers)
     setLoading(false)
-  }
-
-  const handleCancel = () => {
-    currentRef?.current?.closeModal()
-    form.resetFields()
-    setModalOpen(false)
   }
 
   const handleSubmit = async () => {
@@ -68,7 +58,7 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
         await api.dept.edit(formData)
       }
       message.success('操作成功')
-      handleCancel() // 关闭弹窗
+      closeModal() // 关闭弹窗
       onRefreshed() // 执行刷新回调
     } catch (error) {
       if (debugEnable) log.error('操作失败: ', error)
@@ -79,17 +69,17 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
 
   return (
     <Modal
-      title={action === 'create' ? '新增菜单' : '编辑菜单'}
+      title={action === 'create' ? '创建菜单' : '编辑菜单'}
       width={ModalVariables.width}
       open={modalOpen}
       onOk={handleSubmit}
       okButtonProps={{ loading, className: 'cta-button' }}
       okText={'确定'}
-      onCancel={handleCancel}
+      onCancel={closeModal}
       cancelText={'取消'}
     >
       <Form {...ModalVariables.layout} form={form} style={{ maxWidth: 600 }}>
-        <Form.Item hidden name={'_id'}>
+        <Form.Item hidden={true} name={'_id'}>
           <Input />
         </Form.Item>
 

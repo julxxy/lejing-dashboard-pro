@@ -34,8 +34,8 @@ export const URIs = {
 const Welcome = lazy(() => import('@/views/welcome'))
 const Dashboard = lazy(() => import('@/views/dashboard'))
 /* system-menu */
-const UserList = lazy(() => import('@/views/system/user'))
-const DepartmentList = lazy(() => import('@/views/system/dept'))
+const UserFC = lazy(() => import('@/views/system/user'))
+const DepartmentFC = lazy(() => import('@/views/system/dept'))
 const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
 /* order-menu */
@@ -58,8 +58,8 @@ const routes: RouteObject[] = [
     children: [
       { path: URIs.welcome, element: <Welcome /> },
       { path: URIs.dashboard, element: <Dashboard /> },
-      { path: URIs.userList, element: <UserList /> },
-      { path: URIs.deptManage, element: <DepartmentList /> },
+      { path: URIs.userList, element: <UserFC /> },
+      { path: URIs.deptManage, element: <DepartmentFC /> },
       { path: URIs.menuManage, element: <MenuList /> },
       { path: URIs.roleManage, element: <RoleList /> },
       { path: URIs.orderList, element: <OrderList /> },
