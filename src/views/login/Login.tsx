@@ -7,7 +7,7 @@ import { useAntd } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/Enums.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { URIs } from '@/router'
-import { commonUtils } from '@/common/commonUtils.ts'
+import { objectUtils } from '@/common/objectUtils.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { isTrue } from '@/common/booleanUtils.ts'
 import { base64Utils } from '@/common/base64Utils.ts'
@@ -53,7 +53,7 @@ export default function LoginFC() {
     const params = { userName: values.username, userPwd: values.password }
     try {
       const data: any = await api.login(params)
-      if (!commonUtils.hasData(data) || (commonUtils.hasKey(data, 'code') && data.code !== ResultStatus.Success)) {
+      if (!objectUtils.hasData(data) || (objectUtils.hasKey(data, 'code') && data.code !== ResultStatus.Success)) {
         if (isDebugEnable) log.error('login failed: ', data)
         message.error('用户名或密码错误')
         return
