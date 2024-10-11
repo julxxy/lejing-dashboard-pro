@@ -1,7 +1,13 @@
 import { Button, Form, Input, Modal, Select, Upload, UploadProps } from 'antd'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { useImperativeHandle, useState } from 'react'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  LoadingOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+} from '@ant-design/icons'
 import { RcFile } from 'antd/es/upload'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import requestUtils from '@/utils/httpUtils.ts'
@@ -122,20 +128,16 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
       title={action === 'create' ? '创建用户' : '编辑用户'}
       width={ModalVariables.width}
       open={modalOpen}
-      okText={'确认'}
-      cancelText={'取消'}
       onOk={handleSubmit}
       onCancel={handleCancel}
-      okButtonProps={{ className: 'btn-primary' }} // 设置按钮颜色
-      cancelButtonProps={{ className: 'cancel-button' }} // 设置按钮颜色
       footer={[
-        <Button key="reset" type={'dashed'} onClick={handleReset} disabled={action !== 'create'}>
-          重置
-        </Button>,
-        <Button key="cancel" onClick={handleCancel} className={'cancel-button'}>
+        <Button key="cancel" icon={<CloseCircleOutlined />} onClick={handleCancel}>
           取消
         </Button>,
-        <Button key="submit" type="primary" onClick={handleSubmit} className={'cta-button'}>
+        <Button key="reset" icon={<ReloadOutlined />} onClick={handleReset} disabled={action !== 'create'}>
+          重置
+        </Button>,
+        <Button key="submit" icon={<CheckCircleOutlined />} type="primary" onClick={handleSubmit}>
           提交
         </Button>,
       ]}

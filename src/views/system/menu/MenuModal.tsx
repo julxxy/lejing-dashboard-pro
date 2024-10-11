@@ -5,13 +5,14 @@ import { Department, Menu } from '@/types/ApiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 
 /**
  * 菜单弹窗: 创建&编辑
  */
 export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [menus, setMenus] = useState<Menu.Item[]>([])
   const [showModal, setShowModal] = useState(false)
   const [action, setAction] = useState<Action>('create')
@@ -31,6 +32,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
     form.resetFields()
   }
   useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
+
   const fetchMenus = async () => {
     const data = await api.menu.getMenus(form.getFieldsValue())
     setMenus(data)
@@ -65,9 +67,10 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
       width={ModalVariables.width}
       open={showModal}
       onOk={handleSubmit}
-      okButtonProps={{ loading }}
+      okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
       okText={'确定'}
       onCancel={closeModal}
+      cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
       cancelText={'取消'}
     >
       <Form

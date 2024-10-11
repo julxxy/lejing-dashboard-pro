@@ -7,6 +7,7 @@ import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/uti
 import UserModal from '@/views/system/user/UserModal.tsx'
 import { ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
+import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
 /**
  * 使用原生方式实现用户列表
@@ -29,10 +30,10 @@ export default function UsersPrimary() {
   const onCreate = () => {
     currentRef?.current?.openModal('create')
   }
-  const onEdit = (record: User.UserItem) => {
+  const onUserEdit = (record: User.UserItem) => {
     currentRef?.current?.openModal('edit', record) // 打开编辑弹窗
   }
-  const onDelete = (userIds: number[]) =>
+  const onUserDelete = (userIds: number[]) =>
     modal.confirm({
       title: '确认删除用户',
       content: '确认要删除所选用户吗？',
@@ -77,18 +78,8 @@ export default function UsersPrimary() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button size={'small'} color="primary" variant="dashed" shape={'round'} onClick={() => onEdit(record)}>
-              编辑
-            </Button>
-            <Button
-              size={'small'}
-              type="dashed"
-              shape={'round'}
-              danger={true}
-              onClick={() => onDelete([record.userId])}
-            >
-              删除
-            </Button>
+            <Button icon={<EditOutlined />} shape="circle" onClick={() => onUserEdit(record)} />
+            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onUserDelete([record.userId])} />
           </Space>
         )
       },
@@ -171,7 +162,7 @@ export default function UsersPrimary() {
       message.warning('请选择需要删除的用户')
       return
     }
-    onDelete(userIds)
+    onUserDelete(userIds)
     setUserIds([])
   }
 
@@ -194,10 +185,10 @@ export default function UsersPrimary() {
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type="primary" className={'-'} onClick={handleSearch}>
+            <Button icon={<SearchOutlined />} type="primary" onClick={handleSearch}>
               搜索
             </Button>
-            <Button type="default" htmlType={'reset'} onClick={handleReset}>
+            <Button icon={<ReloadOutlined />} type="default" htmlType={'reset'} onClick={handleReset}>
               重置
             </Button>
           </Space>
@@ -208,10 +199,10 @@ export default function UsersPrimary() {
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>
-              <Button type={'primary'} danger={false} onClick={onCreate}>
+              <Button icon={<PlusOutlined />} type={'primary'} danger={false} onClick={onCreate}>
                 添加
               </Button>
-              <Button type={'primary'} danger={true} onClick={() => onBatchDelete()}>
+              <Button icon={<DeleteOutlined />} type={'primary'} danger={true} onClick={() => onBatchDelete()}>
                 批量删除
               </Button>
             </Space>

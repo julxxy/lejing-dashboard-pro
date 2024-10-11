@@ -8,6 +8,7 @@ import DeptModal from '@/views/system/dept/DeptModal.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
+import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
 /**
  * 部门列表
@@ -92,26 +93,20 @@ export default function DepartmentFC() {
   }
 
   const columns: TableColumnsType<Department.Item> = [
-    { title: '部门名称', key: 'deptName', dataIndex: 'deptName', width: 200 },
+    { title: '部门名称', key: 'deptName', dataIndex: 'deptName', width: 400 },
     { title: '负责人', key: 'userName', dataIndex: 'userName', width: 100 },
     { title: '更新时间', key: 'updateTime', dataIndex: 'updateTime', render: _text => formatDateToLocalString(_text) },
     { title: '创建时间', key: 'createTime', dataIndex: 'createTime', render: _text => formatDateToLocalString(_text) },
     {
       title: '操作',
       key: 'action',
-      width: 220,
+      width: 80,
       render: (_text, record?: Department.Item) => {
         return (
           <Space>
-            <Button color={'primary'} variant={'dashed'} onClick={() => onSubCreate(record?._id)}>
-              新增
-            </Button>
-            <Button color={'primary'} variant={'dashed'} onClick={() => onDeptEdit(record)}>
-              编辑
-            </Button>
-            <Button type={'dashed'} danger={true} onClick={() => onDeptDelete(record?._id)}>
-              删除
-            </Button>
+            <Button icon={<PlusOutlined />} shape="circle" onClick={() => onSubCreate(record?._id)} />
+            <Button icon={<EditOutlined />} shape="circle" onClick={() => onDeptEdit(record)} />
+            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onDeptDelete(record?._id)} />
           </Space>
         )
       },
@@ -126,10 +121,10 @@ export default function DepartmentFC() {
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type={'primary'} onClick={onSearch}>
+            <Button icon={<SearchOutlined />} type={'primary'} onClick={onSearch}>
               搜索
             </Button>
-            <Button type={'default'} onClick={handleReset}>
+            <Button icon={<ReloadOutlined />} type={'default'} onClick={handleReset}>
               重置
             </Button>
           </Space>
@@ -139,7 +134,7 @@ export default function DepartmentFC() {
         <div className="header-wrapper">
           <div className="title">部门列表</div>
           <div className="action">
-            <Button type={'primary'} onClick={handleMainCreate}>
+            <Button icon={<PlusOutlined />} type={'primary'} onClick={handleMainCreate}>
               新增
             </Button>
           </div>
