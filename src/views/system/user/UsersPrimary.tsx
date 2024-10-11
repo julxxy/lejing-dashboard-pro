@@ -5,7 +5,7 @@ import api from '@/api'
 import React, { useEffect, useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
 import UserModal from '@/views/system/user/UserModal.tsx'
-import { Action, ModalAction } from '@/types/modal.ts'
+import { ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
 /**
@@ -20,17 +20,17 @@ export default function UsersPrimary() {
   const [userIds, setUserIds] = useState<number[]>([])
   const [pagination, setPagination] = useState<TablePaginationConfig>({ current: 1, pageSize: 10, total: 0 })
 
-  const userRef = useRef<ModalAction>({
-    openModal: (action: Action, data?: User.UserItem) => {
+  const currentRef = useRef<ModalAction>({
+    openModal: (action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
     closeModal: () => {},
   })
   const onCreate = () => {
-    userRef?.current?.openModal('create')
+    currentRef?.current?.openModal('create')
   }
   const onEdit = (record: User.UserItem) => {
-    userRef?.current?.openModal('edit', record) // 打开编辑弹窗
+    currentRef?.current?.openModal('edit', record) // 打开编辑弹窗
   }
   const onDelete = (userIds: number[]) =>
     modal.confirm({
@@ -247,7 +247,7 @@ export default function UsersPrimary() {
             onChange: (current, pageSize) => handlePageChange(current, pageSize),
           }}
         />
-        <UserModal currentRef={userRef} onRefreshed={() => getUsers({})} />
+        <UserModal currentRef={currentRef} onRefresh={() => getUsers({})} />
       </div>
     </div>
   )

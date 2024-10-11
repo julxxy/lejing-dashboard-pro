@@ -4,7 +4,7 @@ import api from '@/api'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
-import { Action, ModalAction } from '@/types/modal.ts'
+import { ModalAction } from '@/types/modal.ts'
 import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd'
 import { Menu } from '@/types/ApiTypes.ts'
 import { formatDateToLocalString } from '@/utils'
@@ -17,10 +17,11 @@ export default function MenuFC() {
   const [data, setData] = useState<Menu.Item[]>([])
   const [loading, setLoading] = useState(false)
   const currentRef = useRef<ModalAction>({
-    openModal: (action: Action, data?: Menu.EditParams | { parentId: string }) => {
+    openModal: (action, data?: Menu.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   useEffect(() => {
@@ -105,20 +106,22 @@ export default function MenuFC() {
       },
     },
   ]
-  const stateOptions = [
-    { label: '所有', value: 0 },
-    { label: '正常', value: 1 },
-    { label: '停用', value: 2 },
-  ]
-
   return (
     <div className="sidebar-submenu">
-      <Form className={'search-box'} layout={'inline'} form={form}>
+      <Form className={'search-box'} layout={'inline'} form={form} initialValues={{ menuState: undefined }}>
         <Form.Item name={'menuName'} label={'菜单名称'}>
           <Input placeholder={'请输入菜单名称'} />
         </Form.Item>
         <Form.Item name={'menuState'} label={'状态'}>
-          <Radio.Group options={stateOptions} defaultValue="0" optionType="button" onChange={getMenus} />
+          <Radio.Group
+            options={[
+              { label: '所有', value: undefined },
+              { label: '正常', value: 1 },
+              { label: '停用', value: 2 },
+            ]}
+            optionType="button"
+            onChange={getMenus}
+          />
         </Form.Item>
         <Form.Item>
           <Space>
@@ -142,7 +145,7 @@ export default function MenuFC() {
         </div>
         <Table bordered rowKey={'_id'} columns={columns} dataSource={data} pagination={false} loading={loading} />
       </div>
-      <MenuModal currentRef={currentRef} onRefreshed={getMenus} />
+      <MenuModal currentRef={currentRef} onRefresh={getMenus} />
     </div>
   )
 }

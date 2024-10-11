@@ -13,7 +13,7 @@ import api from '@/api'
 /**
  * 创建/编辑用户弹窗
  */
-export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
+export default function UserModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
@@ -63,7 +63,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
         res = await api.user.editUser(args)
       }
       if (isDebugEnable) log.info('提交结果', res)
-      onRefreshed() // 调用父组件的刷新函数
+      onRefresh() // 调用父组件的刷新函数
       currentRef?.current.closeModal() // 调用父组件的关闭函数
     } finally {
       message.success('操作成功')

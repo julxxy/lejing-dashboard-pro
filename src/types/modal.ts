@@ -11,7 +11,7 @@ export interface IModalProps {
   /**
    * 数据发生变化时接受父组件传递的回调函数
    */
-  onRefreshed: () => void
+  onRefresh: () => void
 }
 
 /**

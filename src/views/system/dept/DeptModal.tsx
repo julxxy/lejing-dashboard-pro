@@ -9,7 +9,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 /**
  * 创建/编辑菜单弹窗
  */
-export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
+export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(true)
   const [deptList, setDeptList] = useState<Department.Item[]>([])
@@ -59,7 +59,7 @@ export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
       }
       message.success('操作成功')
       closeModal() // 关闭弹窗
-      onRefreshed() // 执行刷新回调
+      onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
     } finally {
