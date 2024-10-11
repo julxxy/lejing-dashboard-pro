@@ -1,6 +1,6 @@
 import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
-import { Form, Input, Modal, Select, TreeSelect } from 'antd'
+import { Form, Input, Modal, Radio, TreeSelect } from 'antd'
 import { Department, Menu } from '@/types/ApiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
@@ -41,14 +41,14 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
   const handleSubmit = async () => {
     setLoading(true)
     try {
-      log.warn(form.getFieldsValue())
+      if (isDebugEnable) log.warn('表单数据：', form.getFieldsValue())
       const validate = await form.validateFields()
       if (!validate) return
       const formData = form.getFieldsValue()
       if (action === 'create') {
-        await api.dept.add(formData)
+        await api.menu.add(formData)
       } else if (action === 'edit') {
-        await api.dept.edit(formData)
+        await api.menu.edit(formData)
       }
       message.success('操作成功')
       closeModal() // 关闭弹窗
@@ -66,32 +66,79 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
       width={ModalVariables.width}
       open={showModal}
       onOk={handleSubmit}
-      okButtonProps={{ loading, className: 'cta-button' }}
+      okButtonProps={{ loading }}
       okText={'确定'}
       onCancel={closeModal}
       cancelText={'取消'}
     >
-      <Form {...ModalVariables.layout} form={form} style={{ maxWidth: 600 }}>
+      <Form
+        {...ModalVariables.layout}
+        form={form}
+        style={{ maxWidth: 600 }}
+        initialValues={{ menuType: 1, menuState: 1 }}
+      >
         <Form.Item hidden={true} name={'_id'}>
           <Input />
         </Form.Item>
-
-        <Form.Item name="parentId" label="上级部门">
+        <Form.Item name="parentId" label="父级菜单">
           <TreeSelect
-            placeholder={'请选择上级部门'}
+            placeholder={'请选择父级菜单'}
             allowClear
             treeDefaultExpandAll
-            fieldNames={{ label: 'deptName', value: '_id' }}
+            fieldNames={{ label: 'menuName', value: '_id' }}
             treeData={menus}
           />
         </Form.Item>
-
-        <Form.Item name={'deptName'} label={'部门名称'} rules={[{ required: true, message: '请输入部门名称' }]}>
-          <Input placeholder={'请输入部门名称'} required={true} />
+        <Form.Item name="menuType" label="菜单类型">
+          <Radio.Group
+            options={[
+              { label: '菜单', value: 1 },
+              { label: '按钮', value: 2 },
+              { label: '页面', value: 3 },
+            ]}
+            optionType="default"
+          />
         </Form.Item>
-
-        <Form.Item name="userName" label={'负责人'} rules={[{ required: true, message: '请选择负责人' }]}>
-          <Select placeholder={'请选择负责人'}></Select>
+        <Form.Item name={'menuState'} label={'菜单状态'}>
+          <Radio.Group
+            options={[
+              { label: '正常', value: 1 },
+              { label: '停用', value: 2 },
+            ]}
+            optionType="default"
+          />
+        </Form.Item>
+        <Form.Item name={'menuName'} label={'菜单名称'} rules={[{ required: true, message: '请输入菜单名称' }]}>
+          <Input placeholder={'请输入菜单名称'} required={true} />
+        </Form.Item>
+        <Form.Item shouldUpdate noStyle>
+          {() => {
+            // 根据菜单类型动态显示权限标识和路由地址
+            if (form.getFieldValue('menuType') === 2) {
+              return (
+                <Form.Item name={'menuCode'} label={'权限标识'}>
+                  <Input placeholder={'请输入权限标识'} />
+                </Form.Item>
+              )
+            } else {
+              return (
+                <>
+                  <Form.Item name="icon" label="菜单图标">
+                    <Input placeholder={'请输入菜单图标'} />
+                  </Form.Item>
+                  <Form.Item name="path" label="路由地址">
+                    <Input placeholder={'请输入路由地址'} />
+                  </Form.Item>
+                </>
+              )
+            }
+          }}
+        </Form.Item>
+        <Form.Item name="component" label="组件名称">
+          <Input placeholder={'请输入组件名称'} />
+        </Form.Item>
+        <Form.Item name="sort" label="菜单排序" tooltip={{ title: '数值越小越靠前' }}>
+          <Input placeholder="排序值" min={0} type="number" />
         </Form.Item>
       </Form>
     </Modal>

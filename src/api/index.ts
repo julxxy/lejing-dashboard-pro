@@ -89,7 +89,7 @@ export default {
     getMenus(params: Menu.SearchParams) {
       return httpUtils.get<Menu.Item[]>('/menu/list', params)
     },
-    create(params: Menu.RequestParams) {
+    add(params: Menu.RequestParams) {
       return httpUtils.post('/menu/create', params)
     },
     edit(params: Menu.EditParams) {
