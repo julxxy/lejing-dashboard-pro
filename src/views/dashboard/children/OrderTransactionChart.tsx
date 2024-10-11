@@ -3,7 +3,7 @@ import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import * as echarts from 'echarts'
 import api from '@/api'
 import { debounce } from 'lodash'
@@ -116,7 +116,7 @@ export default function OrderTransactionChart() {
   }
 
   function onReload() {
-    if (debugEnable) log.info('Reloading chart data')
+    if (isDebugEnable) log.info('Reloading chart data')
     setLoading(true)
     setTimeout(() => fetchAndRenderOrderChart().then(() => setLoading(false)), 500)
   }

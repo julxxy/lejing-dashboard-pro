@@ -1,11 +1,11 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
-import { User } from '@/types/apiTypes.ts'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { User } from '@/types/ApiTypes.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
 import UserModal from '@/views/system/user/UserModal.tsx'
-import { Action, ModalProps } from '@/types/modal.ts'
+import { Action, ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
 
@@ -16,11 +16,12 @@ import { useAntdTable } from 'ahooks'
 export default function UsersSecondary() {
   const [form] = Form.useForm()
   const [userIds, setUserIds] = useState<number[]>([])
-  const userRef = useRef<ModalProps>({
+  const userRef = useRef<ModalAction>({
     openModal: (action: Action, data?: User.UserItem) => {
-      if (debugEnable) log.info('开启弹窗显示: ', action, data)
+      if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   // 1. 获取分页数据
@@ -32,7 +33,7 @@ export default function UsersSecondary() {
       current: number
       pageSize: number
     },
-    formData: User.RequestArgs
+    formData: User.RequestArgs,
   ) => {
     const res = await api.user.getUserList({ ...formData, pageNum: current, pageSize })
     return {
@@ -130,7 +131,7 @@ export default function UsersSecondary() {
   ]
 
   return (
-    <div className="user-list">
+    <div className="sidebar-submenu">
       <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 1 }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />

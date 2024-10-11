@@ -1,5 +1,5 @@
-import { Department, Login, PageResult, UcDashboard, User } from '@/types/apiTypes.ts'
-import request from '@/utils/httpUtils.ts'
+import { Department, Login, Menu, PageResult, UcDashboard, User } from '@/types/ApiTypes.ts'
+import httpUtils from '@/utils/httpUtils.ts'
 
 /**
  * API Request Management
@@ -7,31 +7,31 @@ import request from '@/utils/httpUtils.ts'
 export default {
   // 登录
   login(params: Login.Request) {
-    return request.post<string>(`/users/login`, params, { showLoading: false, showError: false })
+    return httpUtils.post<string>(`/users/login`, params, { showLoading: false, showError: false })
   },
   // 获取用户信息
   getUserInfo() {
-    return request.get<User.Info>('/users/getUserInfo')
+    return httpUtils.get<User.Info>('/users/getUserInfo')
   },
   // 获取报表
   getReport() {
-    return request.get<UcDashboard.Report>('/order/dashboard/getReportData')
+    return httpUtils.get<UcDashboard.Report>('/order/dashboard/getReportData')
   },
   // 获取订单图表数据
   getOrderChartData() {
-    return request.get<UcDashboard.OrderChartEntity>('/order/dashboard/getLineData')
+    return httpUtils.get<UcDashboard.OrderChartEntity>('/order/dashboard/getLineData')
   },
   // 获取城市分布数据
   getDriverCityData() {
-    return request.get<UcDashboard.CityChartEntity[]>('/order/dashboard/getPieCityData')
+    return httpUtils.get<UcDashboard.CityChartEntity[]>('/order/dashboard/getPieCityData')
   },
   // 获取年龄分布数据
   getDriverAgeData() {
-    return request.get<UcDashboard.AgeChartEntity[]>('/order/dashboard/getPieAgeData')
+    return httpUtils.get<UcDashboard.AgeChartEntity[]>('/order/dashboard/getPieAgeData')
   },
   // 获取雷达图数据
   getDriverRadarData() {
-    return request.get<UcDashboard.RadarChartEntity>('/order/dashboard/getRadarData')
+    return httpUtils.get<UcDashboard.RadarChartEntity>('/order/dashboard/getRadarData')
   },
 
   /**
@@ -40,23 +40,23 @@ export default {
   user: {
     // 获取用户列表
     getUserList(params: User.RequestArgs) {
-      return request.get<PageResult<User.UserItem>>('/users/list', params)
+      return httpUtils.get<PageResult<User.UserItem>>('/users/list', params)
     },
     // 获取当前登录者的所有用户
     getAllUsers() {
-      return request.get<User.UserItem[]>('/users//all/list', {})
+      return httpUtils.get<User.UserItem[]>('/users//all/list', {})
     },
     // Add new user
     addUser(params: User.UserAdd) {
-      return request.post('/users/create', params)
+      return httpUtils.post('/users/create', params)
     },
     // Edit User
     editUser(params: User.UserEdit) {
-      return request.post('/users/edit', params)
+      return httpUtils.post('/users/edit', params)
     },
     // Delete user
     deleteUser(userIds: number[]) {
-      return request.post('/users/delete', { userIds })
+      return httpUtils.post('/users/delete', { userIds })
     },
   },
 
@@ -66,26 +66,39 @@ export default {
   dept: {
     // 获取部门列表
     getDepartments(params?: Department.SearchParams) {
-      return request.get<Department.Item[]>('/dept/list', params)
+      return httpUtils.get<Department.Item[]>('/dept/list', params)
     },
     // Add new department
     add(params: Department.CreateParams) {
-      return request.post('/dept/create', params)
+      return httpUtils.post('/dept/create', params)
     },
     // Edit department
     edit(params: Department.EditParams) {
-      return request.post('/dept/edit', params)
+      return httpUtils.post('/dept/edit', params)
     },
     // Delete department
     delete(deptId: Department.DeleteParams) {
-      return request.post('/dept/delete', deptId)
+      return httpUtils.post('/dept/delete', deptId)
     },
   },
 
   /**
    * 菜单管理
    */
-  menu: {},
+  menu: {
+    getMenus(params: Menu.SearchParams) {
+      return httpUtils.get<Menu.Item[]>('/menu/list', params)
+    },
+    create(params: Menu.RequestParams) {
+      return httpUtils.post('/menu/create', params)
+    },
+    edit(params: Menu.EditParams) {
+      return httpUtils.post('/menu/edit', params)
+    },
+    delete(_id: string) {
+      return httpUtils.post('/menu/delete', { _id })
+    },
+  },
   /**
    * 角色管理
    */

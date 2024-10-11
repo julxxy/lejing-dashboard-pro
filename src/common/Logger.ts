@@ -43,8 +43,8 @@ function isDebugEnabled(): boolean {
 /**
  * Check if debug mode is enabled
  */
-export const debugEnable = isDebugEnabled()
+export const isDebugEnable = isDebugEnabled()
 /**
  * Create logger instance
  */
-export const log = createLogger(debugEnable ? 'debug' : 'info')
+export const log = createLogger(isDebugEnable ? 'debug' : 'info')

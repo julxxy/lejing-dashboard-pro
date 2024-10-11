@@ -2,7 +2,7 @@
 import * as echarts from 'echarts'
 import { ECharts, EChartsType } from 'echarts'
 import { RefObject } from 'react'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 
 export const EChartsManager = {
   /**
@@ -17,7 +17,7 @@ export const EChartsManager = {
     }
     // 尝试获取现有的 ECharts 实例，如果不存在则创建一个新的实例
     let instance = echarts.getInstanceByDom(chartRef.current)
-    if (instance && debugEnable) log.debug('Use exists instance of ECharts, chartId: ', instance.getId())
+    if (instance && isDebugEnable) log.debug('Use exists instance of ECharts, chartId: ', instance.getId())
     if (!instance) {
       instance = echarts.init(chartRef.current)
     }
@@ -64,7 +64,7 @@ export const EChartsManager = {
    *      toolbox: {
    *         feature: {
    *           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-   *             if (debugEnable) log.info(`Refreshing chart`)
+   *             if (isDebugEnable) log.info(`Refreshing chart`)
    *             renderVisitChart()
    *           }),
    *         },

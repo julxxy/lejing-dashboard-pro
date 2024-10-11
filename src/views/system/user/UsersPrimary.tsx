@@ -1,11 +1,11 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType, TablePaginationConfig } from 'antd'
-import { PageArgs, User } from '@/types/apiTypes.ts'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { PageArgs, User } from '@/types/ApiTypes.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import React, { useEffect, useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
 import UserModal from '@/views/system/user/UserModal.tsx'
-import { Action, ModalProps } from '@/types/modal.ts'
+import { Action, ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
 /**
@@ -20,11 +20,12 @@ export default function UsersPrimary() {
   const [userIds, setUserIds] = useState<number[]>([])
   const [pagination, setPagination] = useState<TablePaginationConfig>({ current: 1, pageSize: 10, total: 0 })
 
-  const userRef = useRef<ModalProps>({
+  const userRef = useRef<ModalAction>({
     openModal: (action: Action, data?: User.UserItem) => {
-      if (debugEnable) log.info('开启弹窗显示: ', action, data)
+      if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
   const onCreate = () => {
     userRef?.current?.openModal('create')
@@ -109,7 +110,7 @@ export default function UsersPrimary() {
           }
           return acc
         },
-        {} as Record<string, any>
+        {} as Record<string, any>,
       )
       const params = {
         ...cleanedValues,
@@ -117,11 +118,11 @@ export default function UsersPrimary() {
         pageSize: pageSize ?? pagination.pageSize ?? 10,
       }
 
-      if (debugEnable) log.info('搜索条件: ', params)
+      if (isDebugEnable) log.info('搜索条件: ', params)
 
       const data = await api.user.getUserList(params)
       const { list } = data
-      if (debugEnable) log.info('搜索列表: ', list)
+      if (isDebugEnable) log.info('搜索列表: ', list)
 
       if (isMockEnable) {
         const totalItems = 9999 // 模拟总条数
@@ -137,7 +138,7 @@ export default function UsersPrimary() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10)
+          (args.pageNum ?? 1) * (args.pageSize ?? 10),
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })
@@ -176,7 +177,7 @@ export default function UsersPrimary() {
   }
 
   return (
-    <div className="user-list">
+    <div className="sidebar-submenu">
       <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 1 }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />

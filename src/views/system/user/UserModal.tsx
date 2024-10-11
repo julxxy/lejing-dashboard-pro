@@ -1,13 +1,13 @@
 import { Button, Form, Input, Modal, Select, Upload, UploadProps } from 'antd'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import { useImperativeHandle, useState } from 'react'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { RcFile } from 'antd/es/upload'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import requestUtils from '@/utils/httpUtils.ts'
-import { ResultStatus } from '@/types/enums.ts'
+import { ResultStatus } from '@/types/Enums.ts'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
-import { User } from '@/types/apiTypes.ts'
+import { User } from '@/types/ApiTypes.ts'
 import api from '@/api'
 
 /**
@@ -22,7 +22,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
 
   // 开启当前组件的弹窗显示
   const openModal = (action: Action, data?: User.UserItem) => {
-    if (debugEnable) log.info('收到父组件的弹窗显示请求: ', action, JSON.stringify(data))
+    if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, JSON.stringify(data))
     if (action === 'edit' && data) {
       form.setFieldsValue(data)
       setImageUrl(data.userImg)
@@ -39,7 +39,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
   useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
 
   function onFinish(values: any) {
-    if (debugEnable) log.info('on_finish: ', values)
+    if (isDebugEnable) log.info('on_finish: ', values)
   }
 
   function handleReset() {
@@ -62,7 +62,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
       if (action === 'edit') {
         res = await api.user.editUser(args)
       }
-      if (debugEnable) log.info('提交结果', res)
+      if (isDebugEnable) log.info('提交结果', res)
       onRefreshed() // 调用父组件的刷新函数
       currentRef?.current.closeModal() // 调用父组件的关闭函数
     } finally {
@@ -72,7 +72,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
   }
 
   function handleCancel() {
-    if (debugEnable) log.info('取消')
+    if (isDebugEnable) log.info('取消')
     currentRef?.current?.closeModal() // 调用父组件的关闭函数
   }
 
@@ -83,7 +83,7 @@ export default function UserModal({ currentRef, onRefreshed }: IModalProps) {
     }
     if (info.file.status === 'done') {
       const { code, msg, data } = info.file.response
-      if (debugEnable) log.info('图片上传', info.file.response)
+      if (isDebugEnable) log.info('图片上传', info.file.response)
       setLoading(false)
       if (ResultStatus.Success !== code) {
         message.error(msg)

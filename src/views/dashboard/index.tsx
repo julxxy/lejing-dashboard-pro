@@ -2,10 +2,10 @@ import styles from '@/views/dashboard/index.module.less'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import useZustandStore from '@/store/useZustandStore.ts'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import Loading from '@/views/loading'
-import { Environment } from '@/types/enums.ts'
-import { UcDashboard, User } from '@/types/apiTypes.ts'
+import { Environment } from '@/types/Enums.ts'
+import { UcDashboard, User } from '@/types/ApiTypes.ts'
 import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils'
 import api from '@/api'
 import root from '@/mockdata/root.json'
@@ -42,7 +42,7 @@ function getAvatar(avatar: string): string {
 const Dashboard: React.FC = () => {
   useRef<HTMLDivElement>(null)
   const { isDarkEnable, userInfo } = useZustandStore()
-  if (debugEnable) log.info('isDarkEnable: ', isDarkEnable)
+  if (isDebugEnable) log.info('isDarkEnable: ', isDarkEnable)
 
   const [report, setReport] = useState<UcDashboard.Report>()
   const username = Environment.isLocal() ? 'Weasley' : userInfo?.userName
