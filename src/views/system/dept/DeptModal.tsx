@@ -9,7 +9,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 /**
  * 创建/编辑菜单弹窗
  */
-export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
+export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(true)
   const [deptList, setDeptList] = useState<Department.Item[]>([])
