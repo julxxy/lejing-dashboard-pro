@@ -58,15 +58,18 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
       let res = null
       if (action === 'create') {
         res = await api.user.addUser(args)
-      }
-      if (action === 'edit') {
+      } else if (action === 'edit') {
         res = await api.user.editUser(args)
       }
       if (isDebugEnable) log.info('提交结果', res)
+      if (res?.code === ResultStatus.Failed) {
+        message.error(res?.msg)
+        return
+      }
+      message.success('操作成功')
       onRefresh() // 调用父组件的刷新函数
       currentRef?.current.closeModal() // 调用父组件的关闭函数
     } finally {
-      message.success('操作成功')
       setLoading(false)
     }
   }

@@ -1,4 +1,4 @@
-import { Department, Login, Menu, PageResult, UcDashboard, User } from '@/types/ApiTypes.ts'
+import { Department, Login, Menu, PageResult, Result, UcDashboard, User } from '@/types/ApiTypes.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 
 /**
@@ -48,15 +48,15 @@ export default {
     },
     // Add new user
     addUser(params: User.UserAdd) {
-      return httpUtils.post('/users/create', params)
+      return httpUtils.post<Result>('/users/create', params)
     },
     // Edit User
     editUser(params: User.UserEdit) {
-      return httpUtils.post('/users/edit', params)
+      return httpUtils.post<Result>('/users/edit', params)
     },
     // Delete user
     deleteUser(userIds: number[]) {
-      return httpUtils.post('/users/delete', { userIds })
+      return httpUtils.post<Result>('/users/delete', { userIds })
     },
   },
 
@@ -70,15 +70,15 @@ export default {
     },
     // Add new department
     add(params: Department.CreateParams) {
-      return httpUtils.post('/dept/create', params)
+      return httpUtils.post<Result>('/dept/create', params)
     },
     // Edit department
     edit(params: Department.EditParams) {
-      return httpUtils.post('/dept/edit', params)
+      return httpUtils.post<Result>('/dept/edit', params)
     },
     // Delete department
     delete(deptId: Department.DeleteParams) {
-      return httpUtils.post('/dept/delete', deptId)
+      return httpUtils.post<Result>('/dept/delete', deptId)
     },
   },
 
@@ -90,13 +90,13 @@ export default {
       return httpUtils.get<Menu.Item[]>('/menu/list', params)
     },
     add(params: Menu.RequestParams) {
-      return httpUtils.post('/menu/create', params)
+      return httpUtils.post<Result>('/menu/create', params)
     },
     edit(params: Menu.EditParams) {
-      return httpUtils.post('/menu/edit', params)
+      return httpUtils.post<Result>('/menu/edit', params)
     },
     delete(_id: string) {
-      return httpUtils.post('/menu/delete', { _id })
+      return httpUtils.post<Result>('/menu/delete', { _id })
     },
   },
   /**
