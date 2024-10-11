@@ -112,7 +112,6 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
         </Form.Item>
         <Form.Item shouldUpdate noStyle>
           {() => {
-            // 根据菜单类型动态显示权限标识和路由地址
             if (form.getFieldValue('menuType') === 2) {
               return (
                 <>

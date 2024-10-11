@@ -35,6 +35,7 @@ export enum UserStatus {
  */
 export enum ResultStatus {
   Success = 0,
+  Failed = 40001,
 }
 
 /**
