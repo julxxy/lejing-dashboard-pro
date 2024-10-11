@@ -20,7 +20,8 @@ export default function MenuFC() {
     openModal: (action, data?: Menu.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function MenuFC() {
     log.info('删除部门')
     modal.confirm({
       title: '确认删除用户',
-      content: '确认要删除所选用户吗？',
+      content: '确认要删除所选菜单吗？',
       onOk: async () => {
         if (!_id) return
         await api.menu.delete(_id)
