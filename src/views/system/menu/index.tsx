@@ -16,12 +16,11 @@ export default function MenuFC() {
   const [form] = useForm()
   const [data, setData] = useState<Menu.Item[]>([])
   const [loading, setLoading] = useState(false)
-  const currentRef = useRef<ModalAction>({
+  const menuRef = useRef<ModalAction>({
     openModal: (action, data?: Menu.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {
@@ -50,15 +49,15 @@ export default function MenuFC() {
   }
 
   function handleEdit(record?: Menu.Item) {
-    currentRef?.current?.openModal('edit', record) // 打开弹窗
+    menuRef?.current?.openModal('edit', record) // 打开弹窗
   }
 
   function handleMainCreate() {
-    currentRef?.current?.openModal('create') // 打开弹窗
+    menuRef?.current?.openModal('create') // 打开弹窗
   }
 
   const handleSubCreate = (parentId?: string) => {
-    currentRef?.current?.openModal('create', { parentId }) // 打开弹窗
+    menuRef?.current?.openModal('create', { parentId }) // 打开弹窗
   }
 
   function handleReset() {
@@ -145,7 +144,7 @@ export default function MenuFC() {
         </div>
         <Table bordered rowKey={'_id'} columns={columns} dataSource={data} pagination={false} loading={loading} />
       </div>
-      <MenuModal currentRef={currentRef} onRefresh={getMenus} />
+      <MenuModal currentRef={menuRef} onRefresh={getMenus} />
     </div>
   )
 }
