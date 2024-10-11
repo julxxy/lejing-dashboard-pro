@@ -24,7 +24,6 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
     setAction(action)
     setShowModal(true)
     form.setFieldsValue(data)
-    log.info(form.getFieldsValue())
   }
   // 关闭当前组件的弹窗显示
   const closeModal = () => {
@@ -116,9 +115,11 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
             // 根据菜单类型动态显示权限标识和路由地址
             if (form.getFieldValue('menuType') === 2) {
               return (
-                <Form.Item name={'menuCode'} label={'权限标识'}>
-                  <Input placeholder={'请输入权限标识'} />
-                </Form.Item>
+                <>
+                  <Form.Item name={'menuCode'} label={'权限标识'}>
+                    <Input placeholder={'请输入权限标识'} />
+                  </Form.Item>
+                </>
               )
             } else {
               return (
