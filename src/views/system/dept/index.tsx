@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Action, ModalProps } from '@/types/modal.ts'
 import api from '@/api'
 import { Department, User } from '@/types/apiTypes.ts'
-import MenuModal from '@/views/system/dept/DeptModal.tsx'
+import DeptModal from '@/views/system/dept/DeptModal.tsx'
 import { debugEnable, log } from '@/common/loggerProvider.ts'
 import { formatDateToLocalString } from '@/utils'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
@@ -21,7 +21,8 @@ export default function DepartmentFC() {
     openModal: (action: Action, data?: User.UserItem | { parentId: string }) => {
       if (debugEnable) log.info('开启弹窗显示: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   useEffect(() => {
@@ -152,7 +153,7 @@ export default function DepartmentFC() {
           loading={loading}
         />
       </div>
-      <MenuModal currentRef={currentRef} onRefreshed={getDepartments} />
+      <DeptModal currentRef={currentRef} onRefreshed={getDepartments} />
     </div>
   )
 }
