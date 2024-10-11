@@ -8,6 +8,7 @@ import { ModalAction } from '@/types/modal.ts'
 import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd'
 import { Menu } from '@/types/ApiTypes.ts'
 import { formatDateToLocalString } from '@/utils'
+import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
 /**
  * @file 菜单管理页面
@@ -20,8 +21,7 @@ export default function MenuFC() {
     openModal: (action, data?: Menu.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function MenuFC() {
   }
 
   const columns: TableColumnsType<Menu.Item> = [
-    { title: '菜单名称', key: 'menuName', dataIndex: 'menuName', width: 150 },
+    { title: '菜单名称', key: 'menuName', dataIndex: 'menuName', width: 200 },
     { title: '菜单图标', key: 'icon', dataIndex: 'icon', width: 100 },
     {
       title: '菜单类型',
@@ -88,19 +88,13 @@ export default function MenuFC() {
     {
       title: '操作',
       key: 'action',
-      width: 220,
+      width: 80,
       render: (_text, record?: Menu.Item) => {
         return (
           <Space>
-            <Button color={'primary'} variant={'dashed'} onClick={() => handleSubCreate(record?._id)}>
-              新增
-            </Button>
-            <Button color={'primary'} variant={'dashed'} onClick={() => handleEdit(record)}>
-              编辑
-            </Button>
-            <Button type={'dashed'} danger={true} onClick={() => handleDelete(record?._id)}>
-              删除
-            </Button>
+            <Button icon={<PlusOutlined />} shape="circle" onClick={() => handleSubCreate(record?._id)} />
+            <Button icon={<EditOutlined />} shape="circle" onClick={() => handleEdit(record)} />
+            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => handleDelete(record?._id)} />
           </Space>
         )
       },
@@ -125,10 +119,10 @@ export default function MenuFC() {
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type={'primary'} onClick={() => getMenus()}>
+            <Button icon={<SearchOutlined />} type={'primary'} onClick={() => getMenus()}>
               搜索
             </Button>
-            <Button type={'default'} onClick={handleReset}>
+            <Button icon={<ReloadOutlined />} type={'default'} onClick={handleReset}>
               重置
             </Button>
           </Space>
@@ -138,7 +132,7 @@ export default function MenuFC() {
         <div className="header-wrapper">
           <div className="title">菜单列表</div>
           <div className="action">
-            <Button type={'primary'} onClick={handleMainCreate}>
+            <Button icon={<PlusOutlined />} type={'primary'} onClick={handleMainCreate}>
               新增
             </Button>
           </div>

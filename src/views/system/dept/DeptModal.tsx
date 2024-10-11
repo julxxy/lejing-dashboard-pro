@@ -5,6 +5,7 @@ import { Department, User } from '@/types/ApiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 
 /**
  * 创建/编辑菜单弹窗
@@ -69,13 +70,14 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
 
   return (
     <Modal
-      title={action === 'create' ? '创建菜单' : '编辑菜单'}
+      title={action === 'create' ? '创建部门' : '编辑部门'}
       width={ModalVariables.width}
       open={modalOpen}
       onOk={handleSubmit}
-      okButtonProps={{ loading, className: 'cta-button' }}
+      okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
       okText={'确定'}
       onCancel={closeModal}
+      cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
       cancelText={'取消'}
     >
       <Form {...ModalVariables.layout} form={form} style={{ maxWidth: 600 }}>

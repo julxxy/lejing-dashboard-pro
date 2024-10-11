@@ -8,6 +8,7 @@ import UserModal from '@/views/system/user/UserModal.tsx'
 import { ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
+import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
 /**
  * 使用 ahooks 实现用户列表
@@ -111,18 +112,8 @@ export default function UsersSecondary() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button size={'small'} color="primary" variant="dashed" shape={'round'} onClick={() => onUserEdit(record)}>
-              编辑
-            </Button>
-            <Button
-              size={'small'}
-              type="dashed"
-              shape={'round'}
-              danger={true}
-              onClick={() => onUserDelete([record.userId])}
-            >
-              删除
-            </Button>
+            <Button icon={<EditOutlined />} shape="circle" onClick={() => onUserEdit(record)} />
+            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onUserDelete([record.userId])} />
           </Space>
         )
       },
@@ -148,10 +139,10 @@ export default function UsersSecondary() {
         </Form.Item>
         <Form.Item>
           <Space>
-            <Button type="primary" className={'-'} onClick={() => search.submit()}>
+            <Button icon={<SearchOutlined />} type="primary" onClick={() => search.submit()}>
               搜索
             </Button>
-            <Button type="default" htmlType={'reset'} onClick={() => search.reset()}>
+            <Button icon={<ReloadOutlined />} htmlType={'reset'} onClick={() => search.reset()}>
               重置
             </Button>
           </Space>
@@ -162,10 +153,15 @@ export default function UsersSecondary() {
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>
-              <Button type={'primary'} danger={false} onClick={() => currentRef?.current?.openModal('create')}>
+              <Button
+                icon={<PlusOutlined />}
+                type={'primary'}
+                danger={false}
+                onClick={() => currentRef?.current?.openModal('create')}
+              >
                 添加
               </Button>
-              <Button type={'primary'} danger={true} onClick={() => onBatchDelete()}>
+              <Button icon={<DeleteOutlined />} type={'primary'} danger={true} onClick={() => onBatchDelete()}>
                 批量删除
               </Button>
             </Space>

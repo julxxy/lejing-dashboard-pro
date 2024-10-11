@@ -12,6 +12,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { isTrue } from '@/common/booleanUtils.ts'
 import { base64Utils } from '@/common/base64Utils.ts'
 import Draggable from 'react-draggable'
+import { LoginOutlined } from '@ant-design/icons'
 
 function getAccount(): { username: string; password: string } {
   let account = { username: '', password: '' }
@@ -96,6 +97,7 @@ export default function LoginFC() {
                 block={true}
                 htmlType="submit"
                 loading={loading}
+                icon={<LoginOutlined />}
                 style={{ height: '40px', fontSize: '16px' }}
               >
                 登录
