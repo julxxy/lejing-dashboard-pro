@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
-import { User } from '@/types/apiTypes.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
+import { User } from '@/types/ApiTypes.ts'
 import storageUtils from '@/utils/storageUtils.ts'
 
 /**
@@ -47,7 +47,7 @@ const useZustandStore = create<{
 }))
 
 function logUpdate(data: any) {
-  if (debugEnable) log.debug('Zustand meta data update:', data)
+  if (isDebugEnable) log.debug('Zustand meta data update:', data)
 }
 
 export default useZustandStore

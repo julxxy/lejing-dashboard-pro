@@ -3,7 +3,7 @@ import styles from '@/views/dashboard/index.module.less'
 import { Button, Card } from 'antd'
 import { EChartsManager } from '@/context/EChartsManager.ts'
 import { ReloadOutlined } from '@ant-design/icons'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { debounce } from 'lodash'
 
@@ -43,7 +43,7 @@ export default function ModelDiagnosticsRadarChart() {
       toolbox: {
         feature: {
           ...EChartsManager.getEChartsOptionWithRefresh(() => {
-            if (debugEnable) log.info(`Refreshing chart`)
+            if (isDebugEnable) log.info(`Refreshing chart`)
             renderDriverModelChart()
           }),
         },
@@ -98,7 +98,7 @@ export default function ModelDiagnosticsRadarChart() {
   }
 
   function onReload() {
-    if (debugEnable) log.info('Reloading chart data')
+    if (isDebugEnable) log.info('Reloading chart data')
     setLoading(true)
     renderAllCharts().then(() => setTimeout(() => setLoading(false), 500))
   }

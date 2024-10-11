@@ -1,47 +1,40 @@
 import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Input, Modal, Select, TreeSelect } from 'antd'
-import { Department, User } from '@/types/ApiTypes.ts'
+import { Department, Menu } from '@/types/ApiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
 
 /**
- * 创建/编辑菜单弹窗
+ * 菜单弹窗: 创建&编辑
  */
-export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
+export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(true)
-  const [deptList, setDeptList] = useState<Department.Item[]>([])
-  const [allUsers, setAllUsers] = useState<User.UserItem[]>([])
-  const [modalOpen, setModalOpen] = useState(false)
+  const [menus, setMenus] = useState<Menu.Item[]>([])
+  const [showModal, setShowModal] = useState(false)
   const [action, setAction] = useState<Action>('create')
+  const title = (action === 'create' ? '创建' : '编辑') + '菜单'
 
   // 开启当前组件的弹窗显示
   const openModal = (action: Action, data?: Department.EditParams | { parentId: string }) => {
     if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
-    fetchDeptList()
-    fetchAllUsers()
+    fetchMenus()
     setAction(action)
-    setModalOpen(true)
+    setShowModal(true)
     form.setFieldsValue(data)
     log.info(form.getFieldsValue())
   }
   // 关闭当前组件的弹窗显示
   const closeModal = () => {
-    setModalOpen(false)
+    setShowModal(false)
     form.resetFields()
   }
   useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
-  const fetchDeptList = async () => {
-    const deptList = await api.dept.getDepartments()
-    setDeptList(deptList)
-    setLoading(false)
-  }
-
-  const fetchAllUsers = async () => {
-    const allUsers = await api.user.getAllUsers()
-    setAllUsers(allUsers)
+  const fetchMenus = async () => {
+    const data = await api.menu.getMenus(form.getFieldsValue())
+    setMenus(data)
     setLoading(false)
   }
 
@@ -69,9 +62,9 @@ export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
 
   return (
     <Modal
-      title={action === 'create' ? '创建菜单' : '编辑菜单'}
+      title={title}
       width={ModalVariables.width}
-      open={modalOpen}
+      open={showModal}
       onOk={handleSubmit}
       okButtonProps={{ loading, className: 'cta-button' }}
       okText={'确定'}
@@ -89,7 +82,7 @@ export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
             allowClear
             treeDefaultExpandAll
             fieldNames={{ label: 'deptName', value: '_id' }}
-            treeData={deptList}
+            treeData={menus}
           />
         </Form.Item>
 
@@ -99,11 +92,7 @@ export default function DeptModal({ currentRef, onRefreshed }: IModalProps) {
 
         <Form.Item name="userName" label={'负责人'} rules={[{ required: true, message: '请选择负责人' }]}>
           <Select placeholder={'请选择负责人'}>
-            {allUsers.map(({ userName, _id }) => (
-              <Select.Option value={userName} key={_id}>
-                {userName}
-              </Select.Option>
-            ))}
+
           </Select>
         </Form.Item>
       </Form>

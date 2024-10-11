@@ -1,12 +1,12 @@
 import { createRoot } from 'react-dom/client'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import { StrictMode } from 'react'
 import App from '@/App.tsx'
-import { Environment } from '@/types/enums.ts'
+import { Environment } from '@/types/Enums.ts'
 
 const root = createRoot(document.getElementById('root')!)
 
-if (debugEnable) {
+if (isDebugEnable) {
   log.debug(`Debug enabled on '${Environment.current}' mode.`)
 }
 

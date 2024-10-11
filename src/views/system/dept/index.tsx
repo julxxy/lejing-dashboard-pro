@@ -1,11 +1,11 @@
 import { Button, Form, Input, Space, Table, TableColumnsType } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
-import { Action, ModalProps } from '@/types/modal.ts'
+import { Action, ModalAction } from '@/types/modal.ts'
 import api from '@/api'
-import { Department, User } from '@/types/apiTypes.ts'
+import { Department, User } from '@/types/ApiTypes.ts'
 import DeptModal from '@/views/system/dept/DeptModal.tsx'
-import { debugEnable, log } from '@/common/loggerProvider.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 
@@ -17,9 +17,9 @@ export default function DepartmentFC() {
   const [form] = useForm()
   const [departments, setDepartments] = useState<Department.Item[]>([])
   const [loading, setLoading] = useState(false)
-  const currentRef = useRef<ModalProps>({
+  const currentRef = useRef<ModalAction>({
     openModal: (action: Action, data?: User.UserItem | { parentId: string }) => {
-      if (debugEnable) log.info('开启弹窗显示: ', action, data)
+      if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
     closeModal: () => {
     },
@@ -119,7 +119,7 @@ export default function DepartmentFC() {
   ]
 
   return (
-    <div className={'user-list'}>
+    <div className="sidebar-submenu">
       <Form className={'search-box'} layout={'inline'} form={form}>
         <Form.Item name={'deptName'} label={'部门名称'}>
           <Input placeholder={'请输入部门名称'} />

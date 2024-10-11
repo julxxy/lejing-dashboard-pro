@@ -36,3 +36,21 @@ export enum UserStatus {
 export enum ResultStatus {
   Success = 0,
 }
+
+/**
+ * Menu Type
+ */
+export const MenuType = {
+  menu: { code: 1, text: '菜单' },
+  btn: { code: 2, text: '按钮' },
+  page: { code: 3, text: '页面' },
+  getName: (_code: number): string => {
+    for (const key in MenuType) {
+      const item = MenuType[key as keyof typeof MenuType]
+      if (typeof item === 'object' && item.code === _code) {
+        return item.text
+      }
+    }
+    return '未知'
+  },
+} as const

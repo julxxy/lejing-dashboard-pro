@@ -9,7 +9,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { Outlet } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
-import { Environment } from '@/types/enums.ts'
+import { Environment } from '@/types/Enums.ts'
 
 const { Content } = Layout
 const Welcome = lazy(() => import('@/views/welcome'))
