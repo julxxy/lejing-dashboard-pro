@@ -9,7 +9,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 /**
  * 菜单弹窗: 创建&编辑
  */
-export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
+export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(true)
   const [menus, setMenus] = useState<Menu.Item[]>([])
@@ -52,7 +52,7 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
       }
       message.success('操作成功')
       closeModal() // 关闭弹窗
-      onRefreshed() // 执行刷新回调
+      onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
     } finally {

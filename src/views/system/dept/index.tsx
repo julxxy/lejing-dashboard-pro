@@ -1,9 +1,9 @@
 import { Button, Form, Input, Space, Table, TableColumnsType } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
-import { Action, ModalAction } from '@/types/modal.ts'
+import { ModalAction } from '@/types/modal.ts'
 import api from '@/api'
-import { Department, User } from '@/types/ApiTypes.ts'
+import { Department } from '@/types/ApiTypes.ts'
 import DeptModal from '@/views/system/dept/DeptModal.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'
@@ -18,7 +18,7 @@ export default function DepartmentFC() {
   const [departments, setDepartments] = useState<Department.Item[]>([])
   const [loading, setLoading] = useState(false)
   const currentRef = useRef<ModalAction>({
-    openModal: (action: Action, data?: User.UserItem | { parentId: string }) => {
+    openModal: (action, data?: Department.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
     closeModal: () => {},
@@ -152,7 +152,7 @@ export default function DepartmentFC() {
           loading={loading}
         />
       </div>
-      <DeptModal currentRef={currentRef} onRefreshed={getDepartments} />
+      <DeptModal currentRef={currentRef} onRefresh={getDepartments} />
     </div>
   )
 }

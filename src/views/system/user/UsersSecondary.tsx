@@ -5,7 +5,7 @@ import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
 import UserModal from '@/views/system/user/UserModal.tsx'
-import { Action, ModalAction } from '@/types/modal.ts'
+import { ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
 
@@ -16,8 +16,8 @@ import { useAntdTable } from 'ahooks'
 export default function UsersSecondary() {
   const [form] = Form.useForm()
   const [userIds, setUserIds] = useState<number[]>([])
-  const userRef = useRef<ModalAction>({
-    openModal: (action: Action, data?: User.UserItem) => {
+  const currentRef = useRef<ModalAction>({
+    openModal: (action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
     closeModal: () => {},
@@ -84,7 +84,7 @@ export default function UsersSecondary() {
   }
 
   function onUserEdit(record: User.UserItem) {
-    userRef?.current?.openModal('edit', record)
+    currentRef?.current?.openModal('edit', record)
   }
 
   const columns: TableColumnsType<User.UserItem> = [
@@ -162,7 +162,7 @@ export default function UsersSecondary() {
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>
-              <Button type={'primary'} danger={false} onClick={() => userRef?.current?.openModal('create')}>
+              <Button type={'primary'} danger={false} onClick={() => currentRef?.current?.openModal('create')}>
                 添加
               </Button>
               <Button type={'primary'} danger={true} onClick={() => onBatchDelete()}>
@@ -185,7 +185,7 @@ export default function UsersSecondary() {
           rowKey="userId"
           {...tableProps}
         />
-        <UserModal currentRef={userRef} onRefreshed={() => search.reset()} />
+        <UserModal currentRef={currentRef} onRefresh={() => search.reset()} />
       </div>
     </div>
   )
