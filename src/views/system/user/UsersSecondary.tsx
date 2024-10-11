@@ -20,8 +20,7 @@ export default function UsersSecondary() {
     openModal: (action: Action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   // 1. 获取分页数据
@@ -33,7 +32,7 @@ export default function UsersSecondary() {
       current: number
       pageSize: number
     },
-    formData: User.RequestArgs,
+    formData: User.RequestArgs
   ) => {
     const res = await api.user.getUserList({ ...formData, pageNum: current, pageSize })
     return {

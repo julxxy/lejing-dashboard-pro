@@ -91,9 +91,7 @@ export default function MenuModal({ currentRef, onRefreshed }: IModalProps) {
         </Form.Item>
 
         <Form.Item name="userName" label={'负责人'} rules={[{ required: true, message: '请选择负责人' }]}>
-          <Select placeholder={'请选择负责人'}>
-
-          </Select>
+          <Select placeholder={'请选择负责人'}></Select>
         </Form.Item>
       </Form>
     </Modal>

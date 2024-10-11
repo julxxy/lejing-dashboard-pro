@@ -24,8 +24,7 @@ export default function UsersPrimary() {
     openModal: (action: Action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
   const onCreate = () => {
     userRef?.current?.openModal('create')
@@ -110,7 +109,7 @@ export default function UsersPrimary() {
           }
           return acc
         },
-        {} as Record<string, any>,
+        {} as Record<string, any>
       )
       const params = {
         ...cleanedValues,
@@ -138,7 +137,7 @@ export default function UsersPrimary() {
         }))
         const paginatedItems = items.slice(
           ((args.pageNum ?? 1) - 1) * (args.pageSize ?? 10),
-          (args.pageNum ?? 1) * (args.pageSize ?? 10),
+          (args.pageNum ?? 1) * (args.pageSize ?? 10)
         )
         setUsers(paginatedItems)
         setPagination({ total: totalItems, current: args.pageNum, pageSize: args.pageSize })

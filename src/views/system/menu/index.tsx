@@ -20,8 +20,7 @@ export default function MenuFC() {
     openModal: (action: Action, data?: Menu.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {
