@@ -21,7 +21,8 @@ export default function DepartmentFC() {
     openModal: (action, data?: Department.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function DepartmentFC() {
     log.info('删除部门')
     modal.confirm({
       title: '确认删除用户',
-      content: '确认要删除所选用户吗？',
+      content: '确认要删除所选部门吗？',
       onOk: async () => {
         if (!_id) return
         await api.dept.delete({ _id })
