@@ -151,12 +151,7 @@ export namespace Department {
   export interface DeleteParams {
     _id: string
   }
-
-  export interface SideMenuProps {
-    collapsed?: boolean
-  }
 }
-
 /**
  * 菜单管理
  */
@@ -175,6 +170,7 @@ export namespace Menu {
     parentId?: string // 父级菜单ID
     path?: string // 菜单路径
     component?: string // 组件名称
+    orderBy: number
   }
 
   export interface Item extends RequestParams {
@@ -187,4 +183,8 @@ export namespace Menu {
   export interface EditParams extends RequestParams {
     _id?: string
   }
+}
+
+export interface SideMenuProps {
+  collapsed?: boolean
 }

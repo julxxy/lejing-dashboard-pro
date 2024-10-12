@@ -6,7 +6,7 @@ import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
 import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd'
-import { Menu } from '@/types/ApiTypes.ts'
+import { Menu } from '@/types/apiTypes.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 
@@ -18,9 +18,10 @@ export default function MenuFC() {
   const [data, setData] = useState<Menu.Item[]>([])
   const [loading, setLoading] = useState(false)
   const menuRef = useRef<ModalAction>({
-    openModal: (action, data?: Menu.EditParams | { parentId: string }) => {
+    openModal: (action, data?: Menu.EditParams | { parentId?: string; orderBy?: number }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
+
     closeModal: () => {},
   })
 
@@ -54,7 +55,7 @@ export default function MenuFC() {
   }
 
   function handleMainCreate() {
-    menuRef?.current?.openModal('create') // 打开弹窗
+    menuRef?.current?.openModal('create', { orderBy: data.length }) // 打开弹窗
   }
 
   const handleSubCreate = (parentId?: string) => {
@@ -137,7 +138,14 @@ export default function MenuFC() {
             </Button>
           </div>
         </div>
-        <Table bordered rowKey={'_id'} columns={columns} dataSource={data} pagination={false} loading={loading} />
+        <Table
+          bordered
+          rowKey={'_id'}
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          loading={loading}
+        />
       </div>
       <MenuModal currentRef={menuRef} onRefresh={getMenus} />
     </div>

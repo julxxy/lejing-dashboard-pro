@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { StrictMode } from 'react'
 import App from '@/App.tsx'
-import { Environment } from '@/types/Enums.ts'
+import { Environment } from '@/types/constants.ts'
 
 const root = createRoot(document.getElementById('root')!)
 

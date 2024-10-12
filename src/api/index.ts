@@ -1,4 +1,4 @@
-import { Department, Login, Menu, PageResult, Result, UcDashboard, User } from '@/types/ApiTypes.ts'
+import { Department, Login, Menu, PageResult, Result, UcDashboard, User } from '@/types/apiTypes.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 
 /**

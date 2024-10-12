@@ -1,7 +1,7 @@
 import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Input, Modal, Radio, TreeSelect } from 'antd'
-import { Department, Menu } from '@/types/ApiTypes.ts'
+import { Department, Menu } from '@/types/apiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
@@ -19,7 +19,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
   const title = (action === 'create' ? '创建' : '编辑') + '菜单'
 
   // 开启当前组件的弹窗显示
-  const openModal = (action: Action, data?: Department.EditParams | { parentId: string }) => {
+  const openModal = (action: Action, data?: Department.EditParams | { parentId?: string; orderBy?: number }) => {
     if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
     fetchMenus()
     setAction(action)
@@ -140,7 +140,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
         <Form.Item name="component" label="组件名称">
           <Input placeholder={'请输入组件名称'} />
         </Form.Item>
-        <Form.Item name="sort" label="菜单排序" tooltip={{ title: '数值越小越靠前' }}>
+        <Form.Item name="orderBy" label="菜单排序" tooltip={{ title: '数值越小越靠前' }}>
           <Input placeholder="排序值" min={0} type="number" />
         </Form.Item>
       </Form>
