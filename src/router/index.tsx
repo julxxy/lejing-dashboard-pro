@@ -5,40 +5,50 @@ import PageNotFound from '@/views/error/Error404.tsx'
 import NoPermission from '@/views/error/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
-import TestOverflow from '@/views/extra/TestOverflow.tsx'
 import Loading from '@/views/loading'
+import { isDebugEnable, log } from '@/common/Logger.ts'
+import TestOverflow from '@/views/extra/TestOverflow.tsx'
 
 /**
- * URIs in the app
+ * URIs in the APP
  */
+const moduleURIs = { system: '/system', order: '/order' }
+
 export const URIs = {
   home: '/',
   login: '/login',
   welcome: '/welcome',
   dashboard: '/dashboard',
+  overflow: '/overflow',
   notFound: '/404',
   noPermission: '/403',
-  overflowDemo: '/overflow',
-  // system-menu
-  userList: '/user/list',
-  menuManage: '/menu/list',
-  deptManage: '/dept/list',
-  roleManage: '/role/list',
-  // order-menu
-  orderList: '/order/list',
-  shipperManage: '/shipper/list',
-  orderAggregation: '/order/aggregation',
+  module: moduleURIs,
+  // 系统管理
+  system: {
+    userList: moduleURIs.system + '/user/list',
+    menuList: moduleURIs.system + '/menu/list',
+    deptList: moduleURIs.system + '/dept/list',
+    roleList: moduleURIs.system + '/role/list',
+  },
+  // 订单管理
+  order: {
+    orderList: moduleURIs.order + '/list',
+    shipperList: moduleURIs.order + '/shipper/list',
+    orderAggregation: moduleURIs.order + '/aggregation',
+  },
 }
+
+if (isDebugEnable) log.info('Module URIs: \n', JSON.stringify(URIs, null, 2))
 
 /* Lazy load views */
 const Welcome = lazy(() => import('@/views/welcome'))
 const Dashboard = lazy(() => import('@/views/dashboard'))
-/* system-menu */
+/* system */
 const UserFC = lazy(() => import('@/views/system/user'))
 const DepartmentFC = lazy(() => import('@/views/system/dept'))
 const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
-/* order-menu */
+/* order */
 const OrderList = lazy(() => import('@/views/order/list'))
 const DriverList = lazy(() => import('@/views/order/driver'))
 const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
@@ -58,14 +68,24 @@ const routes: RouteObject[] = [
     children: [
       { path: URIs.welcome, element: <Welcome /> },
       { path: URIs.dashboard, element: <Dashboard /> },
-      { path: URIs.userList, element: <UserFC /> },
-      { path: URIs.deptManage, element: <DepartmentFC /> },
-      { path: URIs.menuManage, element: <MenuList /> },
-      { path: URIs.roleManage, element: <RoleList /> },
-      { path: URIs.orderList, element: <OrderList /> },
-      { path: URIs.orderAggregation, element: <OrderAggregate /> },
-      { path: URIs.shipperManage, element: <DriverList /> },
-      { path: URIs.overflowDemo, element: <TestOverflow /> },
+      { path: URIs.overflow, element: <TestOverflow /> },
+      {
+        path: URIs.module.system,
+        children: [
+          { path: URIs.system.userList, element: <UserFC /> },
+          { path: URIs.system.deptList, element: <DepartmentFC /> },
+          { path: URIs.system.menuList, element: <MenuList /> },
+          { path: URIs.system.roleList, element: <RoleList /> },
+        ],
+      },
+      {
+        path: URIs.module.order,
+        children: [
+          { path: URIs.order.orderList, element: <OrderList /> },
+          { path: URIs.order.orderAggregation, element: <OrderAggregate /> },
+          { path: URIs.order.shipperList, element: <DriverList /> },
+        ],
+      },
     ],
   },
   { path: '*', element: <Navigate to={URIs.notFound} /> },

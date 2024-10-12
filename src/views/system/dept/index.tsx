@@ -3,7 +3,7 @@ import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
 import api from '@/api'
-import { Department } from '@/types/ApiTypes.ts'
+import { Department } from '@/types/apiTypes.ts'
 import DeptModal from '@/views/system/dept/DeptModal.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'
@@ -22,8 +22,7 @@ export default function DepartmentFC() {
     openModal: (action, data?: Department.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {

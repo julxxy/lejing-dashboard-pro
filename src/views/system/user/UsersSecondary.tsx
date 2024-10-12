@@ -1,5 +1,5 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
-import { User } from '@/types/ApiTypes.ts'
+import { User } from '@/types/apiTypes.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import React, { useRef, useState } from 'react'

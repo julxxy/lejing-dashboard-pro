@@ -11,9 +11,9 @@ import {
 import { RcFile } from 'antd/es/upload'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import requestUtils from '@/utils/httpUtils.ts'
-import { ResultStatus } from '@/types/Enums.ts'
+import { ResultStatus } from '@/types/constants.ts'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
-import { User } from '@/types/ApiTypes.ts'
+import { User } from '@/types/apiTypes.ts'
 import api from '@/api'
 
 /**
