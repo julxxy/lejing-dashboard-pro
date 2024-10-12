@@ -89,7 +89,6 @@ export default function MenuFC() {
     {
       title: '操作',
       key: 'action',
-      width: 80,
       render: (_text, record?: Menu.Item) => {
         return (
           <Space>
