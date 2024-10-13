@@ -12,34 +12,39 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { Menu, MenuProps, Tooltip } from 'antd'
-import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Menu as IMenu, SideMenuProps } from '@/types/apiTypes.ts'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useRouteLoaderData } from 'react-router-dom'
 import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 import { NavigateFunction } from 'react-router/dist/lib/hooks'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import { SideMenuProps } from '@/types/apiTypes.ts'
+import { RouteConstants } from '@/router/DefaultAuthLoader.ts'
+import { MenuType } from '@/types/appEnums.ts'
+import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 
-// 菜单项
+// 侧边栏菜单项
 type MenuItem = Required<MenuProps>['items'][number]
-const items: MenuItem[] = [
+
+// 静态菜单栏
+const antdItems: MenuItem[] = [
   { key: '0', icon: <DesktopOutlined />, label: '工作台' },
   {
     key: '1',
     icon: <SettingOutlined />,
     label: '系统管理',
     children: [
-      { key: '101', label: '用户管理', icon: <UserOutlined /> },
       { key: '102', label: '菜单管理', icon: <MenuOutlined /> },
-      { key: '103', label: '角色管理', icon: <TrademarkCircleOutlined /> },
       { key: '104', label: '部门管理', icon: <ApartmentOutlined /> },
+      { key: '101', label: '用户管理', icon: <UserOutlined /> },
+      { key: '103', label: '角色管理', icon: <TrademarkCircleOutlined /> },
     ],
   },
   {
+    label: '订单管理',
     key: '2',
     icon: <ShoppingCartOutlined />,
-    label: '订单管理',
     children: [
       { key: '201', label: '订单列表', icon: <OrderedListOutlined /> },
       { key: '202', label: '订单聚合', icon: <GiftOutlined /> },
@@ -49,47 +54,68 @@ const items: MenuItem[] = [
 ]
 
 /**
- * 点击菜单项时执行导航
+ * 生成菜单项
  */
-function onMenuClicked(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
-  const key = menuInfo?.key as string | undefined
-  if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
-  if (key === '0') navigate(URIs.dashboard)
-  if (key === '101') navigate(URIs.system.userList)
-  if (key === '102') navigate(URIs.system.menuList)
-  if (key === '103') navigate(URIs.system.roleList)
-  if (key === '104') navigate(URIs.system.deptList)
-  if (key === '201') navigate(URIs.order.orderList)
-  if (key === '202') navigate(URIs.order.orderAggregation)
-  if (key === '203') navigate(URIs.order.shipperList)
+function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[]) {
+  return {
+    label,
+    key,
+    icon,
+    children,
+  } as MenuItem
 }
 
+/**
+ * 点击菜单项时执行导航
+ */
+function handleMenuClick(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
+  const key = menuInfo?.key as string | undefined
+  if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
+  navigate(key || '/')
+}
+
+/**
+ * 生成菜单树
+ */
+function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] = []) {
+  sourceMenus.forEach(({ menuType, menuState, buttons, menuName, path, children, icon }, index) => {
+    if (menuType === MenuType.menu.code && menuState === 1) {
+      // 菜单项
+      if (!children?.length || buttons) {
+        return targetMenus.push(getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />))
+      }
+      // 子菜单项
+      targetMenus.push(
+        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
+      )
+    }
+  })
+  return targetMenus
+}
+
+/**
+ * Left Side Menu
+ * @constructor
+ */
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
+  const routeData: any = useRouteLoaderData(RouteConstants.layoutId)
+  if (isDebugEnable) log.info('加载路由权限数据: ', routeData)
+
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
   const platformText = import.meta.env.VITE_OPS_PLATFORM as string
   const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
   const navigate = useNavigate()
-  const location = useLocation()
+  const { pathname } = useLocation()
+  const [targetMenus, setTargetMenus] = useState<MenuItem[]>([])
+  const getDefaultSelectedKeys = () => [URIs.welcome]
+  const getDefaultOpenKeys = () => [pathname]
 
-  const getDefaultOpenKeys = () => {
-    if (location.pathname.startsWith(URIs.dashboard)) return ['0']
-    if (location.pathname.startsWith(URIs.module.system)) return ['1']
-    if (location.pathname.startsWith(URIs.module.order)) return ['2']
-    return [] // Default empty if no match
-  }
-
-  const getDefaultSelectedKeys = () => {
-    if (location.pathname.startsWith(URIs.dashboard)) return ['0']
-    if (location.pathname === URIs.system.userList) return ['101']
-    if (location.pathname === URIs.system.menuList) return ['102']
-    if (location.pathname === URIs.system.roleList) return ['103']
-    if (location.pathname === URIs.system.deptList) return ['104']
-    if (location.pathname === URIs.order.orderList) return ['201']
-    if (location.pathname === URIs.order.orderAggregation) return ['202']
-    if (location.pathname === URIs.order.shipperList) return ['203']
-    return [] // Default empty if no match
-  }
+  useEffect(() => {
+    const targetMenu = getMenuTreeifyItems(routeData.menus)
+    log.info('初始化菜单项数据: ', targetMenu, '\n', antdItems)
+    setTargetMenus(targetMenu)
+  }, [])
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} className={styles.sider} theme={theme}>
@@ -114,10 +140,10 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
         <Menu
           mode={'inline'}
           theme={theme}
-          items={items}
+          items={targetMenus}
           defaultOpenKeys={getDefaultOpenKeys()}
           defaultSelectedKeys={getDefaultSelectedKeys()}
-          onClick={e => onMenuClicked(e, navigate)}
+          onClick={e => handleMenuClick(e, navigate)}
         />
       </div>
     </Sider>

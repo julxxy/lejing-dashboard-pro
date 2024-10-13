@@ -67,7 +67,10 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
       width={ModalVariables.width}
       open={showModal}
       onOk={handleSubmit}
-      okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
+      okButtonProps={{
+        loading,
+        icon: <CheckCircleOutlined />,
+      }}
       okText={'确定'}
       onCancel={closeModal}
       cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
@@ -117,11 +120,9 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
           {() => {
             if (form.getFieldValue('menuType') === 2) {
               return (
-                <>
-                  <Form.Item name={'menuCode'} label={'权限标识'}>
-                    <Input placeholder={'请输入权限标识'} />
-                  </Form.Item>
-                </>
+                <Form.Item name={'menuCode'} label={'权限标识'}>
+                  <Input placeholder={'请输入权限标识'} />
+                </Form.Item>
               )
             } else {
               return (

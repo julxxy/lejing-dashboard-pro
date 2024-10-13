@@ -8,11 +8,12 @@ import Layout from '@/layout/index.tsx'
 import Loading from '@/views/loading'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import TestOverflow from '@/views/extra/TestOverflow.tsx'
+import { DefaultAuthLoader, RouteConstants } from '@/router/DefaultAuthLoader.ts'
 
 /**
  * URIs in the APP
  */
-const moduleURIs = { system: '/system', order: '/order' }
+const moduleURIs = { system: '/sys', order: '/order' }
 
 export const URIs = {
   home: '/',
@@ -33,7 +34,7 @@ export const URIs = {
   // 订单管理
   order: {
     orderList: moduleURIs.order + '/list',
-    shipperList: moduleURIs.order + '/shipper/list',
+    shipperList: moduleURIs.order + '/shipper',
     orderAggregation: moduleURIs.order + '/aggregation',
   },
 }
@@ -60,6 +61,8 @@ const routes: RouteObject[] = [
   { path: URIs.home, element: <Navigate to={URIs.welcome} /> },
   { path: URIs.login, element: <LoginFC /> },
   {
+    id: RouteConstants.layoutId,
+    loader: DefaultAuthLoader,
     element: (
       <Suspense fallback={<Loading />}>
         <Layout />

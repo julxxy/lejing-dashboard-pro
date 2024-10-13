@@ -18,10 +18,9 @@ import { useNavigate } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
+  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable, breadItems } = useZustandStore()
   const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
-  const breadItems = [{ title: '首页' }, { title: '工作台' }]
   const items: MenuProps['items'] = [
     { key: '1', label: '个人中心', icon: <ProfileFilled /> },
     { key: '2', label: '切换账号', icon: <UserSwitchOutlined /> },

@@ -48,6 +48,7 @@ export const formatUserStatus = (status: number | undefined): string => {
   if (status === 2) return '离职'
   return ''
 }
+
 export const formatUserRole = (status: number | undefined): string => {
   if (status === 0) return '超级管理员'
   if (status === 1) return '管理员'

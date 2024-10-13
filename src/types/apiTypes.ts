@@ -85,6 +85,11 @@ export namespace User {
   export interface UserEdit extends UserAdd {
     userId: number
   }
+
+  export interface PermissionItem {
+    buttonList: string[]
+    menuList: Menu.Item[]
+  }
 }
 
 /**
