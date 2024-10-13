@@ -1,7 +1,7 @@
+import UsersDefault from '@/views/system/user/UsersDefault.tsx'
 import UsersPrimary from '@/views/system/user/UsersPrimary.tsx'
-import UsersSecondary from '@/views/system/user/UsersSecondary.tsx'
 
 export default function UserManagement() {
   const usePrimary = false
-  return usePrimary ? <UsersPrimary /> : <UsersSecondary />
+  return usePrimary ? <UsersDefault /> : <UsersPrimary />
 }

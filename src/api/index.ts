@@ -1,5 +1,6 @@
-import { Department, Login, Menu, PageResult, Result, UcDashboard, User } from '@/types/apiTypes.ts'
+import { Department, Login, Menu, PageResult, Result, Role, UcDashboard, User } from '@/types/apiTypes.ts'
 import httpUtils from '@/utils/httpUtils.ts'
+import HttpUtils from '@/utils/httpUtils.ts'
 
 /**
  * API Request Management
@@ -106,5 +107,30 @@ export default {
   /**
    * 角色管理
    */
-  role: {},
+  role: {
+    page(params: Role.SearchArgs) {
+      return httpUtils.get<PageResult<Role.RoleDetail>>('/roles/list', params)
+    },
+    add(params: Role.CreateParams) {
+      return HttpUtils.post('/roles/create', params)
+    },
+    edit(params: Role.EditParams) {
+      return HttpUtils.post('/roles/edit', params)
+    },
+    delete(_id: string) {
+      return HttpUtils.post('/roles/delete', { _id })
+    },
+    setPermission(params: Role.Permission) {
+      return HttpUtils.post('/roles/update/permission', params)
+    },
+    getAll() {
+      return HttpUtils.get<Role.RoleDetail[]>('/roles/allList')
+    },
+  },
+  /**
+   * 订单管理
+   */
+  order: {
+    getOrderList() {},
+  },
 }

@@ -23,8 +23,7 @@ export default function MenuFC() {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
 
-    closeModal: () => {
-    },
+    closeModal: () => {},
   })
 
   useEffect(() => {
@@ -94,12 +93,19 @@ export default function MenuFC() {
     {
       title: '操作',
       key: 'action',
+      width: 80,
       render: (_text, record?: Menu.Item) => {
         return (
           <Space>
-            <Button icon={<PlusOutlined />} shape="circle" onClick={() => handleSubCreate(record)} />
-            <Button icon={<EditOutlined />} shape="circle" onClick={() => handleEdit(record)} />
-            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => handleDelete(record)} />
+            <Button icon={<PlusOutlined />} size="small" onClick={() => handleSubCreate(record)}>
+              新建
+            </Button>
+            <Button icon={<EditOutlined />} size="small" onClick={() => handleEdit(record)}>
+              编辑
+            </Button>
+            <Button icon={<DeleteOutlined />} size="small" danger onClick={() => handleDelete(record)}>
+              删除
+            </Button>
           </Space>
         )
       },

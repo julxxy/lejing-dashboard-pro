@@ -190,6 +190,44 @@ export namespace Menu {
   }
 }
 
+/**
+ * 角色权限
+ */
+export namespace Role {
+  export interface SearchArgs extends PageArgs {
+    roleName?: string
+  }
+
+  export interface CreateParams {
+    roleName: string
+    remark?: string
+  }
+
+  export interface EditParams extends CreateParams {
+    _id: string
+  }
+
+  export interface RoleDetail extends CreateParams {
+    _id: string
+    permissionList: {
+      checkedKeys: string[]
+      halfCheckedKeys: string[]
+    }
+    updateTime: string
+    createTime: string
+  }
+
+  export interface Permission {
+    _id: string
+    permissionList: {
+      checkedKeys: string[]
+      halfCheckedKeys: string[]
+    }
+  }
+}
+
+export namespace Order {}
+
 export interface SideMenuProps {
   collapsed?: boolean
 }
