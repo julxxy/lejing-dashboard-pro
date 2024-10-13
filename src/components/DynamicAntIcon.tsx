@@ -11,11 +11,13 @@ export interface DynamicAntIconProps {
  * 动态渲染 AntD 图标
  * @param iconName AntD icon图标名称
  * @param label 图标标签
+ * @example
+ * <DynamicAntIcon iconName="ApartmentOutlined" />
  */
 const DynamicAntIcon: React.FC<DynamicAntIconProps> = ({ iconName, label }) => {
-  if (!iconName) return <></>
+  if (!iconName) return null
   const AntIcon = Icons[iconName as keyof typeof Icons] as React.ComponentType
-  if (!AntIcon) return <></>
+  if (!AntIcon) return null
   if (label) return <Button icon={<AntIcon />}>{label}</Button>
   return <AntIcon />
 }
