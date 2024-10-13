@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select, Upload, UploadProps } from 'antd'
+import { Button, Form, Input, Modal, Select, TreeSelect, Upload, UploadProps } from 'antd'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { useImperativeHandle, useState } from 'react'
 import {
@@ -13,7 +13,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 import requestUtils from '@/utils/httpUtils.ts'
 import { ResultStatus } from '@/types/appEnums.ts'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
-import { User } from '@/types/apiTypes.ts'
+import { Department, Role, User } from '@/types/apiTypes.ts'
 import api from '@/api'
 
 /**
@@ -25,6 +25,8 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
   const [imageUrl, setImageUrl] = useState<string>()
   const [modalOpen, setModalOpen] = useState(false)
   const [action, setAction] = useState<Action>('create')
+  const [deptList, setDeptList] = useState<Department.Item[]>()
+  const [roleList, setRoleList] = useState<Role.RoleDetail[]>([])
 
   // 开启当前组件的弹窗显示
   const openModal = (action: Action, data?: User.UserItem) => {
@@ -33,6 +35,8 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
       form.setFieldsValue(data)
       setImageUrl(data.userImg)
     }
+    fetchDeptList()
+    fetchRoleList()
     setModalOpen(true)
     setAction(action)
   }
@@ -123,6 +127,16 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
     return true
   }
 
+  const fetchDeptList = async () => {
+    const deptList = await api.dept.getDepartments({})
+    setDeptList(deptList)
+  }
+
+  const fetchRoleList = async () => {
+    const data = await api.role.getAll()
+    setRoleList(data)
+  }
+
   return (
     <Modal
       title={action === 'create' ? '创建用户' : '编辑用户'}
@@ -142,7 +156,14 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
         </Button>,
       ]}
     >
-      <Form {...ModalVariables.layout} style={{ maxWidth: 600 }} form={form} name="control-hooks" onFinish={onFinish}>
+      <Form
+        {...ModalVariables.layout}
+        style={{ maxWidth: 600 }}
+        form={form}
+        name="control-hooks"
+        onFinish={onFinish}
+        initialValues={{ state: 1 }}
+      >
         <Form.Item name="userId" label="用户ID" hidden={true}>
           <Input />
         </Form.Item>
@@ -178,8 +199,16 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
         >
           <Input type="text" placeholder={'请输入手机号'} />
         </Form.Item>
-        <Form.Item name="deptId" label="部门" rules={[{ required: false }]}>
-          <Input placeholder={'请输入部门'} />
+        <Form.Item name="deptId" label="部门" rules={[{ required: true, message: '请选择部门' }]}>
+          <TreeSelect
+            placeholder={'请选择部门'}
+            allowClear
+            loading={deptList === undefined}
+            treeDefaultExpandAll
+            showCheckedStrategy={TreeSelect.SHOW_ALL}
+            fieldNames={{ label: 'deptName', value: '_id' }}
+            treeData={deptList}
+          />
         </Form.Item>
         <Form.Item name="job" label="岗位" rules={[{ required: false }]}>
           <Input placeholder={'请输入岗位'} />
@@ -192,8 +221,14 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
             <Select.Option value={3}>试用期</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item name="roleList" label="角色" rules={[{ required: false }]}>
-          <Input placeholder={'请输入角色'} />
+        <Form.Item name="roleList" label="角色" rules={[{ required: false, message: '请选择角色' }]}>
+          <Select mode="multiple">
+            {roleList?.map(({ _id, roleName }) => (
+              <Select.Option value={_id} key={_id}>
+                {roleName}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item label="用户头像">
           <Upload

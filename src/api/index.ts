@@ -91,7 +91,7 @@ export default {
    * 菜单管理
    */
   menu: {
-    getMenus(params: Menu.SearchParams) {
+    getMenus(params: Menu.SearchParams | undefined) {
       return httpUtils.get<Menu.Item[]>('/menu/list', params)
     },
     add(params: Menu.RequestParams) {

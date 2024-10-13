@@ -9,12 +9,19 @@ import { Button, Form, Input, Space, Table, TableColumnsType } from 'antd'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
+import PermissionModal from '@/views/system/role/PermissionModal.tsx'
 
 export default function RoleList() {
   const [form] = Form.useForm()
   const roleRef = useRef<ModalAction>({
     openModal: (action, data?: Role.EditParams | { parentId?: string; orderBy?: number }) => {
-      if (isDebugEnable) log.info('开开弹窗: ', action, data)
+      if (isDebugEnable) log.info('开启角色弹窗: ', action, data)
+    },
+    closeModal: () => {},
+  })
+  const permissionRef = useRef<ModalAction>({
+    openModal: (action, data?: Role.EditParams | { parentId?: string; orderBy?: number }) => {
+      if (isDebugEnable) log.info('开权限弹窗: ', action, data)
     },
     closeModal: () => {},
   })
@@ -52,6 +59,10 @@ export default function RoleList() {
     roleRef.current.openModal('edit', record)
   }
 
+  function assignPermission(record: Role.RoleDetail) {
+    permissionRef.current.openModal('edit', record)
+  }
+
   const columns: TableColumnsType<Role.RoleDetail> = [
     { title: '角色名称', dataIndex: 'roleName', key: 'roleName' },
     { title: '备注', dataIndex: 'remark', key: 'remark' },
@@ -77,7 +88,12 @@ export default function RoleList() {
             <Button key={`edit-${record._id}`} icon={<EditOutlined />} size="small" onClick={() => onEdit(record)}>
               编辑
             </Button>
-            <Button key={`assign-${record._id}`} icon={<EditOutlined />} size="small" onClick={() => onEdit(record)}>
+            <Button
+              key={`assign-${record._id}`}
+              icon={<EditOutlined />}
+              size="small"
+              onClick={() => assignPermission(record)}
+            >
               分配权限
             </Button>
             <Button
@@ -153,6 +169,7 @@ export default function RoleList() {
         />
       </div>
       <RoleModal currentRef={roleRef} onRefresh={() => search.reset()} />
+      <PermissionModal currentRef={permissionRef} onRefresh={() => search.reset()} />
     </div>
   )
 }

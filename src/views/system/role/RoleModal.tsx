@@ -23,8 +23,10 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
   const modalController = {
     // 开启弹窗显示
     openModal: (action: Action, data?: Role.RoleDetail) => {
-      if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
+      if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data, roles)
+      setLoading(true)
       setAction(action)
+      fetchRoles()
       setShowModal(true)
       form.setFieldsValue(data)
     },
