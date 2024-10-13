@@ -2,7 +2,7 @@
 
 The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall), require node v20.x.x or later.
 
-![登录](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241004183254662_20241004183254.png)
+![image-20241013123621010](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241013123621010_20241013123621.png)
 
 ![image-20241013123326848](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241013123326848_20241013123326.png)
 
