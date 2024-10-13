@@ -23,7 +23,8 @@ export default function MenuFC() {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
 
-    closeModal: () => {},
+    closeModal: () => {
+    },
   })
 
   useEffect(() => {
