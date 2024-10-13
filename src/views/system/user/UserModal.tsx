@@ -170,7 +170,7 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
         <Form.Item
           name="userName"
           label="用户名称"
-          rules={[{ required: false }, { min: 5, max: 12, message: '用户名长度必须在5到12个字符之间' }]}
+          rules={[{ required: false }, { min: 5, max: 20, message: '用户名长度必须在5到12个字符之间' }]}
         >
           <Input placeholder={'请输入用户名称'} />
         </Form.Item>
