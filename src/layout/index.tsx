@@ -6,10 +6,13 @@ import LeftSideMenu from '@/components/SideMenu'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
-import { Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnums.ts'
+import { isURIAccessible, URIs } from '@/router'
+import { useAuthLoaderData } from '@/router/DefaultAuthLoader.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 
 // 解构antd组件
 const { Content } = Layout
@@ -25,11 +28,10 @@ const Welcome = lazy(() => import('@/views/welcome'))
  * @constructor
  */
 const LayoutFC: React.FC = () => {
+  const { setUserInfo } = useZustandStore() // 获取 store
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
-  const { setUserInfo } = useZustandStore() // 获取 store
   const headerHeight = 64 // 导航栏高度为 64px
-
   // 获取用户信息
   const getUserInfo = async () => {
     const userInfo = await api.getUserInfo()
@@ -53,6 +55,23 @@ const LayoutFC: React.FC = () => {
       window.removeEventListener('resize', updateHeight) // 清理事件监听器
     }
   }, [])
+
+  // 路由权限校验 - start
+  const { pathname } = useLocation()
+  const routeMeta = useAuthLoaderData()
+  const { menuURIs } = routeMeta
+  const isAccessible = isURIAccessible(pathname)
+  if (isTrue(isAccessible)) {
+    if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
+  } else {
+    const isNotAccessible = !menuURIs.includes(pathname)
+    if (isDebugEnable) log.info('menuURIs: ', menuURIs, isNotAccessible)
+    if (isNotAccessible) {
+      if (isDebugEnable) log.warn(`URI ${pathname} is not accessible for user: ${isNotAccessible}`)
+      return <Navigate to={URIs.noPermission} />
+    }
+  }
+  // 路由权限校验 - end
 
   return (
     <Watermark content={watermark()} inherit={false}>

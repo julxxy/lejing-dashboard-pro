@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import PageNotFound from '@/views/error/Error404.tsx'
@@ -9,6 +10,7 @@ import Loading from '@/views/loading'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import TestOverflow from '@/views/extra/TestOverflow.tsx'
 import { DefaultAuthLoader, RouteConstants } from '@/router/DefaultAuthLoader.ts'
+import { isFalse } from '@/common/booleanUtils.ts'
 
 /**
  * URIs in the APP
@@ -38,18 +40,17 @@ export const URIs = {
     orderAggregation: moduleURIs.order + '/aggregation',
   },
 }
-
 if (isDebugEnable) log.info('Module URIs: \n', JSON.stringify(URIs, null, 2))
+const publicURIs = [URIs.home, URIs.login, URIs.welcome, URIs.notFound, URIs.noPermission]
+const isURIPublic = (path: string) => publicURIs.includes(path)
 
 /* Lazy load views */
 const Welcome = lazy(() => import('@/views/welcome'))
 const Dashboard = lazy(() => import('@/views/dashboard'))
-/* system */
 const UserFC = lazy(() => import('@/views/system/user'))
 const DepartmentFC = lazy(() => import('@/views/system/dept'))
 const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
-/* order */
 const OrderList = lazy(() => import('@/views/order/list'))
 const DriverList = lazy(() => import('@/views/order/driver'))
 const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
@@ -57,7 +58,8 @@ const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
 /**
  * 路由配置
  */
-const routes: RouteObject[] = [
+export type IRouteObject = RouteObject & { enableAuth?: boolean }
+export const routes: IRouteObject[] = [
   { path: URIs.home, element: <Navigate to={URIs.welcome} /> },
   { path: URIs.login, element: <LoginFC /> },
   {
@@ -98,3 +100,24 @@ const routes: RouteObject[] = [
 
 // Create routing instance
 export const router = createBrowserRouter(routes)
+export const isURIAccessible = (route?: string | null | undefined): boolean => {
+  if (!route) return false
+  if (isURIPublic(route)) return true
+  // Recursive function to search for the route in nested routes
+  const findRoute = (routes: IRouteObject[], route: string): IRouteObject | undefined => {
+    for (const r of routes) {
+      // Match route directly
+      if (r.path === route) return r
+      // If there are children, search recursively
+      if (r.children) {
+        const foundChild = findRoute(r.children, route)
+        if (foundChild) return foundChild
+      }
+    }
+    return undefined
+  }
+  const foundRoute = findRoute(routes, route)
+  if (!foundRoute) return false
+  if (foundRoute?.enableAuth === undefined) return false
+  return isFalse(foundRoute.enableAuth)
+}
