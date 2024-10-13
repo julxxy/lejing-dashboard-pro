@@ -70,9 +70,9 @@ function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: R
  * 点击菜单项时执行导航
  */
 function handleMenuClick(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
-  const key = menuInfo?.key as string | undefined
+  const key = menuInfo?.key as string
   if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
-  navigate(key || '/')
+  navigate(key)
 }
 
 /**
