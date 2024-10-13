@@ -58,6 +58,10 @@ export default {
     deleteUser(userIds: number[]) {
       return httpUtils.post<Result>('/users/delete', { userIds })
     },
+    //   Permission list
+    getPermissions() {
+      return httpUtils.get<User.PermissionItem>('/users/getPermissionList')
+    },
   },
 
   /**

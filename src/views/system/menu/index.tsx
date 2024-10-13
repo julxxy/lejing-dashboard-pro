@@ -9,6 +9,7 @@ import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd
 import { Menu } from '@/types/apiTypes.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
+import { MenuType } from '@/types/appEnums.ts'
 
 /**
  * @file 菜单管理页面
@@ -36,11 +37,12 @@ export default function MenuFC() {
     setLoading(false)
   }
 
-  function handleDelete(_id?: string) {
-    log.info('删除部门')
+  function handleDelete(record: any) {
+    const { _id } = record
+    const menuType = MenuType.getName(record.menuType)
     modal.confirm({
-      title: '确认删除用户',
-      content: '确认要删除所选菜单吗？',
+      title: `确认删除${menuType}`,
+      content: `确认要删除所选${menuType}吗？`,
       onOk: async () => {
         if (!_id) return
         await api.menu.delete(_id)
@@ -58,8 +60,10 @@ export default function MenuFC() {
     menuRef?.current?.openModal('create', { orderBy: data.length }) // 打开弹窗
   }
 
-  const handleSubCreate = (parentId?: string) => {
-    menuRef?.current?.openModal('create', { parentId }) // 打开弹窗
+  const handleSubCreate = (record?: Menu.Item) => {
+    if (!record) return
+    const _data = { parentId: record._id, orderBy: record.children?.length ?? 0 }
+    menuRef?.current?.openModal('create', _data) // 打开弹窗
   }
 
   function handleReset() {
@@ -92,9 +96,9 @@ export default function MenuFC() {
       render: (_text, record?: Menu.Item) => {
         return (
           <Space>
-            <Button icon={<PlusOutlined />} shape="circle" onClick={() => handleSubCreate(record?._id)} />
+            <Button icon={<PlusOutlined />} shape="circle" onClick={() => handleSubCreate(record)} />
             <Button icon={<EditOutlined />} shape="circle" onClick={() => handleEdit(record)} />
-            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => handleDelete(record?._id)} />
+            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => handleDelete(record)} />
           </Space>
         )
       },

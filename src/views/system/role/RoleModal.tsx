@@ -77,7 +77,9 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
         form={form}
         style={{ maxWidth: 600 }}
         initialValues={{ menuType: 1, menuState: 1 }}
-      ></Form>
+      >
+        {roles}
+      </Form>
     </Modal>
   )
 }

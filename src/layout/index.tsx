@@ -9,7 +9,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { Outlet } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
-import { Environment } from '@/types/constants.ts'
+import { Environment } from '@/types/appEnums.ts'
 
 const { Content } = Layout
 const Welcome = lazy(() => import('@/views/welcome'))
@@ -22,6 +22,9 @@ const LayoutFC: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
   const { setUserInfo } = useZustandStore() // 获取 store
+  const headerHeight = 64 // 导航栏高度为 64px
+
+  // 获取用户信息
   const getUserInfo = async () => {
     const userInfo = await api.getUserInfo()
     userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除这行
@@ -34,7 +37,6 @@ const LayoutFC: React.FC = () => {
 
   // 动态计算内容区域的的高度
   useEffect(() => {
-    const headerHeight = 64 // 假设导航栏高度为 64px
     const updateHeight = () => {
       const newHeight = window.innerHeight - headerHeight
       setContentHeight(`${newHeight}px`)

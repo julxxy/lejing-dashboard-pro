@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { User } from '@/types/apiTypes.ts'
 import storageUtils from '@/utils/storageUtils.ts'
+import React from 'react'
 
 /**
  * This is the store for the app. implemented using Zustand library.
@@ -17,12 +18,17 @@ const useZustandStore = create<{
   setUserInfo: (userInfo: User.Info) => void
   setCollapsed: () => void
   setDarkEnable: () => void
+  breadItems: { title: string | React.ReactNode; href?: string }[]
 }>(set => ({
   /* state */
   token: '',
   userInfo: {} as User.Info,
   collapsed: false,
   isDarkEnable: false,
+  breadItems: [
+    { title: '首页', href: '/' },
+    { title: '工作台', href: '/dashboard' },
+  ],
   /* setters */
   setToken: (token: string) => set(() => ({ token })),
   setUserInfo: (userInfo: User.Info) => {
@@ -43,6 +49,9 @@ const useZustandStore = create<{
       storageUtils.set('darkEnable', enable)
       return { isDarkEnable: enable }
     })
+  },
+  setBreadItems: (items: { title: string | React.ReactNode; href?: string }[]) => {
+    set(() => ({ breadItems: items }))
   },
 }))
 
