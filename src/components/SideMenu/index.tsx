@@ -27,7 +27,7 @@ import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 // 侧边栏菜单项
 type MenuItem = Required<MenuProps>['items'][number]
 
-// 静态菜单栏
+// 静态导航栏
 const antdItems: MenuItem[] = [
   { key: '0', icon: <DesktopOutlined />, label: '工作台' },
   {
@@ -52,6 +52,7 @@ const antdItems: MenuItem[] = [
     ],
   },
 ]
+if (isDebugEnable) log.debug('静态导航栏:', antdItems)
 
 /**
  * 生成菜单项
@@ -113,7 +114,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
 
   useEffect(() => {
     const targetMenu = getMenuTreeifyItems(routeData.menus)
-    log.info('初始化菜单项数据: ', targetMenu, '\n', antdItems)
+    log.info('初始化菜单项数据: ', targetMenu)
     setTargetMenus(targetMenu)
   }, [])
 
