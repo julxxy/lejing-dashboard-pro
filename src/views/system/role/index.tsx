@@ -19,7 +19,7 @@ export default function RoleList() {
     closeModal: () => {},
   })
 
-  // 1. 获取分页数据
+  // 获取分页数据
   const fetchTableData = async (
     { current, pageSize }: { current: number; pageSize: number },
     formData: Role.SearchArgs
@@ -30,7 +30,7 @@ export default function RoleList() {
       list: res.list,
     }
   }
-  // 2. 分页配置
+  // 封装分页配置
   const { tableProps, search } = useAntdTable(fetchTableData, { form, defaultPageSize: 10 })
   const { pagination } = tableProps
   tableProps.pagination = {
