@@ -4,7 +4,7 @@ The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall),
 
 ![登录](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241004183254662_20241004183254.png)
 
-![首页](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241004183007651_20241004183007.png)
+![image-20241013123326848](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241013123326848_20241013123326.png)
 
 # Tech Stack Links
 
