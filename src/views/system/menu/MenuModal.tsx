@@ -127,7 +127,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
             } else {
               return (
                 <>
-                  <Form.Item name="icon" label="菜单图标">
+                  <Form.Item name="icon" label="菜单的 antd 图标">
                     <Input placeholder={'请输入菜单图标'} />
                   </Form.Item>
                   <Form.Item name="path" label="路由地址">
