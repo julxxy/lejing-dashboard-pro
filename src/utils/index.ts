@@ -26,7 +26,7 @@ export const formatNumberWithComma = (num?: number | string): string => {
 // Format date to date string
 export const formatDateToLocalString = (
   date?: Date | string,
-  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss'
+  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss',
 ): string => {
   const _date = date ? new Date(date) : new Date()
 
@@ -38,7 +38,7 @@ export const formatDateToLocalString = (
   // 使用 date-fns 的 format 函数进行日期格式化
   return format(
     _date,
-    pattern.replace(/yyyy/g, 'yyyy').replace(/dd/g, 'dd').replace(/HH/g, 'HH').replace(/mm/g, 'mm').replace(/ss/g, 'ss')
+    pattern.replace(/yyyy/g, 'yyyy').replace(/dd/g, 'dd').replace(/HH/g, 'HH').replace(/mm/g, 'mm').replace(/ss/g, 'ss'),
   )
 }
 
@@ -53,5 +53,6 @@ export const formatUserRole = (status: number | undefined): string => {
   if (status === 0) return '超级管理员'
   if (status === 1) return '管理员'
   if (status === 2) return '体验管理员'
+  if (status === 3) return '普通用户'
   return ''
 }
