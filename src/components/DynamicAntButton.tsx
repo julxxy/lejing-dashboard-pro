@@ -12,7 +12,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
  * 带权限的按钮的组件
  * @constructor
  * @example
- * <DynamicAtnButton show={false} onClick={() => alert('你好')}>Dynamic Button</DynamicAtnButton>
+ * <DynamicAtnButton show={false} onClick={() => alert('Hi')}>Dynamic Button</DynamicAtnButton>
  */
 const DynamicAtnButton = <T, >({ show = true, btnType, extraData, children, ...props }: DynamicBtnProps<T>) => {
   const { buttons = [] } = useAuthLoaderData()
