@@ -11,6 +11,7 @@ import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnums.ts'
 
+// 解构antd组件
 const { Content } = Layout
 // 获取水印配置
 const watermark = (): string[] => {
