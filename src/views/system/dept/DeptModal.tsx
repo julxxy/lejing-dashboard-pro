@@ -18,22 +18,26 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [action, setAction] = useState<Action>('create')
 
-  // 开启当前组件的弹窗显示
-  const openModal = (action: Action, data?: Department.EditParams | { parentId: string }) => {
-    if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
-    fetchDeptList()
-    fetchAllUsers()
-    setAction(action)
-    setModalOpen(true)
-    form.setFieldsValue(data)
-    log.info(form.getFieldsValue())
+  // 暴露方法给父组件使用
+  useImperativeHandle(currentRef, () => modalController)
+  const modalController = {
+    // 开启当前组件的弹窗显示
+    openModal: (action: Action, data?: Department.EditParams | { parentId: string }) => {
+      if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
+      fetchDeptList()
+      fetchAllUsers()
+      setAction(action)
+      setModalOpen(true)
+      form.setFieldsValue(data)
+      log.info(form.getFieldsValue())
+    },
+    // 关闭当前组件的弹窗显示
+    closeModal: () => {
+      setModalOpen(false)
+      form.resetFields()
+    },
   }
-  // 关闭当前组件的弹窗显示
-  const closeModal = () => {
-    setModalOpen(false)
-    form.resetFields()
-  }
-  useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
+
   const fetchDeptList = async () => {
     const deptList = await api.dept.getDepartments()
     setDeptList(deptList)
@@ -59,7 +63,7 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
         await api.dept.edit(formData)
       }
       message.success('操作成功')
-      closeModal() // 关闭弹窗
+      modalController.closeModal() // 关闭弹窗
       onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
@@ -76,7 +80,7 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
       onOk={handleSubmit}
       okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
       okText={'确定'}
-      onCancel={closeModal}
+      onCancel={modalController.closeModal}
       cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
       cancelText={'取消'}
     >

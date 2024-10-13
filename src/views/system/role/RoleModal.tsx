@@ -18,19 +18,22 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
   const [action, setAction] = useState<Action>('create')
   const title = (action === 'create' ? '创建' : '编辑') + '角色'
 
-  // 开启当前组件的弹窗显示
-  const openModal = (action: Action, data?: any) => {
-    if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
-    setAction(action)
-    setShowModal(true)
-    form.setFieldsValue(data)
+  // 暴露方法给父组件使用
+  useImperativeHandle(currentRef, () => modalController)
+  const modalController = {
+    // 开启弹窗显示
+    openModal: (action: Action, data?: Role.RoleDetail) => {
+      if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
+      setAction(action)
+      setShowModal(true)
+      form.setFieldsValue(data)
+    },
+    // 关闭弹窗显示
+    closeModal: () => {
+      setShowModal(false)
+      form.resetFields()
+    },
   }
-  // 关闭当前组件的弹窗显示
-  const closeModal = () => {
-    setShowModal(false)
-    form.resetFields()
-  }
-  useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
 
   // 获取角色列表
   const fetchRoles = async () => {
@@ -52,7 +55,7 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
         await api.role.edit(formData)
       }
       message.success('操作成功')
-      closeModal() // 关闭弹窗
+      modalController.closeModal() // 关闭弹窗
       onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
@@ -69,7 +72,7 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
       onOk={handleSubmit}
       okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
       okText={'确定'}
-      onCancel={closeModal}
+      onCancel={modalController.closeModal}
       cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
       cancelText={'取消'}
     >
