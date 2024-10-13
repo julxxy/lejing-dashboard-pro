@@ -113,15 +113,15 @@
 .search-box {
   padding: 10px;
   border-radius: var(--border-radius-default);
-  background-color: var(--bg-color-breadcrumb-secondary);
   color: #000;
+  background-color: var(--bg-color-breadcrumb-secondary);
 }
 
 .base-table {
   margin-top: 10px;
   border-radius: var(--border-radius-default);
-  background-color: var(--bg-color-breadcrumb-secondary);
   color: #000;
+  background-color: var(--bg-color-breadcrumb-secondary);
 
   .header-wrapper {
     display: flex;

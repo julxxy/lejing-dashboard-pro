@@ -103,9 +103,15 @@ export default function DepartmentFC() {
       render: (_text, record?: Department.Item) => {
         return (
           <Space>
-            <Button icon={<PlusOutlined />} shape="circle" onClick={() => onSubCreate(record?._id)} />
-            <Button icon={<EditOutlined />} shape="circle" onClick={() => onDeptEdit(record)} />
-            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onDeptDelete(record?._id)} />
+            <Button icon={<PlusOutlined />} size="small" onClick={() => onSubCreate(record?._id)}>
+              新建
+            </Button>
+            <Button icon={<EditOutlined />} size="small" onClick={() => onDeptEdit(record)}>
+              编辑
+            </Button>
+            <Button icon={<DeleteOutlined />} size="small" danger onClick={() => onDeptDelete(record?._id)}>
+              删除
+            </Button>
           </Space>
         )
       },
