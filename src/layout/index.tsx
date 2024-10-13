@@ -12,13 +12,18 @@ import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnums.ts'
 
 const { Content } = Layout
+// 获取水印配置
+const watermark = (): string[] => {
+  const showWatermark = isTrue(import.meta.env.VITE_SHOW_WATERMARK)
+  return showWatermark ? import.meta.env.VITE_APP_WATERMARKS.split(',') : []
+}
+// 懒加载欢迎页
 const Welcome = lazy(() => import('@/views/welcome'))
+/**
+ * Layout 组件
+ * @constructor
+ */
 const LayoutFC: React.FC = () => {
-  // 获取水印配置
-  const watermark = (): string[] => {
-    const showWatermark = isTrue(import.meta.env.VITE_SHOW_WATERMARK)
-    return showWatermark ? import.meta.env.VITE_APP_WATERMARKS.split(',') : []
-  }
   const wrapperRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
   const { setUserInfo } = useZustandStore() // 获取 store
@@ -52,7 +57,7 @@ const LayoutFC: React.FC = () => {
     <Watermark content={watermark()} inherit={false}>
       <Layout style={{ minHeight: '100vh' }}>
         <LeftSideMenu />
-        <Layout ref={wrapperRef} className={styles.rightArea}>
+        <Layout ref={wrapperRef} className={styles.rightSideWrapper}>
           <NaviHeader />
           <Content className={styles.scrollWrapper} style={{ height: contentHeight }}>
             <div className={styles.contentWrapper}>
