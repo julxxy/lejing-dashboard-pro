@@ -26,7 +26,7 @@ export const formatNumberWithComma = (num?: number | string): string => {
 // Format date to date string
 export const formatDateToLocalString = (
   date?: Date | string,
-  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss',
+  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss'
 ): string => {
   const _date = date ? new Date(date) : new Date()
 
@@ -38,7 +38,7 @@ export const formatDateToLocalString = (
   // 使用 date-fns 的 format 函数进行日期格式化
   return format(
     _date,
-    pattern.replace(/yyyy/g, 'yyyy').replace(/dd/g, 'dd').replace(/HH/g, 'HH').replace(/mm/g, 'mm').replace(/ss/g, 'ss'),
+    pattern.replace(/yyyy/g, 'yyyy').replace(/dd/g, 'dd').replace(/HH/g, 'HH').replace(/mm/g, 'mm').replace(/ss/g, 'ss')
   )
 }
 

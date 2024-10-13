@@ -65,7 +65,7 @@ const LayoutFC: React.FC = () => {
     if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
   } else {
     const isNotAccessible = !menuURIs.includes(pathname)
-    if (isDebugEnable) log.info('menuURIs: ', menuURIs, isNotAccessible)
+    if (isDebugEnable) log.info('menuURIs: ', menuURIs, 'isAccessible: ', !isNotAccessible)
     if (isNotAccessible) {
       if (isDebugEnable) log.warn(`URI ${pathname} is not accessible for user: ${isNotAccessible}`)
       return <Navigate to={URIs.noPermission} />
