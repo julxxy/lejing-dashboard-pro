@@ -49,7 +49,7 @@ const NaviHeader = () => {
   }
 
   function logout() {
-    storageUtils.remove('token')
+    storageUtils.clear()
     message.success('退出成功')
     setTimeout(() => {
       location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`

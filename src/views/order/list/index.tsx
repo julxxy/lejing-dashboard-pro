@@ -7,10 +7,19 @@ import api from '@/api'
 import { useAntdTable } from 'ahooks'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { formatDateToLocalString, formatMoneyCNY, formatOrderStatus } from '@/utils'
-import { DeleteOutlined, ExportOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
+import {
+  DatabaseOutlined,
+  DeleteOutlined,
+  ExportOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+  SearchOutlined,
+} from '@ant-design/icons'
 import OrderPointModal from '@/views/order/list/OrderPointModal.tsx'
 import OrderRouteModal from '@/views/order/list/OrderRouteModal.tsx'
 import OrderModal from '@/views/order/list/OrderModal.tsx'
+import orders from '@/mockdata/orders.json'
+import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
 
 /**
  * 订单列表
@@ -18,7 +27,8 @@ import OrderModal from '@/views/order/list/OrderModal.tsx'
  */
 export default function OrderList() {
   const [form] = Form.useForm()
-  const [userIds, setUserIds] = useState<number[]>([])
+  const [ids, setIds] = useState<string[]>([])
+  const [showMockOrder, setShowMockOrder] = useState(false)
 
   const routeRef = useRef<ModalAction>({
     openModal: (action, data?: any) => {
@@ -51,6 +61,7 @@ export default function OrderList() {
     formData: Order.SearchArgs
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
+    setShowMockOrder(result.page.total === 0 && result.list.length === 0)
     return {
       total: result.page.total,
       list: result.list,
@@ -74,13 +85,13 @@ export default function OrderList() {
     showTotal: (total: any) => `共 ${total} 条`,
   }
 
-  const onOrderDelete = (userIds: number[]) =>
+  const onOrderDelete = (ids: string[]) =>
     modal.confirm({
-      title: '确认删除用户',
-      content: '确认要删除所选用户吗？',
+      title: '确认删除订单',
+      content: '确认要删除所选订单吗？',
       onOk: () => {
         try {
-          Promise.all([api.order.delete(userIds)])
+          api.order.delete(ids)
           search.reset()
           message.success('删除成功')
         } catch (e) {
@@ -105,8 +116,8 @@ export default function OrderList() {
       render(_, record) {
         return (
           <div>
-            <p>起点地址：{record.startAddress}</p>
-            <p>终点地址：{record.endAddress}</p>
+            <p>起点：{record.startAddress}</p>
+            <p>终点：{record.endAddress}</p>
           </div>
         )
       },
@@ -141,7 +152,7 @@ export default function OrderList() {
             <Button size="small" onClick={() => detailRef?.current?.openModal('create')}>
               详情
             </Button>
-            <Button size="small" icon={<DeleteOutlined />} danger onClick={() => onOrderDelete([record.userId])}>
+            <Button size="small" icon={<DeleteOutlined />} danger onClick={() => onOrderDelete([record._id])}>
               删除
             </Button>
           </Space>
@@ -150,9 +161,30 @@ export default function OrderList() {
     },
   ]
 
+  function onBatchDelete() {
+    if (ids.length === 0) {
+      message.warning('请选择需要删除的用户')
+      return
+    }
+    onOrderDelete(ids)
+    setIds([])
+  }
+
+  // Mock data
+  function mockOrders() {
+    const _orders = orders as Order.OrderItem[]
+    _orders.forEach((item, index) => {
+      setTimeout(() => {
+        api.order.add(item).then(result => {
+          log.info('mock result: ', result)
+        })
+      }, index * 1000) // 根据 index 计算延迟时间，每次增加 1 秒
+    })
+  }
+
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 1 }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
@@ -161,7 +193,7 @@ export default function OrderList() {
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
           <Select style={{ width: 120 }} onChange={() => search.submit()}>
-            <Select.Option value={0}>全部</Select.Option>
+            <Select.Option value={null}>全部</Select.Option>
             <Select.Option value={1}>进行中</Select.Option>
             <Select.Option value={2}>已完成</Select.Option>
             <Select.Option value={3}>超时</Select.Option>
@@ -184,11 +216,17 @@ export default function OrderList() {
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>
+              <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockOrder}>
+                造数据
+              </DynamicAtnButton>
               <Button icon={<PlusOutlined />} type={'primary'} onClick={() => detailRef?.current?.openModal('create')}>
                 新建
               </Button>
               <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {}}>
                 导出
+              </Button>
+              <Button icon={<DeleteOutlined />} type={'primary'} danger={true} onClick={() => onBatchDelete()}>
+                批量删除
               </Button>
             </Space>
           </div>
@@ -198,13 +236,13 @@ export default function OrderList() {
           bordered
           rowSelection={{
             type: 'checkbox',
-            selectedRowKeys: userIds,
+            selectedRowKeys: ids,
             onChange: (selectedRowKeys: React.Key[]) => {
-              setUserIds(selectedRowKeys as number[])
+              setIds(selectedRowKeys as string[])
             },
           }}
           columns={columns}
-          rowKey={record => record.orderId}
+          rowKey={record => record._id}
           {...tableProps}
         />
         <OrderModal currentRef={detailRef} onRefresh={() => search.reset()} />

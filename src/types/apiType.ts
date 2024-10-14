@@ -241,7 +241,7 @@ export namespace Order {
   export interface CreateParams {
     cityName: string
     userName: string
-    mobile: number
+    mobile: number | string
     startAddress: string //下单开始地址
     endAddress: string //下单结束地址
     orderAmount: number //订单金额
@@ -270,6 +270,8 @@ export namespace Order {
     id: number
     name: string
   }
+
+  export type VehicleDictItem = CityDictItem
 
   /**
    * 修改订单轨迹
