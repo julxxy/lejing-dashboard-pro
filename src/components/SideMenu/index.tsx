@@ -77,7 +77,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
       }
       // 子菜单项
       targetMenus.push(
-        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children)),
+        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
       )
     }
   })
@@ -103,7 +103,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
    * 获取默认选中菜单项
    */
   function getDefaultSelectedKeys() {
-    if (!Environment.isUseStaticSideMenu()) {
+    if (!Environment.isStaticSideMenuEnable()) {
       return [URIs.welcome]
     } else {
       if (pathname.startsWith(URIs.dashboard)) return ['0']
@@ -122,7 +122,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
    * 获取默认展开菜单项
    */
   function getDefaultOpenKeys() {
-    if (!Environment.isUseStaticSideMenu()) {
+    if (!Environment.isStaticSideMenuEnable()) {
       return [pathname]
     } else {
       if (pathname.startsWith(URIs.dashboard)) return ['0']
@@ -138,7 +138,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   function handleMenuClick(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
     if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
     const key = menuInfo?.key as string
-    if (!Environment.isUseStaticSideMenu()) {
+    if (!Environment.isStaticSideMenuEnable()) {
       navigate(key)
     } else {
       log.info('静态导航栏点击菜单项:', key)
@@ -154,7 +154,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   }
 
   useEffect(() => {
-    if (Environment.isUseStaticSideMenu()) {
+    if (Environment.isStaticSideMenuEnable()) {
       if (isDebugEnable) log.warn('使用静态导航栏：', staticSideMenuItems)
       setTargetMenus(staticSideMenuItems)
     } else {

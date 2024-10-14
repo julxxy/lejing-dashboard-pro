@@ -50,7 +50,7 @@ export const RouteConstants = {
 export function getMenuURIs(target: Menu.Item[]): string[] {
   return target
     .flatMap(({ path, children, buttons }) =>
-      Array.isArray(children) && !buttons ? getMenuURIs(children) : (path ?? ''),
+      Array.isArray(children) && !buttons ? getMenuURIs(children) : (path ?? '')
     )
     .filter(Boolean) // 过滤掉空字符串 ''
 }
