@@ -1,3 +1,5 @@
+import { isTrue } from '@/common/booleanUtils.ts'
+
 /**
  * App environment
  */
@@ -10,6 +12,10 @@ export const Environment = {
   isNotProduction: (): boolean => Environment.current !== Environment.prod,
   isLocal: (): boolean => Environment.current === Environment.local,
   isDevelopment: (): boolean => Environment.current === Environment.dev,
+  /**
+   * 是否使用静态导航栏
+   */
+  isUseStaticSideMenu: (): boolean => isTrue(import.meta.env.VITE_IS_USE_STATIC_SIDE_MENU),
 } as const
 
 /**
@@ -36,6 +42,16 @@ export enum UserStatus {
 export enum ResultStatus {
   Success = 0,
   Failed = 40001,
+}
+
+/**
+ * Order status
+ */
+export enum OrderStatus {
+  doing = 1,
+  done = 2,
+  timeout = 3,
+  cancel = 4,
 }
 
 /**

@@ -12,24 +12,23 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { Menu, MenuProps, Tooltip } from 'antd'
-import { Menu as IMenu, SideMenuProps } from '@/types/apiTypes.ts'
+import { Menu as IMenu, SideMenuProps } from '@/types/apiType.ts'
 import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useRouteLoaderData } from 'react-router-dom'
+import { NavigateFunction, useLocation, useNavigate } from 'react-router-dom'
 import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
-import { NavigateFunction } from 'react-router/dist/lib/hooks'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import { RouteConstants } from '@/router/DefaultAuthLoader.ts'
-import { MenuType } from '@/types/appEnums.ts'
-import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
+import { useAuthInterceptorData } from '@/router/DefaultAuthLoader.ts'
+import { Environment, MenuType } from '@/types/appEnum.ts'
+import DynamicAntIcon from '@/components/public/DynamicAntIcon.tsx'
 
 // 侧边栏菜单项
 type MenuItem = Required<MenuProps>['items'][number]
 
 // 静态导航栏
-const antdItems: MenuItem[] = [
-  { key: '0', icon: <DesktopOutlined />, label: '工作台' },
+const staticSideMenuItems: MenuItem[] = [
+  { key: '0', label: '工作台', icon: <DesktopOutlined /> },
   {
     key: '1',
     icon: <SettingOutlined />,
@@ -52,7 +51,7 @@ const antdItems: MenuItem[] = [
     ],
   },
 ]
-if (isDebugEnable) log.debug('静态导航栏:', antdItems)
+if (isDebugEnable) log.debug('静态导航栏:', staticSideMenuItems)
 
 /**
  * 生成菜单项
@@ -67,15 +66,6 @@ function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: R
 }
 
 /**
- * 点击菜单项时执行导航
- */
-function handleMenuClick(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
-  const key = menuInfo?.key as string
-  if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
-  navigate(key)
-}
-
-/**
  * 生成菜单树
  */
 function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] = []) {
@@ -87,7 +77,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
       }
       // 子菜单项
       targetMenus.push(
-        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
+        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children)),
       )
     }
   })
@@ -99,9 +89,8 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
  * @constructor
  */
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
-  const routeData: any = useRouteLoaderData(RouteConstants.layoutId)
+  const routeData: any = useAuthInterceptorData()
   if (isDebugEnable) log.info('加载路由权限数据: ', routeData)
-
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
   const platformText = import.meta.env.VITE_OPS_PLATFORM as string
@@ -109,13 +98,70 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [targetMenus, setTargetMenus] = useState<MenuItem[]>([])
-  const getDefaultSelectedKeys = () => [URIs.welcome]
-  const getDefaultOpenKeys = () => [pathname]
+
+  /**
+   * 获取默认选中菜单项
+   */
+  function getDefaultSelectedKeys() {
+    if (!Environment.isUseStaticSideMenu()) {
+      return [URIs.welcome]
+    } else {
+      if (pathname.startsWith(URIs.dashboard)) return ['0']
+      if (pathname === URIs.system.userList) return ['101']
+      if (pathname === URIs.system.menuList) return ['102']
+      if (pathname === URIs.system.roleList) return ['103']
+      if (pathname === URIs.system.deptList) return ['104']
+      if (pathname === URIs.order.orderList) return ['201']
+      if (pathname === URIs.order.orderAggregation) return ['202']
+      if (pathname === URIs.order.shipperList) return ['203']
+      return []
+    }
+  }
+
+  /**
+   * 获取默认展开菜单项
+   */
+  function getDefaultOpenKeys() {
+    if (!Environment.isUseStaticSideMenu()) {
+      return [pathname]
+    } else {
+      if (pathname.startsWith(URIs.dashboard)) return ['0']
+      if (pathname.startsWith(URIs.module.system)) return ['1']
+      if (pathname.startsWith(URIs.module.order)) return ['2']
+      return []
+    }
+  }
+
+  /**
+   * 点击菜单项时执行导航操作
+   */
+  function handleMenuClick(menuInfo: MenuItem, navigate: NavigateFunction): MenuProps['onClick'] | void {
+    if (isDebugEnable) log.debug('菜单项导航:', menuInfo)
+    const key = menuInfo?.key as string
+    if (!Environment.isUseStaticSideMenu()) {
+      navigate(key)
+    } else {
+      log.info('静态导航栏点击菜单项:', key)
+      if (key === '0') navigate(URIs.dashboard)
+      if (key === '101') navigate(URIs.system.userList)
+      if (key === '102') navigate(URIs.system.menuList)
+      if (key === '103') navigate(URIs.system.roleList)
+      if (key === '104') navigate(URIs.system.deptList)
+      if (key === '201') navigate(URIs.order.orderList)
+      if (key === '202') navigate(URIs.order.orderAggregation)
+      if (key === '203') navigate(URIs.order.shipperList)
+    }
+  }
 
   useEffect(() => {
-    const targetMenu = getMenuTreeifyItems(routeData.menus)
-    log.info('初始化菜单项数据: ', targetMenu)
-    setTargetMenus(targetMenu)
+    if (Environment.isUseStaticSideMenu()) {
+      if (isDebugEnable) log.warn('使用静态导航栏：', staticSideMenuItems)
+      setTargetMenus(staticSideMenuItems)
+    } else {
+      const targetMenu = getMenuTreeifyItems(routeData.menus)
+      if (isDebugEnable) log.warn('使用动态菜单项数据: ', targetMenu)
+      setTargetMenus(targetMenu)
+    }
   }, [])
 
   return (

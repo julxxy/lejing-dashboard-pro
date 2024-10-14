@@ -1,7 +1,7 @@
 import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Input, Modal, Select, TreeSelect } from 'antd'
-import { Department, User } from '@/types/apiTypes.ts'
+import { Department, User } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'

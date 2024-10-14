@@ -9,12 +9,12 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
-import { Environment } from '@/types/appEnums.ts'
+import { Environment } from '@/types/appEnum.ts'
 import { isURIAccessible, URIs } from '@/router'
-import { useAuthLoaderData } from '@/router/DefaultAuthLoader.ts'
+import { useAuthInterceptorData } from '@/router/DefaultAuthLoader.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 
-// 解构antd组件
+// 解构 antd 组件
 const { Content } = Layout
 // 获取水印配置
 const watermark = (): string[] => {
@@ -35,7 +35,7 @@ const LayoutFC: React.FC = () => {
   // 获取用户信息
   const getUserInfo = async () => {
     const userInfo = await api.getUserInfo()
-    userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除这行
+    userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除
     setUserInfo(userInfo)
   }
 
@@ -58,17 +58,19 @@ const LayoutFC: React.FC = () => {
 
   // 路由权限校验 - start
   const { pathname } = useLocation()
-  const routeMeta = useAuthLoaderData()
+  const routeMeta = useAuthInterceptorData()
   const { menuURIs } = routeMeta
   const isAccessible = isURIAccessible(pathname)
-  if (isTrue(isAccessible)) {
-    if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
-  } else {
-    const isNotAccessible = !menuURIs.includes(pathname)
-    if (isDebugEnable) log.info('menuURIs: ', menuURIs, 'isAccessible: ', !isNotAccessible)
-    if (isNotAccessible) {
-      if (isDebugEnable) log.warn(`URI ${pathname} is not accessible for user: ${isNotAccessible}`)
-      return <Navigate to={URIs.noPermission} />
+  if (!Environment.isUseStaticSideMenu()) {
+    if (isTrue(isAccessible)) {
+      if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
+    } else {
+      const isNotAccessible = !menuURIs.includes(pathname)
+      if (isDebugEnable) log.info('menuURIs: ', menuURIs, 'isAccessible: ', !isNotAccessible)
+      if (isNotAccessible) {
+        if (isDebugEnable) log.warn(`URI ${pathname} is not accessible for user: ${isNotAccessible}`)
+        return <Navigate to={URIs.noPermission} />
+      }
     }
   }
   // 路由权限校验 - end

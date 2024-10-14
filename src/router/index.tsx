@@ -52,7 +52,7 @@ const DepartmentFC = lazy(() => import('@/views/system/dept'))
 const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
 const OrderList = lazy(() => import('@/views/order/list'))
-const DriverList = lazy(() => import('@/views/order/driver'))
+const ShipperList = lazy(() => import('@/views/order/shipper'))
 const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
 
 /**
@@ -88,7 +88,7 @@ export const routes: IRouteObject[] = [
         children: [
           { path: URIs.order.orderList, element: <OrderList /> },
           { path: URIs.order.orderAggregation, element: <OrderAggregate /> },
-          { path: URIs.order.shipperList, element: <DriverList /> },
+          { path: URIs.order.shipperList, element: <ShipperList /> },
         ],
       },
     ],

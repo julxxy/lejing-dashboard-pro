@@ -1,5 +1,5 @@
 import api from '@/api'
-import { Menu } from '@/types/apiTypes.ts'
+import { Menu } from '@/types/apiType.ts'
 import { useRouteLoaderData } from 'react-router-dom'
 
 /**
@@ -17,6 +17,13 @@ export interface IRouteMeta {
 }
 
 /**
+ * 获取路由权限信息
+ */
+export function useAuthInterceptorData(): IRouteMeta {
+  return useRouteLoaderData(RouteConstants.layoutId) as IRouteMeta
+}
+
+/**
  * 路由权限加载器: 页面渲染前加载路由权限信息
  */
 export async function DefaultAuthLoader(): Promise<IRouteMeta> {
@@ -28,13 +35,6 @@ export async function DefaultAuthLoader(): Promise<IRouteMeta> {
     menus: menuList,
     menuURIs,
   }
-}
-
-/**
- * 获取路由权限信息
- */
-export function useAuthLoaderData(): IRouteMeta {
-  return useRouteLoaderData(RouteConstants.layoutId) as IRouteMeta
 }
 
 /**
@@ -50,7 +50,7 @@ export const RouteConstants = {
 export function getMenuURIs(target: Menu.Item[]): string[] {
   return target
     .flatMap(({ path, children, buttons }) =>
-      Array.isArray(children) && !buttons ? getMenuURIs(children) : (path ?? '')
+      Array.isArray(children) && !buttons ? getMenuURIs(children) : (path ?? ''),
     )
     .filter(Boolean) // 过滤掉空字符串 ''
 }

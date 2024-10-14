@@ -5,7 +5,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import api from '@/api'
-import { Role } from '@/types/apiTypes.ts'
+import { Role } from '@/types/apiType.ts'
 
 /**
  * 角色弹窗: 创建&编辑
