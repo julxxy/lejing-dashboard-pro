@@ -15,7 +15,7 @@ export const Environment = {
   /**
    * 是否使用静态导航栏
    */
-  isUseStaticSideMenu: (): boolean => isTrue(import.meta.env.VITE_IS_USE_STATIC_SIDE_MENU),
+  isStaticSideMenuEnable: (): boolean => isTrue(import.meta.env.VITE_IS_STATIC_SIDE_MENU_ENABLE),
 } as const
 
 /**

@@ -61,7 +61,7 @@ const LayoutFC: React.FC = () => {
   const routeMeta = useAuthInterceptorData()
   const { menuURIs } = routeMeta
   const isAccessible = isURIAccessible(pathname)
-  if (!Environment.isUseStaticSideMenu()) {
+  if (!Environment.isStaticSideMenuEnable()) {
     if (isTrue(isAccessible)) {
       if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
     } else {
