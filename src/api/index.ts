@@ -1,4 +1,4 @@
-import { Department, Login, Menu, PageResult, Result, Role, UcDashboard, User } from '@/types/apiTypes.ts'
+import { Department, Login, Menu, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 
 /**
@@ -131,5 +131,10 @@ export default {
    */
   order: {
     getOrderList() {},
+    getShipperList() {},
+    delete(orderIds?: number[]) {
+      if (!orderIds) return
+      return undefined
+    },
   },
 }

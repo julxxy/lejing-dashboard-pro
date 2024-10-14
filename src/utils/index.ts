@@ -49,6 +49,14 @@ export const formatUserStatus = (status: number | undefined): string => {
   return ''
 }
 
+export const formatOrderStatus = (status: number | undefined): string => {
+  if (status === 1) return '进行中'
+  if (status === 2) return '已完成'
+  if (status === 3) return '超时'
+  if (status === 4) return '取消'
+  return ''
+}
+
 export const formatUserRole = (status: number | undefined): string => {
   if (status === 0) return '超级管理员'
   if (status === 1) return '管理员'

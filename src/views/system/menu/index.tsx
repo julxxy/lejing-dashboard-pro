@@ -6,10 +6,10 @@ import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
 import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd'
-import { Menu } from '@/types/apiTypes.ts'
+import { Menu } from '@/types/apiType.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
-import { MenuType } from '@/types/appEnums.ts'
+import { MenuType } from '@/types/appEnum.ts'
 
 /**
  * @file 菜单管理页面

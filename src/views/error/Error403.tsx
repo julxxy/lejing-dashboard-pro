@@ -3,18 +3,16 @@ import { useNavigate } from 'react-router-dom'
 
 function NoPermission() {
   const navigate = useNavigate()
-  const navigateToHome = () => {
-    navigate('/')
-  }
+  const navigateToHome = () => navigate('/')
   return (
     <>
       <Result
         status="403"
         title="403"
-        subTitle="Sorry, you do not have permission to access this page."
+        subTitle="抱歉，您没有访问此页面的权限。"
         extra={
           <Button type="primary" onClick={navigateToHome}>
-            Back Home
+            返回首页
           </Button>
         }
       />

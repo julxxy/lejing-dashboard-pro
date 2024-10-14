@@ -1,5 +1,5 @@
 import resso from 'resso'
-import { User } from '@/types/apiTypes.ts'
+import { User } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 
 /**
