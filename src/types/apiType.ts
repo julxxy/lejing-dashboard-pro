@@ -232,7 +232,7 @@ export namespace Role {
  * 订单管理
  */
 export namespace Order {
-  export interface SearchParams extends PageArgs {
+  export interface SearchArgs extends PageArgs {
     orderId?: string
     userName?: string
     state?: number
@@ -266,7 +266,7 @@ export namespace Order {
   /**
    * 城市列表
    */
-  export interface DictItem {
+  export interface CityDictItem {
     id: number
     name: string
   }

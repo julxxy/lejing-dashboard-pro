@@ -29,7 +29,7 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
       setAction(action)
       setModalOpen(true)
       form.setFieldsValue(data)
-      log.info(form.getFieldsValue())
+      if (isDebugEnable) log.info('form value: ', form.getFieldsValue())
     },
     // 关闭当前组件的弹窗显示
     closeModal: () => {

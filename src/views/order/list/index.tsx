@@ -1,16 +1,16 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
 import React, { useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
-import { Order, User } from '@/types/apiType.ts'
+import { Order } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { useAntdTable } from 'ahooks'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
-import { formatDateToLocalString, formatOrderStatus, formatUserStatus } from '@/utils'
+import { formatDateToLocalString, formatMoneyCNY, formatOrderStatus } from '@/utils'
 import { DeleteOutlined, ExportOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 import OrderPointModal from '@/views/order/list/OrderPointModal.tsx'
 import OrderRouteModal from '@/views/order/list/OrderRouteModal.tsx'
-import OrderDetailModal from '@/views/order/list/OrderDetailModal.tsx'
+import OrderModal from '@/views/order/list/OrderModal.tsx'
 
 /**
  * 订单列表
@@ -19,12 +19,7 @@ import OrderDetailModal from '@/views/order/list/OrderDetailModal.tsx'
 export default function OrderList() {
   const [form] = Form.useForm()
   const [userIds, setUserIds] = useState<number[]>([])
-  const orderRef = useRef<ModalAction>({
-    openModal: (action, data?: any) => {
-      if (isDebugEnable) log.info('开开弹窗: ', action, data)
-    },
-    closeModal: () => {},
-  })
+
   const routeRef = useRef<ModalAction>({
     openModal: (action, data?: any) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
@@ -45,7 +40,7 @@ export default function OrderList() {
   })
 
   // pagination data source
-  const fetchPageData = (
+  const fetchPageData = async (
     {
       current,
       pageSize,
@@ -53,12 +48,12 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: User.RequestArgs
+    formData: Order.SearchArgs
   ) => {
-    const [res] = Promise.all(api.order.getOrderList({ ...formData, pageNum: current, pageSize }))
+    const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     return {
-      total: 9999, //API 有问题，这里先写死
-      list: res.list,
+      total: result.page.total,
+      list: result.list,
     }
   }
   // pagination config
@@ -126,7 +121,7 @@ export default function OrderList() {
       title: '订单价格',
       dataIndex: 'orderAmount',
       key: 'orderAmount',
-      render: (state: number) => formatUserStatus(state),
+      render: (state: number) => formatMoneyCNY(state),
     },
     { title: '订单状态', dataIndex: 'state', key: 'state', render: (state: number) => formatOrderStatus(state) },
     { title: '用户名称', dataIndex: 'userName', key: 'userName' },
@@ -134,7 +129,7 @@ export default function OrderList() {
     {
       title: '操作',
       key: 'operate',
-      render(record: User.UserItem) {
+      render(record: Order.OrderItem) {
         return (
           <Space>
             <Button size="small" onClick={() => pointRef?.current?.openModal('create')}>
@@ -165,7 +160,7 @@ export default function OrderList() {
           <Input placeholder={'请输入用户名称'} />
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
-          <Select style={{ width: 110 }}>
+          <Select style={{ width: 120 }} onChange={() => search.submit()}>
             <Select.Option value={0}>全部</Select.Option>
             <Select.Option value={1}>进行中</Select.Option>
             <Select.Option value={2}>已完成</Select.Option>
@@ -189,8 +184,8 @@ export default function OrderList() {
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>
-              <Button icon={<PlusOutlined />} type={'primary'} onClick={() => pointRef?.current?.openModal('create')}>
-                添加
+              <Button icon={<PlusOutlined />} type={'primary'} onClick={() => detailRef?.current?.openModal('create')}>
+                新建
               </Button>
               <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {}}>
                 导出
@@ -198,7 +193,7 @@ export default function OrderList() {
             </Space>
           </div>
         </div>
-        <Table<User.UserItem>
+        <Table<Order.OrderItem>
           scroll={{ x: 'max-content' }} //启用表格水平滚动
           bordered
           rowSelection={{
@@ -209,12 +204,12 @@ export default function OrderList() {
             },
           }}
           columns={columns}
-          rowKey="userId"
+          rowKey={record => record.orderId}
           {...tableProps}
         />
+        <OrderModal currentRef={detailRef} onRefresh={() => search.reset()} />
         <OrderPointModal currentRef={pointRef} onRefresh={() => search.reset()} />
         <OrderRouteModal currentRef={routeRef} onRefresh={() => search.reset()} />
-        <OrderDetailModal currentRef={detailRef} onRefresh={() => search.reset()} />
       </div>
     </div>
   )
