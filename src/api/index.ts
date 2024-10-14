@@ -1,5 +1,6 @@
 import { Department, Login, Menu, Order, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
 import httpUtils from '@/utils/httpUtils.ts'
+import { isDebugEnable, log } from '@/common/Logger.ts'
 
 /**
  * API Request Entities Management
@@ -130,19 +131,26 @@ export default {
    * 订单管理
    */
   order: {
+    add(params: Order.CreateParams) {
+      return httpUtils.post('/order/create', params)
+    },
+    delete(orderIds?: string[]) {
+      if (!orderIds) return
+      orderIds.forEach(id => {
+        httpUtils.post('/order/delete', { _id: id }).then(res => {
+          if (isDebugEnable) log.info('删除订单成功: ', res)
+        })
+      })
+    },
+    getShipperList() {},
     getOrderList(params: Order.SearchArgs) {
       return httpUtils.get<PageResult<Order.OrderItem>>('/order/list', params)
     },
     getCities() {
-      return httpUtils.get<Order.CityDictItem>('/order/cityList')
+      return httpUtils.get<Order.CityDictItem[]>('/order/cityList')
     },
     getOrderVehicles() {
-      return httpUtils.get('/order/vehicleList')
-    },
-    getShipperList() {},
-    delete(orderIds?: number[]) {
-      if (!orderIds) return
-      return undefined
+      return httpUtils.get<Order.VehicleDictItem[]>('/order/vehicleList')
     },
   },
 }

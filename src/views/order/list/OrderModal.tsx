@@ -5,20 +5,19 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select } from 'antd'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import api from '@/api'
+import { message } from '@/context/AntdGlobalProvider.ts'
 
-type VehiclesDictItem = Order.CityDictItem
 /**
  * 订单弹窗
  */
 export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
-  const [orderList, setOrderList] = useState<Order.OrderItem[]>([])
   const [modalOpen, setModalOpen] = useState(false)
   const [action, setAction] = useState<Action>('create')
   const [loading, setLoading] = useState(false)
   // 暴露方法给父组件使用
   const [cities, setCities] = useState<Order.CityDictItem[]>()
-  const [vehicles, setVehicles] = useState<VehiclesDictItem[]>()
+  const [vehicles, setVehicles] = useState<Order.VehicleDictItem[]>()
 
   useImperativeHandle(currentRef, () => modalController)
   const modalController = {
@@ -31,6 +30,7 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
     },
     // 关闭当前组件弹窗
     closeModal: () => {
+      setLoading(false)
       setModalOpen(false)
       form.resetFields()
     },
@@ -39,11 +39,7 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
   useEffect(() => {
     Promise.all([api.order.getCities(), api.order.getOrderVehicles()])
       .then(([cities, vehicles]) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         setCities(cities)
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
         setVehicles(vehicles)
       })
       .catch(error => {
@@ -51,8 +47,20 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
       })
   }, [])
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    const validateFields = await form.validateFields()
+    if (!validateFields) {
+      return
+    }
     setLoading(true)
+    const values = form.getFieldsValue()
+    if (action === 'create') {
+      await api.order.add(values)
+      message.success('订单创建成功')
+      setLoading(false)
+      modalController.closeModal()
+      onRefresh()
+    }
   }
 
   return (
