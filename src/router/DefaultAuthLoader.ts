@@ -1,6 +1,5 @@
 import api from '@/api'
 import { Menu } from '@/types/apiType.ts'
-import { useRouteLoaderData } from 'react-router-dom'
 
 /**
  * 路由元信息
@@ -14,13 +13,6 @@ export interface IRouteMeta {
   menus: Menu.Item[]
   // 菜单 URI 列表
   menuURIs: string[]
-}
-
-/**
- * 获取路由权限信息
- */
-export function useAuthInterceptorData(): IRouteMeta {
-  return useRouteLoaderData(RouteConstants.layoutId) as IRouteMeta
 }
 
 /**

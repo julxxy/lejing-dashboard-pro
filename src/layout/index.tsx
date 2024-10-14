@@ -11,8 +11,8 @@ import { isTrue } from '@/common/booleanUtils.ts'
 import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnum.ts'
 import { isURIAccessible, URIs } from '@/router'
-import { useAuthInterceptorData } from '@/router/DefaultAuthLoader.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
+import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 
 // 解构 antd 组件
 const { Content } = Layout
@@ -56,11 +56,12 @@ const LayoutFC: React.FC = () => {
     }
   }, [])
 
-  // 路由权限校验 - start
   const { pathname } = useLocation()
-  const routeMeta = useAuthInterceptorData()
+  const routeMeta = useAuthLoaderData()
   const { menuURIs } = routeMeta
   const isAccessible = isURIAccessible(pathname)
+
+  // 路由权限校验
   if (!Environment.isStaticSideMenuEnable()) {
     if (isTrue(isAccessible)) {
       if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
@@ -73,7 +74,6 @@ const LayoutFC: React.FC = () => {
       }
     }
   }
-  // 路由权限校验 - end
 
   return (
     <Watermark content={watermark()} inherit={false}>
