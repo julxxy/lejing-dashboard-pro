@@ -77,19 +77,18 @@ export default function PermissionModal({ currentRef, onRefresh }: IModalProps) 
       },
     })
     if (isDebugEnable) log.debug('Permission:', permission)
-    handleSetPermissions()
   }
 
-  async function handleSetPermissions() {
-    if (permission) {
-      await api.role.setPermission(permission)
-      message.success('权限分配成功')
-      setPermission(undefined)
-    }
+  function handleSetPermissions() {
+    if (!permission) return
+    Promise.all([api.role.setPermission(permission)])
+    message.success('权限分配成功')
+    setPermission(undefined)
   }
 
   const handleSubmit = () => {
     if (isDebugEnable) log.debug('Submit')
+    handleSetPermissions()
     onRefresh()
     modalController.closeModal()
   }
