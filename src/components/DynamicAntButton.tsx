@@ -14,7 +14,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
  * @example
  * <DynamicAtnButton show={false} onClick={() => alert('Hi')}>Dynamic Button</DynamicAtnButton>
  */
-const DynamicAtnButton = <T, >({ show = true, btnType, extraData, children, ...props }: DynamicBtnProps<T>) => {
+const DynamicAtnButton = <T,>({ show = true, btnType, extraData, children, ...props }: DynamicBtnProps<T>) => {
   const { buttons = [] } = useAuthLoaderData()
   const { userInfo } = useZustandStore()
   const isSuperAdmin = userInfo?.role === 1
