@@ -1,8 +1,8 @@
-import { Department, Login, Menu, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
+import { Department, Login, Menu, Order, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 
 /**
- * API Request Management
+ * API Request Entities Management
  */
 export default {
   // 登录
@@ -130,7 +130,15 @@ export default {
    * 订单管理
    */
   order: {
-    getOrderList() {},
+    getOrderList(params: Order.SearchArgs) {
+      return httpUtils.get<PageResult<Order.OrderItem>>('/order/list', params)
+    },
+    getCities() {
+      return httpUtils.get<Order.CityDictItem>('/order/cityList')
+    },
+    getOrderVehicles() {
+      return httpUtils.get('/order/vehicleList')
+    },
     getShipperList() {},
     delete(orderIds?: number[]) {
       if (!orderIds) return

@@ -11,11 +11,11 @@ export const Environment = {
   isProduction: (): boolean => Environment.current === Environment.prod,
   isNotProduction: (): boolean => Environment.current !== Environment.prod,
   isLocal: (): boolean => Environment.current === Environment.local,
-  isDevelopment: (): boolean => Environment.current === Environment.dev,
   /**
    * 是否使用静态导航栏
    */
   isStaticSideMenuEnable: (): boolean => isTrue(import.meta.env.VITE_IS_STATIC_SIDE_MENU_ENABLE),
+  isLocaleCN: isTrue(import.meta.env.VITE_IS_LOCALE_CN),
 } as const
 
 /**

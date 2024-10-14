@@ -20,7 +20,7 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Environment, MenuType } from '@/types/appEnum.ts'
-import DynamicAntIcon from '@/components/public/DynamicAntIcon.tsx'
+import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 
 // 侧边栏菜单项
