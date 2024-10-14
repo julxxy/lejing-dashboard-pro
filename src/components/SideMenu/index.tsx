@@ -19,9 +19,9 @@ import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import { useAuthInterceptorData } from '@/router/DefaultAuthLoader.ts'
 import { Environment, MenuType } from '@/types/appEnum.ts'
 import DynamicAntIcon from '@/components/public/DynamicAntIcon.tsx'
+import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 
 // 侧边栏菜单项
 type MenuItem = Required<MenuProps>['items'][number]
@@ -89,7 +89,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
  * @constructor
  */
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
-  const routeData: any = useAuthInterceptorData()
+  const routeData = useAuthLoaderData()
   if (isDebugEnable) log.info('加载路由权限数据: ', routeData)
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'

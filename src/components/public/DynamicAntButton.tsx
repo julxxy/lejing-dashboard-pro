@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from 'antd'
-import { useAuthInterceptorData } from '@/router/DefaultAuthLoader.ts'
 import useZustandStore from '@/store/useZustandStore.ts'
+import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 
 interface DynamicBtnProps<T> extends ButtonProps {
   show: boolean // 是否显示按钮
@@ -15,7 +15,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
  * <DynamicAtnButton show={false} onClick={() => alert('Hi')}>Dynamic Button</DynamicAtnButton>
  */
 const DynamicAtnButton = <T,>({ show = true, btnType, extraData, children, ...props }: DynamicBtnProps<T>) => {
-  const { buttons = [] } = useAuthInterceptorData()
+  const { buttons = [] } = useAuthLoaderData()
   const { userInfo } = useZustandStore()
   const isSuperAdmin = userInfo?.role === 1
   const hasPermission = buttons.includes(btnType || '') // 根据用户按钮权限判断
