@@ -18,8 +18,8 @@ import {
   ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
-import OrderPointModal from '@/views/order/list/OrderPointModal.tsx'
-import OrderRouteModal from '@/views/order/list/OrderRouteModal.tsx'
+import ShipperRouteCreateModal from '@/views/order/list/ShipperRouteCreateModal.tsx'
+import ShipperRouteAnimateModal from '@/views/order/list/ShipperRouteAnimateModal.tsx'
 import OrderCreateModal from '@/views/order/list/OrderCreateModal'
 import orders from '@/mockdata/orders.json'
 import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
@@ -146,6 +146,7 @@ export default function OrderList() {
     {
       title: '操作',
       key: 'operate',
+      width: 80,
       render(record: Order.OrderDetail) {
         return (
           <Space>
@@ -268,8 +269,8 @@ export default function OrderList() {
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
       <OrderDetailModal currentRef={detailRef} onRefresh={() => search.reset()} />
-      <OrderPointModal currentRef={pointRef} onRefresh={() => search.reset()} />
-      <OrderRouteModal currentRef={routeRef} onRefresh={() => search.reset()} />
+      <ShipperRouteCreateModal currentRef={pointRef} onRefresh={() => search.reset()} />
+      <ShipperRouteAnimateModal currentRef={routeRef} onRefresh={() => search.reset()} />
     </div>
   )
 }
