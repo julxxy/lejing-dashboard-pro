@@ -111,10 +111,10 @@ export default function OrderList() {
     detailRef.current.openModal('view', record.orderId)
   }
 
-  // Table columns
+  // Define table columns
   const columns: TableColumnsType<Order.OrderDetail> = [
-    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', width: 160, fixed: false },
-    { title: '城市', dataIndex: 'cityName', key: 'cityName' },
+    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', fixed: true },
+    { title: '城市', dataIndex: 'cityName', key: 'cityName', fixed: true },
     {
       title: '下单地址',
       dataIndex: 'address',
@@ -267,7 +267,7 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} />
+      <OrderDetailModal currentRef={detailRef} onRefresh={() => search.reset()} />
       <OrderPointModal currentRef={pointRef} onRefresh={() => search.reset()} />
       <OrderRouteModal currentRef={routeRef} onRefresh={() => search.reset()} />
     </div>

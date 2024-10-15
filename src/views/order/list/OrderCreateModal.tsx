@@ -73,7 +73,7 @@ export default function OrderCreateModal({ currentRef, onRefresh }: IModalProps)
       message.success('订单创建成功')
       setLoading(false)
       modalController.closeModal()
-      if (onRefresh) onRefresh()
+      onRefresh()
     }
   }
 
