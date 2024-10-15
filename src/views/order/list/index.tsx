@@ -64,7 +64,7 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: Order.SearchArgs
+    formData: Order.SearchArgs,
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     setShowMockButton(result.page.total === 0 && result.list.length === 0)
@@ -237,7 +237,8 @@ export default function OrderList() {
               <Button icon={<PlusOutlined />} type={'primary'} onClick={() => createRef?.current?.openModal('create')}>
                 新建
               </Button>
-              <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {}}>
+              <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {
+              }}>
                 导出
               </Button>
               <DynamicAtnButton
@@ -268,9 +269,10 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} onRefresh={() => search.reset()} />
-      <ShipperRouteCreateModal currentRef={pointRef} onRefresh={() => search.reset()} />
-      <ShipperRouteAnimateModal currentRef={routeRef} onRefresh={() => search.reset()} />
+      <OrderDetailModal currentRef={detailRef} onRefresh={() => {
+      }} />
+      <ShipperRouteCreateModal currentRef={pointRef} onRefresh={() => search.submit()} />
+      <ShipperRouteAnimateModal currentRef={routeRef} onRefresh={() => search.submit()} />
     </div>
   )
 }
