@@ -5,7 +5,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { useForm } from 'antd/es/form/Form'
 import { useEffect, useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
-import { Button, Form, Input, Radio, Space, Table, TableColumnsType } from 'antd'
+import { Button, Form, Input, Radio, Space, Table, TableColumnsType, Tooltip } from 'antd'
 import { Menu } from '@/types/apiType.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
@@ -97,15 +97,15 @@ export default function MenuFC() {
       render: (_text, record?: Menu.Item) => {
         return (
           <Space>
-            <Button icon={<PlusOutlined />} size="small" onClick={() => handleSubCreate(record)}>
-              新建
-            </Button>
-            <Button icon={<EditOutlined />} size="small" onClick={() => handleEdit(record)}>
-              编辑
-            </Button>
-            <Button icon={<DeleteOutlined />} size="small" danger onClick={() => handleDelete(record)}>
-              删除
-            </Button>
+            <Tooltip title="新建">
+              <Button icon={<PlusOutlined />} shape="circle" onClick={() => handleSubCreate(record)} />
+            </Tooltip>
+            <Tooltip title="编辑">
+              <Button icon={<EditOutlined />} shape="circle" onClick={() => handleEdit(record)} />
+            </Tooltip>
+            <Tooltip title="删除">
+              <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => handleDelete(record)} />
+            </Tooltip>
           </Space>
         )
       },

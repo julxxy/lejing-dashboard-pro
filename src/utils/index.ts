@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import dayjs from 'dayjs'
 
 /**
  * Helper function library
@@ -63,4 +64,12 @@ export const formatUserRole = (status: number | undefined): string => {
   if (status === 2) return '体验管理员'
   if (status === 3) return '普通用户'
   return ''
+}
+
+export const formatDateToDayjs = (date: any) => {
+  return date ? dayjs(date) : null
+}
+
+export const formatDayjsToDateString = (date: any) => {
+  return date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : ''
 }

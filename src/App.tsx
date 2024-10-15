@@ -6,6 +6,10 @@ import AntdGlobalProvider, { useThemeToken } from '@/context/AntdGlobalProvider.
 import zhCN from 'antd/lib/locale/zh_CN'
 import enUS from 'antd/lib/locale/en_US'
 import { Environment } from '@/types/appEnum.ts'
+import 'dayjs/locale/zh-cn'
+import dayjs from 'dayjs'
+
+if (Environment.isLocaleCN) dayjs.locale('zh-cn')
 
 function App() {
   return (

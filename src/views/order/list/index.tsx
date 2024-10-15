@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
+import { Button, Form, Input, Select, Space, Table, TableColumnsType, Tooltip } from 'antd'
 import React, { useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
 import { Order } from '@/types/apiType.ts'
@@ -10,8 +10,11 @@ import { formatDateToLocalString, formatMoneyCNY, formatOrderStatus } from '@/ut
 import {
   DatabaseOutlined,
   DeleteOutlined,
+  EnvironmentOutlined,
   ExportOutlined,
+  InfoCircleOutlined,
   PlusOutlined,
+  PushpinOutlined,
   ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
@@ -28,7 +31,7 @@ import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
 export default function OrderList() {
   const [form] = Form.useForm()
   const [ids, setIds] = useState<string[]>([])
-  const [showMockOrder, setShowMockOrder] = useState(false)
+  const [showMockButton, setShowMockButton] = useState(false)
 
   const routeRef = useRef<ModalAction>({
     openModal: (action, data?: any) => {
@@ -61,7 +64,7 @@ export default function OrderList() {
     formData: Order.SearchArgs
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
-    setShowMockOrder(result.page.total === 0 && result.list.length === 0)
+    setShowMockButton(result.page.total === 0 && result.list.length === 0)
     return {
       total: result.page.total,
       list: result.list,
@@ -101,13 +104,13 @@ export default function OrderList() {
       },
     })
 
-  function onOrderEdit(record: Order.OrderItem) {
-    pointRef?.current?.openModal('edit', record)
+  function handleOrderDetail(record: Order.OrderItem) {
+    detailRef?.current?.openModal('view', record)
   }
 
-  // Table columns: 订单编号	城市							操作
+  // Table columns
   const columns: TableColumnsType<Order.OrderItem> = [
-    { title: '订单编号', dataIndex: 'orderId', key: 'orderId' },
+    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', width: 160, fixed: true },
     { title: '城市', dataIndex: 'cityName', key: 'cityName' },
     {
       title: '下单地址',
@@ -143,18 +146,26 @@ export default function OrderList() {
       render(record: Order.OrderItem) {
         return (
           <Space>
-            <Button size="small" onClick={() => pointRef?.current?.openModal('create')}>
-              打点
-            </Button>
-            <Button size="small" onClick={() => routeRef?.current?.openModal('create')}>
-              轨迹
-            </Button>
-            <Button size="small" onClick={() => detailRef?.current?.openModal('create')}>
-              详情
-            </Button>
-            <Button size="small" icon={<DeleteOutlined />} danger onClick={() => onOrderDelete([record._id])}>
-              删除
-            </Button>
+            <Tooltip title="地图打点">
+              <Button
+                icon={<PushpinOutlined />}
+                shape="circle"
+                onClick={() => pointRef?.current?.openModal('create')}
+              />
+            </Tooltip>
+            <Tooltip title="行驶轨迹">
+              <Button
+                icon={<EnvironmentOutlined />}
+                shape="circle"
+                onClick={() => routeRef?.current?.openModal('create')}
+              />
+            </Tooltip>
+            <Tooltip title="详情">
+              <Button icon={<InfoCircleOutlined />} shape="circle" onClick={() => handleOrderDetail(record)} />
+            </Tooltip>
+            <Tooltip title="删除">
+              <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onOrderDelete([record._id])} />
+            </Tooltip>
           </Space>
         )
       },
@@ -163,7 +174,7 @@ export default function OrderList() {
 
   function onBatchDelete() {
     if (ids.length === 0) {
-      message.warning('请选择需要删除的用户')
+      message.warning('请选择需要删除的条目')
       return
     }
     onOrderDelete(ids)
@@ -188,7 +199,7 @@ export default function OrderList() {
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
-        <Form.Item name="useName" label={'用户名称'}>
+        <Form.Item name="userName" label={'用户名称'}>
           <Input placeholder={'请输入用户名称'} />
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
@@ -216,7 +227,7 @@ export default function OrderList() {
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>
-              <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockOrder}>
+              <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockButton}>
                 造数据
               </DynamicAtnButton>
               <Button icon={<PlusOutlined />} type={'primary'} onClick={() => detailRef?.current?.openModal('create')}>
@@ -225,9 +236,15 @@ export default function OrderList() {
               <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {}}>
                 导出
               </Button>
-              <Button icon={<DeleteOutlined />} type={'primary'} danger={true} onClick={() => onBatchDelete()}>
+              <DynamicAtnButton
+                icon={<DeleteOutlined />}
+                type={'primary'}
+                danger={true}
+                onClick={() => onBatchDelete()}
+                show={true}
+              >
                 批量删除
-              </Button>
+              </DynamicAtnButton>
             </Space>
           </div>
         </div>

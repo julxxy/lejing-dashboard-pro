@@ -5,7 +5,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { useAntdTable } from 'ahooks'
 import { Role } from '@/types/apiType.ts'
-import { Button, Form, Input, Space, Table, TableColumnsType } from 'antd'
+import { Button, Form, Input, Space, Table, TableColumnsType, Tooltip } from 'antd'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { formatDateToLocalString } from '@/utils'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
@@ -85,26 +85,25 @@ export default function RoleList() {
       render(record: Role.RoleDetail) {
         return (
           <Space>
-            <Button key={`edit-${record._id}`} icon={<EditOutlined />} size="small" onClick={() => onEdit(record)}>
-              编辑
-            </Button>
-            <Button
-              key={`assign-${record._id}`}
-              icon={<EditOutlined />}
-              size="small"
-              onClick={() => assignPermission(record)}
-            >
-              分配权限
-            </Button>
-            <Button
-              key={`delete-${record._id}`}
-              icon={<DeleteOutlined />}
-              size="small"
-              danger
-              onClick={() => onDelete(record._id)}
-            >
-              删除
-            </Button>
+            <Tooltip title="编辑">
+              <Button
+                icon={<EditOutlined />}
+                shape="circle"
+                key={`edit-${record._id}`}
+                onClick={() => onEdit(record)}
+              />
+            </Tooltip>
+            <Tooltip title="设置权限">
+              <Button key={`assign-${record._id}`} icon={<EditOutlined />} onClick={() => assignPermission(record)} />
+            </Tooltip>
+            <Tooltip title="删除">
+              <Button
+                key={`delete-${record._id}`}
+                icon={<DeleteOutlined />}
+                danger
+                onClick={() => onDelete(record._id)}
+              />
+            </Tooltip>
           </Space>
         )
       },

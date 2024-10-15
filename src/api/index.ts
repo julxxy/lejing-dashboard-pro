@@ -147,10 +147,10 @@ export default {
       return httpUtils.get<PageResult<Order.OrderItem>>('/order/list', params)
     },
     getCities() {
-      return httpUtils.get<Order.CityDictItem[]>('/order/cityList')
+      return httpUtils.get<Order.CityDict[]>('/order/cityList')
     },
     getOrderVehicles() {
-      return httpUtils.get<Order.VehicleDictItem[]>('/order/vehicleList')
+      return httpUtils.get<Order.VehicleDict[]>('/order/vehicleList')
     },
   },
 }
