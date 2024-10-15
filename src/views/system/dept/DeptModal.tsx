@@ -64,7 +64,7 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
       }
       message.success('操作成功')
       modalController.closeModal() // 关闭弹窗
-      if (onRefresh) onRefresh() // 执行刷新回调
+      onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
     } finally {

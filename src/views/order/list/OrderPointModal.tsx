@@ -7,15 +7,28 @@ import { Order } from '@/types/apiType.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
 
+const deleteButtonHTML = `
+    <div style="
+      color: #fff;
+      background-color: #ff4d4f;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-align:center;
+      cursor: pointer;
+      font-size: 14px;
+    ">
+      删除？
+    </div>
+  `
+
 /**
  * 百度地图打点：货运人员行驶轨迹
  */
-export default function OrderPointModal({ currentRef }: IModalProps) {
+export default function OrderPointModal({ currentRef, onRefresh }: IModalProps) {
   // Constants
   const driverIcon = '/images/icon_driver_128.png'
   const [showModal, setShowModal] = useState(false)
   const [orderId, setOrderId] = useState<string>('')
-  const [loading, setLoading] = useState(false)
   const [centerPoint, setCenterPoint] = useState<{ lng: string; lat: string }>() // 中心点坐标
   const [marks, setMarks] = useState<{ lng: string; lat: string; id: string }[]>([]) // 标注点坐标
 
@@ -29,15 +42,19 @@ export default function OrderPointModal({ currentRef }: IModalProps) {
       if (data) {
         setOrderId(data.orderId)
         convertCityToGeoPoint(data.cityName)
-        const restoredMarkers = data?.route?.map((item, index) => ({ lng: item.lng, lat: item.lat, id: `${index}` }))
-        setMarks(restoredMarkers)
+        const restoredMarks = data?.route?.map((item, index) => ({ lng: item.lng, lat: item.lat, id: `${index}` }))
+        setMarks(restoredMarks)
       }
     },
-    closeModal: () => setShowModal(false),
+    closeModal: () => {
+      setMarks([])
+      onRefresh()
+      setShowModal(false)
+    },
   }
 
-  // Geocoding city name to geo point
-  function convertCityToGeoPoint(cityName: string) {
+  // 将城市名称地理编码为地理点
+  const convertCityToGeoPoint = (cityName: string) => {
     const geocoder = new window.BMapGL.Geocoder()
     geocoder.getPoint(
       cityName,
@@ -51,17 +68,6 @@ export default function OrderPointModal({ currentRef }: IModalProps) {
       },
       cityName,
     )
-  }
-
-  // Handle OK button click event
-  async function handleSubmit() {
-    setLoading(true)
-    await api.order.update({ orderId, route: marks }).then(() => {
-      if (isDebugEnable) log.info('Order map info saved successfully')
-    })
-    message.success('保存成功')
-    controller.closeModal()
-    setLoading(false)
   }
 
   // 获取地图实例
@@ -79,34 +85,46 @@ export default function OrderPointModal({ currentRef }: IModalProps) {
   // 创建标注对象并添加到地图
   function createMarker(map: any, lng: string, lat: string, id: string) {
     const point = new window.BMapGL.Point(lng, lat)
-    const icon = new window.BMapGL.Icon(
-      driverIcon,
-      new window.BMapGL.Size(32, 32), // 修改图标的大小
-      {
-        imageSize: new window.BMapGL.Size(32, 32), // 设置实际图标大小
-        anchor: new window.BMapGL.Size(16, 16), // 设置图标的锚点
-      },
-    )
+    const icon = new window.BMapGL.Icon(driverIcon, new window.BMapGL.Size(32, 32), {
+      imageSize: new window.BMapGL.Size(32, 32),
+      anchor: new window.BMapGL.Size(16, 16),
+    })
 
     const marker = new window.BMapGL.Marker(point, { icon }) // 创建标注对象
     marker.id = id // 给标注对象添加 id 属性
 
-    const markerMenu = new window.BMapGL.ContextMenu() // 创建右键菜单
+    // 创建右键菜单
+    const markerMenu = new window.BMapGL.ContextMenu()
     markerMenu.addItem(
-      new window.BMapGL.MenuItem('删除', () => {
+      new window.BMapGL.MenuItem(deleteButtonHTML, () => {
         if (isDebugEnable) log.info('Marker menu clicked before: ', marker.id, marks)
         setMarks(prevMarkers => prevMarkers.filter(item => item.id !== marker.id))
         map.removeOverlay(marker)
-        if (isDebugEnable) log.info('Marker menu clicked after: ', marks)
+        if (isDebugEnable) log.info('Marker menu clicked after: ', marker.id, marks)
       }),
     )
+
     marker.addContextMenu(markerMenu) // 绑定右键菜单
     map.addOverlay(marker)
   }
 
+  // 恢复标注
+  const restoreMarkerIfPresent = (map: any, marks: { lng: string; lat: string; id: string }[]) => {
+    if (map && marks) {
+      marks.forEach(marker => {
+        createMarker(map, marker.lng, marker.lat, marker.id)
+      })
+    }
+  }
+
   // 渲染地图
   function renderMap(center: { lng: string; lat: string }) {
+    if (!center) {
+      log.error('Center point is not available')
+      return
+    }
     const map = getMapInstance(center)
+    restoreMarkerIfPresent(map, marks)
     map.addEventListener('click', (event: any) => {
       const { latlng, timeStamp } = event
       const { lng, lat } = latlng
@@ -116,23 +134,19 @@ export default function OrderPointModal({ currentRef }: IModalProps) {
     })
   }
 
-  // 恢复标注
-  function restoreMarkers(marks: { lng: string; lat: string; id: string }[]) {
-    if (centerPoint) {
-      const map = getMapInstance(centerPoint)
-      marks.forEach(marker => {
-        createMarker(map, marker.lng, marker.lat, marker.id)
-      })
-    }
+  // Handle OK button click event
+  async function handleSubmit() {
+    await api.order.update({ orderId, route: marks })
+    message.success('保存成功')
+    controller.closeModal()
   }
 
-  // 监听订单信息变化，更新地图信息
+  // 监听 centerPoint 变化，渲染地图
   useEffect(() => {
-    if (orderId && centerPoint) {
+    if (centerPoint) {
       renderMap(centerPoint)
-      restoreMarkers(marks)
     }
-  }, [orderId, centerPoint])
+  }, [centerPoint])
 
   return (
     <Modal
@@ -141,8 +155,8 @@ export default function OrderPointModal({ currentRef }: IModalProps) {
       height="60%"
       open={showModal}
       onOk={handleSubmit}
-      okButtonProps={{ loading, icon: <CheckCircleOutlined /> }}
-      cancelButtonProps={{ disabled: loading, icon: <CloseCircleOutlined /> }}
+      okButtonProps={{ icon: <CheckCircleOutlined /> }}
+      cancelButtonProps={{ icon: <CloseCircleOutlined /> }}
       onCancel={controller.closeModal}
     >
       <div

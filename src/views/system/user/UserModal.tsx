@@ -77,7 +77,7 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
         return
       }
       message.success('操作成功')
-      if (onRefresh) onRefresh() // 调用父组件的刷新函数
+      onRefresh() // 调用父组件的刷新函数
       closeModal() // 调用父组件的关闭函数
     } finally {
       setLoading(false)

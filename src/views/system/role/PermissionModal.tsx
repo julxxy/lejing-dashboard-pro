@@ -89,8 +89,8 @@ export default function PermissionModal({ currentRef, onRefresh }: IModalProps) 
   const handleSubmit = () => {
     if (isDebugEnable) log.debug('Submit')
     handleSetPermissions()
-    onRefresh()
     modalController.closeModal()
+    onRefresh()
   }
 
   useEffect(() => {
