@@ -17,13 +17,11 @@ export default function RoleList() {
     openModal: (action, data?: Role.EditParams | { parentId?: string; orderBy?: number }) => {
       if (isDebugEnable) log.info('开启角色弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
   const permissionRef = useRef<ModalAction>({
     openModal: (action, data?: Role.EditParams | { parentId?: string; orderBy?: number }) => {
       if (isDebugEnable) log.info('开权限弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
 
   // 获取分页数据

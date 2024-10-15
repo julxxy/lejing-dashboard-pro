@@ -255,7 +255,7 @@ export namespace Order {
     endTime: string // 订单结束时间
   }
 
-  export interface OrderItem extends CreateParams {
+  export interface OrderDetail extends CreateParams {
     _id: string
     orderId: string //订单ID
     route: Array<{ lng: string; lat: string }> //行驶轨迹

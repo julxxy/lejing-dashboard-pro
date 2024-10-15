@@ -142,9 +142,15 @@ export default {
         })
       })
     },
+    update(params?: Order.OrderRoute) {
+      return httpUtils.post('/order/edit', params)
+    },
+    getOrderDetail(orderId: string) {
+      return httpUtils.get<Order.OrderDetail>(`/order/detail/${orderId}`)
+    },
     getShipperList() {},
     getOrderList(params: Order.SearchArgs) {
-      return httpUtils.get<PageResult<Order.OrderItem>>('/order/list', params)
+      return httpUtils.get<PageResult<Order.OrderDetail>>('/order/list', params)
     },
     getCities() {
       return httpUtils.get<Order.CityDict[]>('/order/cityList')

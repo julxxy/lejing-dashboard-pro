@@ -13,19 +13,21 @@ import { formatDateToDayjs, formatDayjsToDateString } from '@/utils'
 /**
  * 订单弹窗
  */
-export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
+export default function OrderCreateModal({ currentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [modalOpen, setModalOpen] = useState(false)
+
   const [action, setAction] = useState<Action>('create')
   const [loading, setLoading] = useState(false)
-  // 暴露方法给父组件使用
+
   const [cities, setCities] = useState<Order.CityDict[]>()
   const [vehicles, setVehicles] = useState<Order.VehicleDict[]>()
 
+  // 暴露方法给父组件使用
   useImperativeHandle(currentRef, () => modalController)
   const modalController = {
     // 开启当前组件弹窗
-    openModal: (action: Action, data?: Order.OrderItem) => {
+    openModal: (action: Action, data?: Order.OrderDetail) => {
       if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
       setAction(action)
       setModalOpen(true)
@@ -71,13 +73,13 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
       message.success('订单创建成功')
       setLoading(false)
       modalController.closeModal()
-      onRefresh()
+      if (onRefresh) onRefresh()
     }
   }
 
   return (
     <Modal
-      title={action === 'create' ? '新建订单' : '订单详情'}
+      title={'新建订单'}
       width={ModalVariables.width}
       open={modalOpen}
       onOk={handleSubmit}
@@ -112,14 +114,22 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
           <Col span={12}>
             <Form.Item name="cityName" label="城市名称" rules={[{ required: true }]}>
               <Select placeholder="请选择城市名称">
-                {cities?.map(item => <Select.Option value={item.id}>{item.name}</Select.Option>)}
+                {cities?.map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item name="vehicleName" label="车型" rules={[{ required: true }]}>
               <Select placeholder="请选择车型">
-                {vehicles?.map(item => <Select.Option value={item.id}>{item.name}</Select.Option>)}
+                {vehicles?.map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

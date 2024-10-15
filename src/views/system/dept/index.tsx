@@ -22,7 +22,6 @@ export default function DepartmentFC() {
     openModal: (action, data?: Department.EditParams | { parentId: string }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
 
   useEffect(() => {

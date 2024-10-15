@@ -20,9 +20,10 @@ import {
 } from '@ant-design/icons'
 import OrderPointModal from '@/views/order/list/OrderPointModal.tsx'
 import OrderRouteModal from '@/views/order/list/OrderRouteModal.tsx'
-import OrderModal from '@/views/order/list/OrderModal.tsx'
+import OrderCreateModal from '@/views/order/list/OrderCreateModal'
 import orders from '@/mockdata/orders.json'
 import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
+import OrderDetailModal from '@/views/order/list/OrderDetailModal.tsx'
 
 /**
  * 订单列表
@@ -37,19 +38,21 @@ export default function OrderList() {
     openModal: (action, data?: any) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
   const pointRef = useRef<ModalAction>({
     openModal: (action, data?: any) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
+  })
+  const createRef = useRef<ModalAction>({
+    openModal: (action, data?: any) => {
+      if (isDebugEnable) log.info('开开弹窗: ', action, data)
+    },
   })
   const detailRef = useRef<ModalAction>({
     openModal: (action, data?: any) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
 
   // pagination data source
@@ -104,13 +107,13 @@ export default function OrderList() {
       },
     })
 
-  function handleOrderDetail(record: Order.OrderItem) {
-    detailRef?.current?.openModal('view', record)
+  function getOrderDetail(record: Order.OrderDetail) {
+    detailRef.current.openModal('view', record.orderId)
   }
 
   // Table columns
-  const columns: TableColumnsType<Order.OrderItem> = [
-    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', width: 160, fixed: true },
+  const columns: TableColumnsType<Order.OrderDetail> = [
+    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', width: 160, fixed: false },
     { title: '城市', dataIndex: 'cityName', key: 'cityName' },
     {
       title: '下单地址',
@@ -143,25 +146,25 @@ export default function OrderList() {
     {
       title: '操作',
       key: 'operate',
-      render(record: Order.OrderItem) {
+      render(record: Order.OrderDetail) {
         return (
           <Space>
             <Tooltip title="地图打点">
               <Button
                 icon={<PushpinOutlined />}
                 shape="circle"
-                onClick={() => pointRef?.current?.openModal('create')}
+                onClick={() => pointRef.current.openModal('create', record)}
               />
             </Tooltip>
             <Tooltip title="行驶轨迹">
               <Button
                 icon={<EnvironmentOutlined />}
                 shape="circle"
-                onClick={() => routeRef?.current?.openModal('create')}
+                onClick={() => routeRef.current.openModal('view', record.orderId)}
               />
             </Tooltip>
             <Tooltip title="详情">
-              <Button icon={<InfoCircleOutlined />} shape="circle" onClick={() => handleOrderDetail(record)} />
+              <Button icon={<InfoCircleOutlined />} shape="circle" onClick={() => getOrderDetail(record)} />
             </Tooltip>
             <Tooltip title="删除">
               <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onOrderDelete([record._id])} />
@@ -183,7 +186,7 @@ export default function OrderList() {
 
   // Mock data
   function mockOrders() {
-    const _orders = orders as Order.OrderItem[]
+    const _orders = orders as Order.OrderDetail[]
     _orders.forEach((item, index) => {
       setTimeout(() => {
         api.order.add(item).then(result => {
@@ -195,7 +198,7 @@ export default function OrderList() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: '' }}>
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
@@ -204,7 +207,7 @@ export default function OrderList() {
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
           <Select style={{ width: 120 }} onChange={() => search.submit()}>
-            <Select.Option value={null}>全部</Select.Option>
+            <Select.Option value={''}>全部</Select.Option>
             <Select.Option value={1}>进行中</Select.Option>
             <Select.Option value={2}>已完成</Select.Option>
             <Select.Option value={3}>超时</Select.Option>
@@ -230,7 +233,7 @@ export default function OrderList() {
               <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockButton}>
                 造数据
               </DynamicAtnButton>
-              <Button icon={<PlusOutlined />} type={'primary'} onClick={() => detailRef?.current?.openModal('create')}>
+              <Button icon={<PlusOutlined />} type={'primary'} onClick={() => createRef?.current?.openModal('create')}>
                 新建
               </Button>
               <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {}}>
@@ -248,7 +251,7 @@ export default function OrderList() {
             </Space>
           </div>
         </div>
-        <Table<Order.OrderItem>
+        <Table<Order.OrderDetail>
           scroll={{ x: 'max-content' }} //启用表格水平滚动
           bordered
           rowSelection={{
@@ -262,10 +265,11 @@ export default function OrderList() {
           rowKey={record => record._id}
           {...tableProps}
         />
-        <OrderModal currentRef={detailRef} onRefresh={() => search.reset()} />
-        <OrderPointModal currentRef={pointRef} onRefresh={() => search.reset()} />
-        <OrderRouteModal currentRef={routeRef} onRefresh={() => search.reset()} />
       </div>
+      <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
+      <OrderDetailModal currentRef={detailRef} />
+      <OrderPointModal currentRef={pointRef} onRefresh={() => search.reset()} />
+      <OrderRouteModal currentRef={routeRef} onRefresh={() => search.reset()} />
     </div>
   )
 }

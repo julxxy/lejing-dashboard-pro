@@ -21,7 +21,6 @@ export default function UsersPrimary() {
     openModal: (action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
 
   // 1. 获取分页数据
@@ -37,7 +36,7 @@ export default function UsersPrimary() {
   ) => {
     const res = await api.user.getUserList({ ...formData, pageNum: current, pageSize })
     return {
-      total: 9999, //API 有问题，这里先写死
+      total: res.page.total,
       list: res.list,
     }
   }

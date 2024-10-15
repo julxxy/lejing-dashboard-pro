@@ -23,5 +23,5 @@
       "@/*": ["src/*", "types/*"]
     }
   },
-  "include": ["src", "types/axios-conf.d.ts"]
+  "include": ["src", "types"]
 }
