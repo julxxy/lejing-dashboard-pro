@@ -29,26 +29,26 @@ type MenuItem = Required<MenuProps>['items'][number]
 
 // 静态导航栏
 const staticSideMenuItems: MenuItem[] = [
-  { key: '0', label: '工作台', icon: <DesktopOutlined /> },
+  { key: '/dashboard', label: '工作台', icon: <DesktopOutlined /> },
   {
-    key: '1',
+    key: '/sys',
     icon: <SettingOutlined />,
     label: '系统管理',
     children: [
-      { key: '102', label: '菜单管理', icon: <MenuOutlined /> },
-      { key: '104', label: '部门管理', icon: <ApartmentOutlined /> },
-      { key: '101', label: '用户管理', icon: <UserOutlined /> },
-      { key: '103', label: '角色管理', icon: <TrademarkCircleOutlined /> },
+      { key: '/sys/menu/list', label: '菜单管理', icon: <MenuOutlined /> },
+      { key: '/sys/dept/list', label: '部门管理', icon: <ApartmentOutlined /> },
+      { key: '/sys/user/list', label: '用户管理', icon: <UserOutlined /> },
+      { key: '/sys/role/list', label: '角色管理', icon: <TrademarkCircleOutlined /> },
     ],
   },
   {
     label: '订单管理',
-    key: '2',
+    key: '/order',
     icon: <ShoppingCartOutlined />,
     children: [
-      { key: '201', label: '订单列表', icon: <OrderedListOutlined /> },
-      { key: '202', label: '订单聚合', icon: <GiftOutlined /> },
-      { key: '203', label: '货运人员', icon: <TruckOutlined /> },
+      { key: '/order/list', label: '订单列表', icon: <OrderedListOutlined /> },
+      { key: '/order/aggregation', label: '订单聚合', icon: <GiftOutlined /> },
+      { key: '/order/shipper', label: '货运人员', icon: <TruckOutlined /> },
     ],
   },
 ]
@@ -113,13 +113,11 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
 
   // 菜单项选中时保存状态
   const handleClick: MenuProps['onClick'] = e => {
-    if (isDebugEnable) log.debug('菜单项导航:', e)
+    if (isDebugEnable) log.info('菜单项导航:', e, pathname)
     const key = e.key as string
     setSelectedKeys([key])
     storageUtils.set('menuSelectedKeys', [key])
-    if (!Environment.isStaticSideMenuEnable()) {
-      navigate(key)
-    }
+    navigate(key)
   }
 
   // 组件挂载时: 获取菜单数据

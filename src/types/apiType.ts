@@ -251,7 +251,7 @@ export namespace Order {
     driverName: string //司机名称
     vehicleName: string //订单车型
     state: OrderStatus // 订单状态: 1: 进行中 2：已完成 3：超时 4：取消
-    useTime: string // 用车时间
+    useTime: string | Date | null // 用车时间
     endTime: string // 订单结束时间
   }
 
@@ -259,19 +259,19 @@ export namespace Order {
     _id: string
     orderId: string //订单ID
     route: Array<{ lng: string; lat: string }> //行驶轨迹
-    createTime: string //创建时间
+    createTime: string | Date | null //创建时间
     remark: string //备注
   }
 
   /**
    * 城市列表
    */
-  export interface CityDictItem {
+  export interface CityDict {
     id: number
     name: string
   }
 
-  export type VehicleDictItem = CityDictItem
+  export type VehicleDict = CityDict
 
   /**
    * 修改订单轨迹

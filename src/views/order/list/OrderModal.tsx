@@ -1,3 +1,5 @@
+// noinspection t
+
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { useEffect, useImperativeHandle, useState } from 'react'
 import { Order } from '@/types/apiType.ts'
@@ -6,6 +8,7 @@ import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select }
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
+import { formatDateToDayjs, formatDayjsToDateString } from '@/utils'
 
 /**
  * 订单弹窗
@@ -16,8 +19,8 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
   const [action, setAction] = useState<Action>('create')
   const [loading, setLoading] = useState(false)
   // 暴露方法给父组件使用
-  const [cities, setCities] = useState<Order.CityDictItem[]>()
-  const [vehicles, setVehicles] = useState<Order.VehicleDictItem[]>()
+  const [cities, setCities] = useState<Order.CityDict[]>()
+  const [vehicles, setVehicles] = useState<Order.VehicleDict[]>()
 
   useImperativeHandle(currentRef, () => modalController)
   const modalController = {
@@ -26,7 +29,14 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
       if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)
       setAction(action)
       setModalOpen(true)
-      form.setFieldsValue(data)
+      // 确保日期字段正确地转换为 dayjs 对象
+      if (data) {
+        form.setFieldsValue({
+          ...data,
+          useTime: formatDateToDayjs(data.useTime),
+          endTime: formatDateToDayjs(data.endTime),
+        })
+      }
     },
     // 关闭当前组件弹窗
     closeModal: () => {
@@ -52,8 +62,10 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
     if (!validateFields) {
       return
     }
-    setLoading(true)
     const values = form.getFieldsValue()
+    values.useTime = formatDayjsToDateString(values.useTime)
+    values.endTime = formatDayjsToDateString(values.endTime)
+    setLoading(true)
     if (action === 'create') {
       await api.order.add(values)
       message.success('订单创建成功')
@@ -65,13 +77,14 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
 
   return (
     <Modal
-      title={action === 'create' ? '新建订单' : '编辑订单'}
+      title={action === 'create' ? '新建订单' : '订单详情'}
       width={ModalVariables.width}
       open={modalOpen}
       onOk={handleSubmit}
       okButtonProps={{
         loading,
         icon: <CheckCircleOutlined />,
+        disabled: action === 'view',
       }}
       okText={'确定'}
       onCancel={modalController.closeModal}
@@ -87,19 +100,12 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
         labelAlign="right"
         initialValues={{
           cityName: cities?.[0]?.name || '',
-          userName: '',
-          mobile: '',
-          startAddress: '',
-          endAddress: '',
           orderAmount: 0.01,
           userPayAmount: 0.01,
           driverAmount: 0.01,
           payType: 1,
-          driverName: '',
           vehicleName: vehicles?.[0]?.name || '',
           state: 1,
-          useTime: null,
-          endTime: null,
         }}
       >
         <Row gutter={24}>
@@ -195,12 +201,22 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item name="useTime" label="用车时间">
-              <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
+              <DatePicker
+                placeholder="请选择日期"
+                style={{ width: '100%' }}
+                showTime={{ format: 'HH:mm' }}
+                format="YYYY-MM-DD HH:mm"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item name="endTime" label="订单结束时间">
-              <DatePicker placeholder="请选择日期" style={{ width: '100%' }} />
+              <DatePicker
+                placeholder="请选择日期"
+                style={{ width: '100%' }}
+                showTime={{ format: 'HH:mm' }}
+                format="YYYY-MM-DD HH:mm"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -208,7 +224,7 @@ export default function OrderModal({ currentRef, onRefresh }: IModalProps) {
           <Button
             style={{ left: 0, bottom: -60 }}
             type={'default'}
-            disabled={loading}
+            disabled={action === 'view' || loading}
             onClick={() => form.resetFields()}
           >
             重置表单

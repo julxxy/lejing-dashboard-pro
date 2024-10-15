@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
+import { Button, Form, Input, Select, Space, Table, TableColumnsType, Tooltip } from 'antd'
 import { User } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
@@ -89,7 +89,7 @@ export default function UsersPrimary() {
   }
 
   const columns: TableColumnsType<User.UserItem> = [
-    { title: '用户ID', dataIndex: 'userId', key: 'userId' },
+    { title: '用户ID', dataIndex: 'userId', key: 'userId', fixed: true },
     { title: '用户名', dataIndex: 'userName', key: 'userName' },
     { title: '用户邮箱', dataIndex: 'userEmail', key: 'userEmail' },
     { title: '用户角色', dataIndex: 'role', key: 'role', render: (role: number) => formatUserRole(role) },
@@ -112,12 +112,12 @@ export default function UsersPrimary() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button icon={<EditOutlined />} size="small" onClick={() => onUserEdit(record)}>
-              编辑
-            </Button>
-            <Button icon={<DeleteOutlined />} size="small" danger onClick={() => onUserDelete([record.userId])}>
-              删除
-            </Button>
+            <Tooltip title="编辑">
+              <Button icon={<EditOutlined />} shape="circle" onClick={() => onUserEdit(record)} />
+            </Tooltip>
+            <Tooltip title="删除">
+              <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onUserDelete([record.userId])} />
+            </Tooltip>
           </Space>
         )
       },
@@ -157,6 +157,7 @@ export default function UsersPrimary() {
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>
+              <Tooltip title="地图打点"></Tooltip>
               <Button
                 icon={<PlusOutlined />}
                 type={'primary'}

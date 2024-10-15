@@ -26,13 +26,9 @@
   --bg-color-breadcrumb-third: #e8e8e8; /* 淡灰色 */
 
   /* Border and shadow */
+  --border-default: 1 solid #d9d9d9; /* 默认边框: 提升边界感 */
   --border-radius-default: 8px; /* 默认的圆角半径 */
   --box-shadow-default: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
-}
-
-/* 覆盖 Ant Design 的布局背景色 */
-.ant-layout {
-  background-color: var(--bg-color-breadcrumb-primary);
 }
 
 /* 消除默认样式 */
@@ -42,19 +38,14 @@
   box-sizing: border-box;
 }
 
+/* 覆盖 Ant Design 的布局背景色 */
+.ant-layout {
+  background-color: var(--bg-color-breadcrumb-primary);
+}
+
 /* 使用深蓝色 */
 .logo-text-dark-blue {
   color: var(--color-text-primary-dark);
-}
-
-/* Sample usage in components */
-.btn-primary {
-  background-color: var(--color-primary-bright);
-  color: #fff;
-  border-radius: var(--border-radius-default);
-  box-shadow: var(--box-shadow-default);
-  padding: 8px 16px;
-  border: none;
 }
 
 .btn-secondary {
@@ -92,6 +83,13 @@
   color: var(--color-accent-green);
 }
 
+/* ant 固定列的视觉样式 */
+.ant-table-cell-fix-left {
+  background-color: #fff;
+  font-weight: bold;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
 /* Background styling */
 .sidebar {
   background-color: var(--color-primary-dark);
@@ -111,17 +109,21 @@
 }
 
 .search-box {
-  padding: 10px;
+  padding: 16px;
   border-radius: var(--border-radius-default);
   color: #000;
   background-color: var(--bg-color-breadcrumb-secondary);
+  margin-bottom: 20px;
+  border: var(--border-default);
+  box-shadow: var(--box-shadow-default);
 }
 
 .base-table {
-  margin-top: 10px;
   border-radius: var(--border-radius-default);
   color: #000;
   background-color: var(--bg-color-breadcrumb-secondary);
+  box-shadow: var(--box-shadow-default);
+  border: var(--border-default);
 
   .header-wrapper {
     display: flex;

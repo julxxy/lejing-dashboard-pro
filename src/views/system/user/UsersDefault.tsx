@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select, Space, Table, TableColumnsType, TablePaginationConfig } from 'antd'
+import { Button, Form, Input, Select, Space, Table, TableColumnsType, TablePaginationConfig, Tooltip } from 'antd'
 import { PageArgs, User } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
@@ -55,7 +55,7 @@ export default function UsersDefault() {
   }, [pagination.current, pagination.pageSize])
 
   const columns: TableColumnsType<User.UserItem> = [
-    { title: '用户ID', dataIndex: 'userId', key: 'userId' },
+    { title: '用户ID', dataIndex: 'userId', key: 'userId', fixed: true },
     { title: '用户名', dataIndex: 'userName', key: 'userName' },
     { title: '用户邮箱', dataIndex: 'userEmail', key: 'userEmail' },
     { title: '用户角色', dataIndex: 'role', key: 'role', render: (role: number) => formatUserRole(role) },
@@ -78,12 +78,12 @@ export default function UsersDefault() {
       render(record: User.UserItem) {
         return (
           <Space>
-            <Button icon={<EditOutlined />} shape="circle" onClick={() => onUserEdit(record)}>
-              编辑
-            </Button>
-            <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onUserDelete([record.userId])}>
-              删除
-            </Button>
+            <Tooltip title="删除">
+              <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onUserDelete([record.userId])} />
+            </Tooltip>
+            <Tooltip title="编辑">
+              <Button icon={<EditOutlined />} shape="circle" onClick={() => onUserEdit(record)} />
+            </Tooltip>
           </Space>
         )
       },

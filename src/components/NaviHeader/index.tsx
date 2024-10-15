@@ -29,16 +29,14 @@ const NaviHeader = () => {
   const handleMenuClick: MenuProps['onClick'] = e => {
     if (isDebugEnable) log.debug(e)
     const { key } = e
-    switch (key) {
-      case '1':
-        return navigate(URIs.dashboard)
-      case '2':
-        return switchAccount()
-      case '3':
-        return logout()
-      default:
-        break
+    if (key === '1') {
+      return navigate(URIs.dashboard)
+    } else if (key === '2') {
+      return switchAccount()
+    } else if (key === '3') {
+      return logout()
     }
+    return undefined
   }
 
   const menuProps = {
