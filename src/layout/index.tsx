@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import React, { lazy, useEffect, useRef, useState } from 'react'
 import { Layout, Watermark } from 'antd'
 import NaviHeader from '@/components/NaviHeader'
 import NavFooter from '@/components/NavFooter'
@@ -8,7 +8,6 @@ import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
-import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnum.ts'
 import { isURIAccessible, URIs } from '@/router'
 import { isDebugEnable, log } from '@/common/Logger.ts'
@@ -83,9 +82,7 @@ const LayoutFC: React.FC = () => {
           <NaviHeader />
           <Content className={styles.scrollWrapper} style={{ height: contentHeight }}>
             <div className={styles.contentWrapper}>
-              <Suspense fallback={<Loading />}>
-                <Outlet context={<Welcome />} />
-              </Suspense>
+              <Outlet context={<Welcome />} />
             </div>
             <NavFooter />
           </Content>
