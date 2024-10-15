@@ -53,7 +53,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
       }
       message.success('操作成功')
       closeModal() // 关闭弹窗
-      onRefresh() // 执行刷新回调
+      if (onRefresh) onRefresh() // 执行刷新回调
     } catch (error) {
       if (isDebugEnable) log.error('操作失败: ', error)
     } finally {

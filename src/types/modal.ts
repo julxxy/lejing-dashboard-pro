@@ -11,7 +11,7 @@ export interface IModalProps {
   /**
    * 数据发生变化时接受父组件传递的回调函数
    */
-  onRefresh: () => void
+  onRefresh?: () => void
 }
 
 /**
@@ -25,9 +25,9 @@ export interface ModalAction {
    */
   openModal: (action: Action, data?: any) => void
   /**
-   * 关闭弹窗
+   * 关闭弹窗: 子组件里面必须实现该方法
    */
-  closeModal: () => void
+  closeModal?: () => void
 }
 
 /**

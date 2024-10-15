@@ -22,8 +22,6 @@ export default function MenuFC() {
     openModal: (action, data?: Menu.EditParams | { parentId?: string; orderBy?: number }) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-
-    closeModal: () => {},
   })
 
   useEffect(() => {

@@ -25,7 +25,6 @@ export default function UsersDefault() {
     openModal: (action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
     },
-    closeModal: () => {},
   })
   const onCreate = () => {
     currentRef?.current?.openModal('create')
