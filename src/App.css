@@ -110,11 +110,10 @@
 
 .search-box {
   padding: 16px;
-  border-radius: var(--border-radius-default);
   color: #000;
   background-color: var(--bg-color-breadcrumb-secondary);
-  margin-bottom: 20px;
   border: var(--border-default);
+  border-radius: var(--border-radius-default);
   box-shadow: var(--box-shadow-default);
 }
 
@@ -130,7 +129,7 @@
     justify-content: space-between;
     align-items: center;
     border-radius: 5px 5px 0 0;
-    padding: 15px;
+    padding: 16px;
 
     .action-btn {
       margin-right: 10px;

@@ -27,7 +27,7 @@ export const formatNumberWithComma = (num?: number | string): string => {
 // Format date to date string
 export const formatDateToLocalString = (
   date?: Date | string,
-  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' = 'yyyy-MM-dd HH:mm:ss'
+  pattern: 'yyyy-MM-dd' | 'HH:mm:ss' | 'yyyy-MM-dd HH:mm:ss' | 'yyyyMMddHHmm' | 'yyyyMMddHHmmss' = 'yyyy-MM-dd HH:mm:ss'
 ): string => {
   const _date = date ? new Date(date) : new Date()
 

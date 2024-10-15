@@ -55,6 +55,14 @@ instance.interceptors.response.use(
     hideLoading()
 
     const config = response.config
+    if (
+      config.responseType === 'blob' ||
+      response.headers['content-type'] === 'blob' ||
+      response.headers['content-type'] === 'application/octet-stream'
+    ) {
+      return response
+    }
+
     const { data }: { data: Result } = response
     const { code, msg } = data
 
@@ -103,6 +111,39 @@ export default {
   },
   put: function <T>(url: string, data?: any): Promise<T> {
     return instance.put(url, data)
+  },
+  download(url: string, data: any, filename: string = 'DefaultFilename.xlsx') {
+    instance({
+      url,
+      data,
+      method: 'post',
+      responseType: 'blob',
+    }).then(response => {
+      // Try to extract filename from 'content-disposition' or 'file-name' header
+      let _filename = filename
+      const contentDisposition = response.headers['content-disposition']
+      const fileNameHeader = response.headers['file-name']
+
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename\*=UTF-8''(.*)|filename="(.*)"/)
+        if (fileNameMatch) {
+          _filename = decodeURIComponent(fileNameMatch[1] || fileNameMatch[2])
+        }
+      } else if (fileNameHeader) {
+        _filename = decodeURIComponent(fileNameHeader)
+      }
+
+      // Create a Blob from the response data and download the file
+      const blob = new Blob([response.data], { type: response.data.type })
+      const blobUrl = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = blobUrl
+      link.setAttribute('download', _filename)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(blobUrl)
+    })
   },
   getAuthHeaders: function () {
     return {

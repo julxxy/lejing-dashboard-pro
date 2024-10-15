@@ -1,6 +1,7 @@
 import { Department, Login, Menu, Order, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
+import { formatDateToLocalString } from '@/utils'
 
 /**
  * API Request Entities Management
@@ -157,6 +158,13 @@ export default {
     },
     getOrderVehicles() {
       return httpUtils.get<Order.VehicleDict[]>('/order/vehicleList')
+    },
+    exportExcel(params: any) {
+      return httpUtils.download(
+        '/order/orderExport',
+        params,
+        `订单数据_${formatDateToLocalString(new Date(), 'yyyyMMddHHmm')}.xlsx`
+      )
     },
   },
 }

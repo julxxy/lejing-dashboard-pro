@@ -1,4 +1,4 @@
-import { Action, IModalProps } from '@/types/modal'
+import { Action, IModalProps } from '@/types/modal.ts'
 import { useImperativeHandle, useState } from 'react'
 import { Order } from '@/types/apiType.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
