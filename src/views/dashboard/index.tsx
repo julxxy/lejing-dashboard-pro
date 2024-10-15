@@ -1,9 +1,8 @@
 import styles from '@/views/dashboard/index.module.less'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Descriptions, DescriptionsProps } from 'antd'
 import useZustandStore from '@/store/useZustandStore.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import Loading from '@/views/loading'
 import { Environment } from '@/types/appEnum.ts'
 import { UcDashboard, User } from '@/types/apiType.ts'
 import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils'
@@ -87,15 +86,9 @@ const Dashboard: React.FC = () => {
         ))}
       </div>
       <div className={styles.chartContainer}>
-        <Suspense fallback={<Loading />}>
-          <OrderTransactionChart />
-        </Suspense>
-        <Suspense fallback={<Loading />}>
-          <DriverDistributionPieChart />
-        </Suspense>
-        <Suspense fallback={<Loading />}>
-          <ModelDiagnosticsRadarChart />
-        </Suspense>
+        <OrderTransactionChart />
+        <DriverDistributionPieChart />
+        <ModelDiagnosticsRadarChart />
       </div>
     </>
   )
