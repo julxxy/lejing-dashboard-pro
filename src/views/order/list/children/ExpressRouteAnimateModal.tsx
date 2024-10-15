@@ -57,7 +57,7 @@ export default function ExpressRouteAnimateModal({ currentRef, onRefresh }: IMod
     map.addOverlay(truckMarker)
 
     // 绘制路线的折线
-    const polyline = new BMapGL.Polyline(points, { strokeColor: '#58e817', strokeWeight: 5 })
+    const polyline = new BMapGL.Polyline(points, { strokeColor: '#58e817', strokeWeight: 5, strokeOpacity: 0.8 })
     map.addOverlay(polyline)
 
     // 初始化轨迹动画
