@@ -18,12 +18,12 @@ import {
   ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
-import ShipperRouteCreateModal from '@/views/order/list/ShipperRouteCreateModal.tsx'
-import ShipperRouteAnimateModal from '@/views/order/list/ShipperRouteAnimateModal.tsx'
-import OrderCreateModal from '@/views/order/list/OrderCreateModal'
+import ExpressRouteReportModal from '@/views/order/list/children/ExpressRouteReportModal.tsx'
+import ExpressRouteAnimateModal from '@/views/order/list/children/ExpressRouteAnimateModal.tsx'
+import OrderCreateModal from '@/views/order/list/children/OrderCreateModal.tsx'
 import orders from '@/mockdata/orders.json'
 import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
-import OrderDetailModal from '@/views/order/list/OrderDetailModal.tsx'
+import OrderDetailModal from '@/views/order/list/children/OrderDetailModal.tsx'
 
 /**
  * 订单列表
@@ -64,7 +64,7 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: Order.SearchArgs,
+    formData: Order.SearchArgs
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     setShowMockButton(result.page.total === 0 && result.list.length === 0)
@@ -98,8 +98,8 @@ export default function OrderList() {
       onOk: () => {
         try {
           api.order.delete(ids)
-          search.reset()
           message.success('删除成功')
+          search.submit()
         } catch (e) {
           log.error(e)
           message.success('删除失败')
@@ -157,14 +157,14 @@ export default function OrderList() {
                 onClick={() => pointRef.current.openModal('create', record)}
               />
             </Tooltip>
-            <Tooltip title="行驶轨迹">
+            <Tooltip title="物流详情">
               <Button
                 icon={<EnvironmentOutlined />}
                 shape="circle"
-                onClick={() => routeRef.current.openModal('view', record.orderId)}
+                onClick={() => routeRef.current.openModal('view', record)}
               />
             </Tooltip>
-            <Tooltip title="详情">
+            <Tooltip title="订单详情">
               <Button icon={<InfoCircleOutlined />} shape="circle" onClick={() => getOrderDetail(record)} />
             </Tooltip>
             <Tooltip title="删除">
@@ -183,6 +183,7 @@ export default function OrderList() {
     }
     onOrderDelete(ids)
     setIds([])
+    search.submit()
   }
 
   // Mock data
@@ -197,9 +198,18 @@ export default function OrderList() {
     })
   }
 
+  function handleExport() {
+    if (isDebugEnable) log.info('导出订单: ', form.getFieldsValue())
+    if (tableProps.dataSource.length === 0) {
+      message.warning('请选择数据以导出')
+      return
+    }
+    api.order.exportExcel(form.getFieldsValue())
+  }
+
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: '' }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
@@ -208,7 +218,7 @@ export default function OrderList() {
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
           <Select style={{ width: 120 }} onChange={() => search.submit()}>
-            <Select.Option value={''}>全部</Select.Option>
+            <Select.Option value={null}>全部</Select.Option>
             <Select.Option value={1}>进行中</Select.Option>
             <Select.Option value={2}>已完成</Select.Option>
             <Select.Option value={3}>超时</Select.Option>
@@ -232,13 +242,12 @@ export default function OrderList() {
           <div className="actions">
             <Space>
               <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockButton}>
-                造数据
+                拉取
               </DynamicAtnButton>
               <Button icon={<PlusOutlined />} type={'primary'} onClick={() => createRef?.current?.openModal('create')}>
                 新建
               </Button>
-              <Button icon={<ExportOutlined />} type={'primary'} onClick={() => {
-              }}>
+              <Button icon={<ExportOutlined />} type={'primary'} onClick={() => handleExport()}>
                 导出
               </Button>
               <DynamicAtnButton
@@ -269,10 +278,9 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} onRefresh={() => {
-      }} />
-      <ShipperRouteCreateModal currentRef={pointRef} onRefresh={() => search.submit()} />
-      <ShipperRouteAnimateModal currentRef={routeRef} onRefresh={() => search.submit()} />
+      <OrderDetailModal currentRef={detailRef} onRefresh={() => {}} />
+      <ExpressRouteReportModal currentRef={pointRef} onRefresh={() => search.submit()} />
+      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {}} />
     </div>
   )
 }

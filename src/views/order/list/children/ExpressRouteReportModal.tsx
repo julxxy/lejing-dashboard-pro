@@ -6,28 +6,17 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { Order } from '@/types/apiType.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
+import { convertCityNameToGeoPoint, getMapInstance, mapConstants } from '@/context/BaiduMapProvider.ts'
+import '@/views/order/list/index.mudule.less'
 
-// Custom delete button HTML
-const deleteButtonHTML = `
-  <div style="
-    color: #fff;
-    background-color: #ff4d4f;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-align:center;
-    cursor: pointer;
-    font-size: 14px;
-  ">
-    删除？
-  </div>
-`
+// Delete button HTML
+const deleteButtonHTML = `<div class="mapDeleteButton">删除 ?</div>`
 
 /**
- * 货运人员行驶轨迹：使用可点击标记显示驾驶员路线的模式
+ * 地图打点上报货运人员行驶轨迹：使用可点击标记显示驾驶员行驶的地图路线
  */
-export default function ShipperRouteCreateModal({ currentRef, onRefresh }: IModalProps) {
+export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModalProps) {
   // Constants
-  const driverIcon = '/images/icon_driver_128.png'
   const [showModal, setShowModal] = useState(false)
   const [orderId, setOrderId] = useState<string>('')
   const [centerPoint, setCenterPoint] = useState<{ lng: string; lat: string } | undefined>()
@@ -42,7 +31,7 @@ export default function ShipperRouteCreateModal({ currentRef, onRefresh }: IModa
       setShowModal(true)
       if (data) {
         setOrderId(data.orderId)
-        convertCityToGeoPoint(data.cityName)
+        convertCityNameToGeoPoint(data.cityName, point => setCenterPoint(point))
         const restoredMarks = data.route?.map((item, index) => ({
           lng: item.lng,
           lat: item.lat,
@@ -58,50 +47,21 @@ export default function ShipperRouteCreateModal({ currentRef, onRefresh }: IModa
     },
   }
 
-  // Convert city name to geo point
-  const convertCityToGeoPoint = (cityName: string) => {
-    const geocoder = new window.BMapGL.Geocoder()
-    geocoder.getPoint(
-      cityName,
-      (point: { lng: string; lat: string }) => {
-        if (point) {
-          setCenterPoint(point)
-          log.info(`Geocoded city: ${cityName}, Point:`, point)
-        } else {
-          log.error('Failed to geocode city name')
-        }
-      },
-      cityName
-    )
-  }
-
-  // Get map instance
-  const getMapInstance = (center: { lng: string; lat: string }) => {
-    const map = new window.BMapGL.Map('bmContainer')
-    const point = new window.BMapGL.Point(center.lng, center.lat)
-    map.centerAndZoom(point, 12)
-    map.addControl(new window.BMapGL.ScaleControl())
-    map.addControl(new window.BMapGL.ZoomControl())
-    map.addControl(new window.BMapGL.CityListControl())
-    map.enableScrollWheelZoom(true)
-    return map
-  }
-
   // Create and add marker
   const createMarker = (map: any, lng: string, lat: string, id: string) => {
-    const point = new window.BMapGL.Point(lng, lat)
-    const icon = new window.BMapGL.Icon(driverIcon, new window.BMapGL.Size(32, 32), {
-      imageSize: new window.BMapGL.Size(32, 32),
-      anchor: new window.BMapGL.Size(16, 16),
+    const point = new BMapGL.Point(lng, lat)
+    const icon = new BMapGL.Icon(mapConstants.iconMarkPoint, new BMapGL.Size(32, 32), {
+      imageSize: new BMapGL.Size(32, 32),
+      anchor: new BMapGL.Size(16, 16),
     })
 
-    const marker = new window.BMapGL.Marker(point, { icon })
+    const marker = new BMapGL.Marker(point, { icon })
     marker.id = id
 
     // Add delete menu
-    const markerMenu = new window.BMapGL.ContextMenu()
+    const markerMenu = new BMapGL.ContextMenu()
     markerMenu.addItem(
-      new window.BMapGL.MenuItem(deleteButtonHTML, () => {
+      new BMapGL.MenuItem(deleteButtonHTML, () => {
         if (isDebugEnable) log.info('Marker menu clicked before: ', marker.id, marks)
         setMarks(prevMarks => prevMarks.filter(item => item.id !== marker.id))
         map.removeOverlay(marker)
@@ -126,7 +86,7 @@ export default function ShipperRouteCreateModal({ currentRef, onRefresh }: IModa
       log.error('Center point is not available')
       return
     }
-    const map = getMapInstance(center)
+    const map = getMapInstance(center, 'bmContainer', 14)
     restoreMarkers(map)
     map.addEventListener('click', (event: any) => {
       const { latlng, timeStamp } = event
@@ -153,24 +113,16 @@ export default function ShipperRouteCreateModal({ currentRef, onRefresh }: IModa
 
   return (
     <Modal
-      title="行驶路线打点"
-      width="70%"
+      title="物流路线打点上报"
+      width="68%"
       height="60%"
       open={showModal}
       onOk={handleSubmit}
-      okButtonProps={{ icon: <CheckCircleOutlined /> }}
+      okButtonProps={{ icon: <CheckCircleOutlined />, type: 'primary' }}
       cancelButtonProps={{ icon: <CloseCircleOutlined /> }}
       onCancel={controller.closeModal}
     >
-      <div
-        id="bmContainer"
-        style={{
-          padding: '20px',
-          height: '600px',
-          borderRadius: 'var(--border-radius-default)',
-          border: 'var(--border-default)',
-        }}
-      />
+      <div id="bmContainer" className="mapContainer" />
     </Modal>
   )
 }

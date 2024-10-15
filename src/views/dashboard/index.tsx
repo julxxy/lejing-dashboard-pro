@@ -11,26 +11,18 @@ import root from '@/mockdata/root.json'
 
 // Lazy loading for charts
 const OrderTransactionChart = React.lazy(() => import('@/views/dashboard/children/OrderTransactionChart.tsx'))
-const DriverDistributionPieChart = React.lazy<React.ComponentType<any>>(() => {
-  return new Promise(resolve => {
-    setTimeout(() => resolve(import('@/views/dashboard/children/BusinessOverviewPieChart.tsx')), 1000) // 延迟加载
-  })
-})
+const DriverDistributionPieChart = React.lazy(() => import('@/views/dashboard/children/BusinessOverviewPieChart.tsx'))
 const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
 function getCardItems(userInfo?: User.Info): DescriptionsProps['items'] {
-  if (Environment.isLocal()) {
-    return root.user.info
-  } else {
-    return [
-      { key: '1', label: '用户 ID', children: userInfo?.userId },
-      { key: '2', label: '邮箱', children: userInfo?.userEmail },
-      { key: '3', label: '状态', children: formatUserStatus(userInfo?.state) },
-      { key: '4', label: '手机号', children: userInfo?.mobile },
-      { key: '5', label: '职位', children: userInfo?.job },
-      { key: '6', label: '部门', children: userInfo?.deptName },
-    ]
-  }
+  return [
+    { key: '1', label: '用户 ID', children: userInfo?.userId },
+    { key: '2', label: '邮箱', children: userInfo?.userEmail },
+    { key: '3', label: '状态', children: formatUserStatus(userInfo?.state) },
+    { key: '4', label: '手机号', children: userInfo?.mobile },
+    { key: '5', label: '职位', children: userInfo?.job },
+    { key: '6', label: '部门', children: userInfo?.deptName },
+  ]
 }
 
 function getAvatar(avatar: string): string {
