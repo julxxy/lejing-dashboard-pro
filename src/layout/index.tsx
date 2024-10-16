@@ -34,7 +34,6 @@ const LayoutFC: React.FC = () => {
   // 获取用户信息
   const getUserInfo = async () => {
     const userInfo = await api.getUserInfo()
-    userInfo.userName = Environment.isLocal() ? 'admin' : userInfo.userName // TODO 上线后删除
     setUserInfo(userInfo)
   }
 
