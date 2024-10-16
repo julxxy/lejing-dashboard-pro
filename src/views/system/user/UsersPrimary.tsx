@@ -64,15 +64,11 @@ export default function UsersPrimary() {
     modal.confirm({
       title: '确认删除用户',
       content: '确认要删除所选用户吗？',
-      onOk: async () => {
-        try {
-          await api.user.deleteUser(userIds)
+      onOk: () => {
+        api.user.deleteUser(userIds).then(() => {
           search.reset()
           message.success('删除成功')
-        } catch (e) {
-          log.error(e)
-          message.success('删除失败')
-        }
+        })
       },
     })
 

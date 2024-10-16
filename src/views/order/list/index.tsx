@@ -96,14 +96,9 @@ export default function OrderList() {
       title: '确认删除订单',
       content: '确认要删除所选订单吗？',
       onOk: () => {
-        try {
-          api.order.delete(ids)
-          message.success('删除成功')
-          search.submit()
-        } catch (e) {
-          log.error(e)
-          message.success('删除失败')
-        }
+        api.order.delete(ids)
+        message.success('删除成功')
+        search.submit()
       },
     })
 
