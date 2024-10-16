@@ -52,7 +52,7 @@ instance.interceptors.request.use(
  */
 instance.interceptors.response.use(
   response => {
-    hideLoading() // Hide loading
+    hideLoading()
     const config = response.config
 
     if (
@@ -68,11 +68,9 @@ instance.interceptors.response.use(
 
     if (isDebugEnable) log.debug(data)
 
-    if (code === 500001) {
-      return handleSessionExpired(msg, data)
-    } else if (code !== 0) {
-      return isFalse(config.showError) ? Promise.resolve(data) : handleError(msg, data)
-    }
+    if (code === 500001) return handleSessionExpired(msg, data)
+    if (code === 40001) return handleError(msg, data)
+    if (code !== 0) return isFalse(config.showError) ? Promise.resolve(data) : handleError(msg, data)
 
     return data.data
   },

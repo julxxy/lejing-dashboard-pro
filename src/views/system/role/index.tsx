@@ -112,15 +112,11 @@ export default function RoleList() {
     modal.confirm({
       title: '确认删除权限',
       content: '确认要删除所选权限吗？',
-      onOk: async () => {
-        try {
-          await api.role.delete(_id)
+      onOk: () => {
+        api.role.delete(_id).then(() => {
           search.reset()
           message.success('删除成功')
-        } catch (e) {
-          log.error(e)
-          message.success('删除失败')
-        }
+        })
       },
     })
 

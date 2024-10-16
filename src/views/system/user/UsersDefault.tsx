@@ -36,15 +36,11 @@ export default function UsersDefault() {
     modal.confirm({
       title: '确认删除用户',
       content: '确认要删除所选用户吗？',
-      onOk: async () => {
-        try {
-          await api.user.deleteUser(userIds)
-          await getUsers({})
+      onOk: () => {
+        api.user.deleteUser(userIds).then(() => {
+          getUsers({})
           message.success('删除成功')
-        } catch (e) {
-          log.error(e)
-          message.success('删除失败')
-        }
+        })
       },
     })
 

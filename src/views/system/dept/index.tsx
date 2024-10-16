@@ -42,7 +42,7 @@ export default function DepartmentFC() {
   function onDeptDelete(_id?: string) {
     log.info('删除部门')
     modal.confirm({
-      title: '确认删除用户',
+      title: '确认删除部门',
       content: '确认要删除所选部门吗？',
       onOk: async () => {
         if (!_id) return
