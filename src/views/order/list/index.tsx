@@ -10,8 +10,8 @@ import { formatDateToLocalString, formatMoneyCNY, formatOrderStatus } from '@/ut
 import {
   DatabaseOutlined,
   DeleteOutlined,
+  DownloadOutlined,
   EnvironmentOutlined,
-  ExportOutlined,
   InfoCircleOutlined,
   PlusOutlined,
   PushpinOutlined,
@@ -67,7 +67,7 @@ export default function OrderList() {
     formData: Order.SearchArgs
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
-    setShowMockButton(result.page.total === 0 && result.list.length === 0)
+    setShowMockButton(result.page.total === 0)
     return {
       total: result.page.total,
       list: result.list,
@@ -108,8 +108,8 @@ export default function OrderList() {
 
   // Define table columns
   const columns: TableColumnsType<Order.OrderDetail> = [
-    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', fixed: true },
-    { title: '城市', dataIndex: 'cityName', key: 'cityName', fixed: true },
+    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', fixed: false },
+    { title: '城市', dataIndex: 'cityName', key: 'cityName', fixed: false },
     {
       title: '下单地址',
       dataIndex: 'address',
@@ -164,7 +164,7 @@ export default function OrderList() {
             </Tooltip>
             <Tooltip title="删除">
               <DynamicAtnButton
-                show={true}
+                show
                 disabled={true}
                 icon={<DeleteOutlined />}
                 shape="circle"
@@ -242,21 +242,21 @@ export default function OrderList() {
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>
-              <DynamicAtnButton icon={<DatabaseOutlined />} onClick={mockOrders} show={showMockButton}>
+              <DynamicAtnButton icon={<DatabaseOutlined />} show={showMockButton} onClick={mockOrders}>
                 拉取
               </DynamicAtnButton>
               <Button icon={<PlusOutlined />} type={'primary'} onClick={() => createRef?.current?.openModal('create')}>
                 新建
               </Button>
-              <Button icon={<ExportOutlined />} type={'primary'} onClick={() => handleExport()}>
+              <Button icon={<DownloadOutlined />} type={'primary'} onClick={() => handleExport()}>
                 导出
               </Button>
               <DynamicAtnButton
                 icon={<DeleteOutlined />}
-                type={'primary'}
+                show={true}
+                type="primary"
                 danger={true}
                 onClick={() => onBatchDelete()}
-                show={true}
                 disabled={true}
               >
                 批量删除

@@ -8,7 +8,7 @@ import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import TestOverflow from '@/views/extra/TestOverflow.tsx'
-import { DefaultAuthLoader, RouteConstants } from '@/router/DefaultAuthLoader.ts'
+import { defaultAuthLoader, RouteConstants } from '@/router/defaultAuthLoader.ts'
 import { isFalse } from '@/common/booleanUtils.ts'
 import Lazy from '@/components/Lazy.tsx'
 import { Environment } from '@/types/appEnum.ts'
@@ -22,7 +22,7 @@ const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
 const OrderList = lazy(() => import('@/views/order/list'))
 const ShipperList = lazy(() => import('@/views/order/shipper'))
-const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
+const OrderAggregate = lazy(() => import('@/views/order/aggr'))
 
 /**
  * URIs in the APP
@@ -55,7 +55,7 @@ const isURIPublic = (path: string) => publicURIs.includes(path)
 
 const jacksMenu: IRouteObject[] = [
   { path: '/welcome', element: <Welcome /> },
-  { path: '/dashboard', element: <Lazy Component={Dashboard} /> },
+  { path: '/dashboard', element: <Dashboard /> },
   { path: '/userList', element: <Lazy Component={UserFC} /> },
   { path: '/deptList', element: <Lazy Component={DepartmentFC} /> },
   { path: '/menuList', element: <Lazy Component={MenuList} /> },
@@ -75,13 +75,13 @@ export const routes: IRouteObject[] = [
   { path: URIs.login, element: <LoginFC /> },
   {
     id: RouteConstants.layoutId,
-    loader: DefaultAuthLoader,
+    loader: defaultAuthLoader,
     element: <Layout />,
     children: Environment.canUseStaticLayout()
       ? jacksMenu
       : [
           { path: URIs.welcome, element: <Welcome /> },
-          { path: URIs.dashboard, element: <Lazy Component={Dashboard} /> },
+          { path: URIs.dashboard, element: <Dashboard /> },
           { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
           {
             path: URIs.module.system,
@@ -109,6 +109,7 @@ export const routes: IRouteObject[] = [
 
 // Create routing instance
 export const router = createBrowserRouter(routes)
+// URI is Accessible
 export const isURIAccessible = (route?: string | null | undefined): boolean => {
   if (!route) return false
   if (isURIPublic(route)) return true

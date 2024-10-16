@@ -9,36 +9,36 @@ import { formatDateToLocalString } from '@/utils'
 export default {
   // 登录
   login(params: Login.Request) {
-    return httpUtils.post<string>(`/users/login`, params, { showLoading: false, showError: false })
+    return httpUtils.post<string>('/users/login', params, { showLoading: false, showError: false })
   },
   // 获取用户信息
   getUserInfo() {
     return httpUtils.get<User.Info>('/users/getUserInfo')
   },
-  // 获取报表
-  getReport() {
-    return httpUtils.get<UcDashboard.Report>('/order/dashboard/getReportData')
+  // 工作台
+  dashboard: {
+    // 获取报表
+    getReport() {
+      return httpUtils.get<UcDashboard.Report>('/order/dashboard/getReportData')
+    },
+    // 获取订单图表数据
+    getOrderChartData() {
+      return httpUtils.get<UcDashboard.OrderChartEntity>('/order/dashboard/getLineData')
+    },
+    // 获取城市分布数据
+    getDriverCityData() {
+      return httpUtils.get<UcDashboard.CityChartEntity[]>('/order/dashboard/getPieCityData')
+    },
+    // 获取年龄分布数据
+    getDriverAgeData() {
+      return httpUtils.get<UcDashboard.AgeChartEntity[]>('/order/dashboard/getPieAgeData')
+    },
+    // 获取雷达图数据
+    getDriverRadarData() {
+      return httpUtils.get<UcDashboard.RadarChartEntity>('/order/dashboard/getRadarData')
+    },
   },
-  // 获取订单图表数据
-  getOrderChartData() {
-    return httpUtils.get<UcDashboard.OrderChartEntity>('/order/dashboard/getLineData')
-  },
-  // 获取城市分布数据
-  getDriverCityData() {
-    return httpUtils.get<UcDashboard.CityChartEntity[]>('/order/dashboard/getPieCityData')
-  },
-  // 获取年龄分布数据
-  getDriverAgeData() {
-    return httpUtils.get<UcDashboard.AgeChartEntity[]>('/order/dashboard/getPieAgeData')
-  },
-  // 获取雷达图数据
-  getDriverRadarData() {
-    return httpUtils.get<UcDashboard.RadarChartEntity>('/order/dashboard/getRadarData')
-  },
-
-  /**
-   * 用户管理
-   */
+  // 用户管理
   user: {
     // 获取用户列表
     getUserList(params: User.RequestArgs) {
@@ -66,9 +66,7 @@ export default {
     },
   },
 
-  /**
-   * 部门管理
-   */
+  // 部门管理
   dept: {
     // 获取部门列表
     getDepartments(params?: Department.SearchParams) {
@@ -88,9 +86,7 @@ export default {
     },
   },
 
-  /**
-   * 菜单管理
-   */
+  // 菜单管理
   menu: {
     getMenus(params: Menu.SearchParams | undefined) {
       return httpUtils.get<Menu.Item[]>('/menu/list', params)
@@ -105,9 +101,8 @@ export default {
       return httpUtils.post<Result>('/menu/delete', { _id })
     },
   },
-  /**
-   * 角色管理
-   */
+
+  // 角色管理
   role: {
     page(params: Role.SearchArgs) {
       return httpUtils.get<PageResult<Role.RoleDetail>>('/roles/list', params)
@@ -128,9 +123,8 @@ export default {
       return httpUtils.get<Role.RoleDetail[]>('/roles/allList')
     },
   },
-  /**
-   * 订单管理
-   */
+
+  // 订单管理
   order: {
     add(params: Order.CreateParams) {
       return httpUtils.post('/order/create', params)

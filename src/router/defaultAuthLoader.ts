@@ -18,7 +18,7 @@ export interface IRouteMeta {
 /**
  * 路由权限加载器: 页面渲染前加载路由权限信息
  */
-export async function DefaultAuthLoader(): Promise<IRouteMeta> {
+export async function defaultAuthLoader(): Promise<IRouteMeta> {
   const { buttonList, menuList } = await api.user.getPermissions()
   const menuURIs = getMenuURIs(menuList)
   return {

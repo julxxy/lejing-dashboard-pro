@@ -31,13 +31,13 @@ interface DynamicBtnProps<T> extends ButtonProps {
  * @example
  * <DynamicAtnButton show={false} onClick={() => alert('Hello！')}>Dynamic Button</DynamicAtnButton>
  */
-const DynamicAtnButton = <T,>({ show = true, action, payload, children, ...props }: DynamicBtnProps<T>) => {
+const DynamicAtnButton = <T,>({ show, action, payload, children, ...props }: DynamicBtnProps<T>) => {
   const { buttons = [] } = useAuthLoaderData()
   const { userInfo } = useZustandStore()
   const isSuperAdmin = userInfo?.role === 1
   const hasPermission = buttons.includes(action || '') // 根据用户按钮权限判断
 
-  if (show || isSuperAdmin || hasPermission) {
+  if (show && (isSuperAdmin || hasPermission)) {
     return <Button {...props}>{children}</Button>
   }
 

@@ -8,11 +8,16 @@ import { UcDashboard, User } from '@/types/apiType.ts'
 import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils'
 import api from '@/api'
 import root from '@/mockdata/root.json'
+import Lazy from '@/components/Lazy.tsx'
 
-// Lazy loading for charts
-const OrderTransactionChart = React.lazy(() => import('@/views/dashboard/children/OrderTransactionChart.tsx'))
-const DriverDistributionPieChart = React.lazy(() => import('@/views/dashboard/children/BusinessOverviewPieChart.tsx'))
-const ModelDiagnosticsRadarChart = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
+// Lazy load views
+const OrderTransaction = React.lazy<React.ComponentType<any>>(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import('@/views/dashboard/children/OrderTransactionChart.tsx')), 1500) // 延迟加载
+  })
+})
+const BusinessOverview = React.lazy(() => import('@/views/dashboard/children/BusinessOverviewPieChart.tsx'))
+const ModelDiagnostics = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
 function getCardItems(userInfo?: User.Info): DescriptionsProps['items'] {
   return [
@@ -50,7 +55,7 @@ const Dashboard: React.FC = () => {
   }, [])
 
   async function getReport() {
-    const data = await api.getReport()
+    const data = await api.dashboard.getReport()
     setReport(data)
   }
 
@@ -78,9 +83,9 @@ const Dashboard: React.FC = () => {
         ))}
       </div>
       <div className={styles.chartContainer}>
-        <OrderTransactionChart />
-        <DriverDistributionPieChart />
-        <ModelDiagnosticsRadarChart />
+        <Lazy Component={OrderTransaction} />
+        <Lazy Component={BusinessOverview} />
+        <Lazy Component={ModelDiagnostics} />
       </div>
     </>
   )
