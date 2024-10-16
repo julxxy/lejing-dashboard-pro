@@ -15,7 +15,7 @@ import { Menu, MenuProps, Tooltip } from 'antd'
 import { Menu as IMenu, SideMenuProps } from '@/types/apiType.ts'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { URIs } from '@/router'
+import { moduleURIs, URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import Sider from 'antd/es/layout/Sider'
 import { isDebugEnable, log } from '@/common/Logger.ts'
@@ -26,37 +26,38 @@ import storageUtils from '@/utils/storageUtils.ts'
 
 // 侧边栏菜单项
 type MenuItem = Required<MenuProps>['items'][number]
-
 // 静态导航栏
-const staticSideMenuItems: MenuItem[] = [
-  { key: '/dashboard', label: '工作台', icon: <DesktopOutlined /> },
-  {
-    key: '/sys',
-    icon: <SettingOutlined />,
-    label: '系统管理',
-    children: [
-      { key: '/sys/menu/list', label: '菜单管理', icon: <MenuOutlined /> },
-      { key: '/sys/dept/list', label: '部门管理', icon: <ApartmentOutlined /> },
-      { key: '/sys/user/list', label: '用户管理', icon: <UserOutlined /> },
-      { key: '/sys/role/list', label: '角色管理', icon: <TrademarkCircleOutlined /> },
-    ],
-  },
-  {
-    label: '订单管理',
-    key: '/order',
-    icon: <ShoppingCartOutlined />,
-    children: [
-      { key: '/order/list', label: '订单列表', icon: <OrderedListOutlined /> },
-      { key: '/order/aggregation', label: '订单聚合', icon: <GiftOutlined /> },
-      { key: '/order/shipper', label: '货运人员', icon: <TruckOutlined /> },
-    ],
-  },
-]
-if (isDebugEnable) log.debug('静态导航栏:', staticSideMenuItems)
+let staticMenuItems: MenuItem[] = []
+setTimeout(() => {
+  staticMenuItems = [
+    { key: URIs.dashboard, label: '工作台', icon: <DesktopOutlined /> },
+    {
+      key: moduleURIs.system,
+      icon: <SettingOutlined />,
+      label: '系统管理',
+      children: [
+        { key: URIs.system.menu, label: '菜单管理', icon: <MenuOutlined /> },
+        { key: URIs.system.dept, label: '部门管理', icon: <ApartmentOutlined /> },
+        { key: URIs.system.user, label: '用户管理', icon: <UserOutlined /> },
+        { key: URIs.system.role, label: '角色管理', icon: <TrademarkCircleOutlined /> },
+      ],
+    },
+    {
+      label: '订单管理',
+      key: moduleURIs.order,
+      icon: <ShoppingCartOutlined />,
+      children: [
+        { key: URIs.order.list, label: '订单列表', icon: <OrderedListOutlined /> },
+        { key: URIs.order.aggregation, label: '订单聚合', icon: <GiftOutlined /> },
+        { key: URIs.order.shipper, label: '货运人员', icon: <TruckOutlined /> },
+      ],
+    },
+  ]
+}, 100) // 防止 URIs 未初始化完成时渲染菜单
 
-/**
- * 生成菜单项
- */
+if (isDebugEnable) log.debug('静态导航栏:', staticMenuItems)
+
+// 生成菜单项
 function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[]) {
   return {
     label,
@@ -66,20 +67,19 @@ function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: R
   } as MenuItem
 }
 
-/**
- * 生成菜单树
- */
+// 生成菜单树
 function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] = []) {
   sourceMenus.forEach(({ menuType, menuState, buttons, menuName, path, children, icon }, index) => {
     if (menuType === MenuType.menu.code && menuState === 1) {
       // 菜单项
       if (!children?.length || buttons) {
-        return targetMenus.push(getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />))
+        targetMenus.push(getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />))
+      } else {
+        // 子菜单项
+        targetMenus.push(
+          getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
+        )
       }
-      // 子菜单项
-      targetMenus.push(
-        getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
-      )
     }
   })
   return targetMenus
@@ -87,7 +87,6 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
 
 /**
  * Left Side Menu
- * @constructor
  */
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const routeData = useAuthLoaderData()
@@ -97,13 +96,27 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const theme = isDarkEnable ? 'dark' : 'light'
   const platformText = import.meta.env.VITE_OPS_PLATFORM as string
   const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
 
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+
+  // 组件挂载时: 获取菜单数据/恢复菜单状态
+  useEffect(() => {
+    if (Environment.isStaticMenuEnable()) {
+      if (isDebugEnable) log.warn('使用静态导航栏：', staticMenuItems)
+      setMenuItems(staticMenuItems)
+    } else {
+      const dynamicMenuItems = getMenuTreeifyItems(routeData.menus)
+      if (isDebugEnable) log.warn('使用动态菜单项数据: ', dynamicMenuItems)
+      setMenuItems(dynamicMenuItems)
+    }
+    setOpenKeys(storageUtils.get<string[]>('menuOpenKeys') ?? [])
+    setSelectedKeys([pathname])
+  }, [routeData.menus, pathname])
 
   // 菜单展开 & 折叠时保存状态
   const handleOpenChange: MenuProps['onOpenChange'] = keys => {
@@ -112,31 +125,12 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   }
 
   // 菜单项选中时保存状态
-  const handleClick: MenuProps['onClick'] = e => {
-    if (isDebugEnable) log.info('菜单项导航:', e, pathname)
-    const key = e.key as string
-    setSelectedKeys([key])
+  const handleMenuClick: MenuProps['onClick'] = ({ key }: { key: string }) => {
+    if (isDebugEnable) log.info('菜单项导航:', key, pathname)
     storageUtils.set('menuSelectedKeys', [key])
+    setSelectedKeys([key])
     navigate(key)
   }
-
-  // 组件挂载时: 获取菜单数据
-  useEffect(() => {
-    if (Environment.isStaticSideMenuEnable()) {
-      if (isDebugEnable) log.warn('使用静态导航栏：', staticSideMenuItems)
-      setMenuItems(staticSideMenuItems)
-    } else {
-      const targetMenu = getMenuTreeifyItems(routeData.menus)
-      if (isDebugEnable) log.warn('使用动态菜单项数据: ', targetMenu)
-      setMenuItems(targetMenu)
-    }
-  }, [])
-
-  // 组件挂载时: 恢复菜单状态
-  useEffect(() => {
-    setSelectedKeys(storageUtils.get<string[]>('menuSelectedKeys') ?? [pathname])
-    setOpenKeys(storageUtils.get<string[]>('menuOpenKeys') ?? [])
-  }, [])
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} className={styles.sider} theme={theme}>
@@ -164,7 +158,7 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
           items={menuItems}
           openKeys={openKeys}
           selectedKeys={selectedKeys}
-          onClick={handleClick}
+          onClick={handleMenuClick}
           onOpenChange={handleOpenChange}
         />
       </div>

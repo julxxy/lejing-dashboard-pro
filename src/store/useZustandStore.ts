@@ -24,7 +24,7 @@ const useZustandStore = create<{
   token: '',
   userInfo: {} as User.Info,
   collapsed: false,
-  isDarkEnable: false,
+  isDarkEnable: true,
   breadItems: [
     { title: '首页', href: '/' },
     { title: '工作台', href: '/dashboard' },

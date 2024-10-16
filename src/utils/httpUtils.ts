@@ -44,7 +44,7 @@ instance.interceptors.request.use(
   (error: AxiosError) => {
     hideLoading()
     return Promise.reject(error)
-  },
+  }
 )
 
 /**
@@ -79,7 +79,7 @@ instance.interceptors.response.use(
   error => {
     hideLoading()
     return handleError(error.message, error)
-  },
+  }
 )
 
 // Common error handling logic
@@ -145,7 +145,7 @@ export default {
       window.URL.revokeObjectURL(blobUrl)
     })
   },
-  getAuthHeaders: function() {
+  getAuthHeaders: function () {
     return {
       icode: apiToken,
       Authorization: `Bearer ${storageUtils.get<string>('token')}`,

@@ -5,7 +5,7 @@ import api from '@/api'
 import React, { useRef, useState } from 'react'
 import { formatDateToLocalString, formatUserRole, formatUserStatus } from '@/utils'
 import UserModal from '@/views/system/user/UserModal.tsx'
-import { ModalAction } from '@/types/modal.ts'
+import { Action, ModalAction } from '@/types/modal.ts'
 import { message, modal } from '@/context/AntdGlobalProvider.ts'
 import { useAntdTable } from 'ahooks'
 import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutlined } from '@ant-design/icons'
@@ -17,9 +17,11 @@ import { DeleteOutlined, EditOutlined, PlusOutlined, ReloadOutlined, SearchOutli
 export default function UsersPrimary() {
   const [form] = Form.useForm()
   const [userIds, setUserIds] = useState<number[]>([])
+  const [action, setAction] = useState<Action>('create')
   const currentRef = useRef<ModalAction>({
     openModal: (action, data?: User.UserItem) => {
       if (isDebugEnable) log.info('开开弹窗: ', action, data)
+      setAction(action)
     },
   })
 
@@ -125,7 +127,7 @@ export default function UsersPrimary() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 1 }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
         </Form.Item>
@@ -133,8 +135,8 @@ export default function UsersPrimary() {
           <Input placeholder={'请输入用户名称'} />
         </Form.Item>
         <Form.Item name="state" label={'状态'} style={{ width: 120 }}>
-          <Select onChange={() => search.submit()}>
-            <Select.Option value={0}>所有</Select.Option>
+          <Select>
+            <Select.Option value={null}>所有</Select.Option>
             <Select.Option value={1}>在职</Select.Option>
             <Select.Option value={2}>离职</Select.Option>
             <Select.Option value={3}>试用期</Select.Option>
@@ -182,10 +184,15 @@ export default function UsersPrimary() {
             },
           }}
           columns={columns}
-          rowKey="userId"
+          rowKey={record => record.userId}
           {...tableProps}
         />
-        <UserModal currentRef={currentRef} onRefresh={() => search.reset()} />
+        <UserModal
+          currentRef={currentRef}
+          onRefresh={() => {
+            return action === 'create' ? search.reset() : search.submit()
+          }}
+        />
       </div>
     </div>
   )

@@ -15,8 +15,7 @@ import { isFalse } from '@/common/booleanUtils.ts'
 /**
  * URIs in the APP
  */
-const moduleURIs = { system: '/sys', order: '/order' }
-
+export const moduleURIs = { system: '/sys', order: '/order' }
 export const URIs = {
   home: '/',
   login: '/login',
@@ -28,16 +27,16 @@ export const URIs = {
   module: moduleURIs,
   // 系统管理
   system: {
-    userList: moduleURIs.system + '/user/list',
-    menuList: moduleURIs.system + '/menu/list',
-    deptList: moduleURIs.system + '/dept/list',
-    roleList: moduleURIs.system + '/role/list',
+    user: moduleURIs.system + '/user/list',
+    menu: moduleURIs.system + '/menu/list',
+    dept: moduleURIs.system + '/dept/list',
+    role: moduleURIs.system + '/role/list',
   },
   // 订单管理
   order: {
-    orderList: moduleURIs.order + '/list',
-    shipperList: moduleURIs.order + '/shipper',
-    orderAggregation: moduleURIs.order + '/aggregation',
+    list: moduleURIs.order + '/list',
+    shipper: moduleURIs.order + '/shipper',
+    aggregation: moduleURIs.order + '/aggregation',
   },
 }
 if (isDebugEnable) log.info('Module URIs: \n', JSON.stringify(URIs, null, 2))
@@ -57,6 +56,7 @@ const OrderAggregate = lazy(() => import('@/views/order/aggregation'))
 
 /**
  * 路由配置
+ * @apiNote 页面抖动很影响体验: 只对 Layout 进行加载，不包裹整个 Suspense
  */
 export type IRouteObject = RouteObject & { enableAuth?: boolean }
 export const routes: IRouteObject[] = [
@@ -65,30 +65,89 @@ export const routes: IRouteObject[] = [
   {
     id: RouteConstants.layoutId,
     loader: DefaultAuthLoader,
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Layout />
-      </Suspense>
-    ),
+    element: <Layout />,
     children: [
       { path: URIs.welcome, element: <Welcome /> },
-      { path: URIs.dashboard, element: <Dashboard /> },
-      { path: URIs.overflow, element: <TestOverflow /> },
+      {
+        path: URIs.dashboard,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Dashboard />
+          </Suspense>
+        ),
+      },
+      {
+        path: URIs.overflow,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <TestOverflow />
+          </Suspense>
+        ),
+      },
       {
         path: URIs.module.system,
         children: [
-          { path: URIs.system.userList, element: <UserFC /> },
-          { path: URIs.system.deptList, element: <DepartmentFC /> },
-          { path: URIs.system.menuList, element: <MenuList /> },
-          { path: URIs.system.roleList, element: <RoleList /> },
+          {
+            path: URIs.system.user,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <UserFC />
+              </Suspense>
+            ),
+          },
+          {
+            path: URIs.system.dept,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <DepartmentFC />
+              </Suspense>
+            ),
+          },
+          {
+            path: URIs.system.menu,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <MenuList />
+              </Suspense>
+            ),
+          },
+          {
+            path: URIs.system.role,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <RoleList />
+              </Suspense>
+            ),
+          },
         ],
       },
       {
         path: URIs.module.order,
         children: [
-          { path: URIs.order.orderList, element: <OrderList /> },
-          { path: URIs.order.orderAggregation, element: <OrderAggregate /> },
-          { path: URIs.order.shipperList, element: <ShipperList /> },
+          {
+            path: URIs.order.list,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <OrderList />
+              </Suspense>
+            ),
+          },
+          {
+            path: URIs.order.aggregation,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <OrderAggregate />
+              </Suspense>
+            ),
+          },
+          {
+            path: URIs.order.shipper,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <ShipperList />
+              </Suspense>
+            ),
+          },
         ],
       },
     ],
