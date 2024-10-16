@@ -76,7 +76,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
       } else {
         // 子菜单项
         targetMenus.push(
-          getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
+          getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children)),
         )
       }
     }
@@ -89,7 +89,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
  */
 const LeftSideMenu: React.FC<SideMenuProps> = () => {
   const routeData = useAuthLoaderData()
-  if (isDebugEnable) log.info('加载路由权限数据: ', routeData)
+  if (isDebugEnable) log.info('加载动态路由权限数据: ', routeData)
 
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
@@ -106,11 +106,11 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   // 组件挂载时: 获取菜单数据/恢复菜单状态
   useEffect(() => {
     if (Environment.isStaticMenuEnable()) {
-      if (isDebugEnable) log.warn('静态菜导航栏单数据：', JSON.stringify(staticMenuItems, null, 2))
+      if (isDebugEnable) log.warn('使用静态菜导航栏单数据：', staticMenuItems)
       setMenuItems(staticMenuItems)
     } else {
       const dynamicMenuItems = getMenuTreeifyItems(routeData.menus)
-      if (isDebugEnable) log.warn('动态菜导航栏单数据: ', JSON.stringify(dynamicMenuItems, null, 2))
+      if (isDebugEnable) log.warn('使用动态菜导航栏单数据: ', dynamicMenuItems)
       setMenuItems(dynamicMenuItems)
     }
     setOpenKeys(storageUtils.get<string[]>('menuOpenKeys') ?? [])

@@ -7,9 +7,10 @@ interface LazyProps {
 }
 
 /**
- * 延迟加载时显示的组件
+ * 延迟加载 HOC 组件
+ * @author weasley
  * @example
- * <Lazy Component={UserFC} />
+ * <Lazy Component={Dashboard} />
  */
 const Lazy: React.FC<LazyProps> = ({ Component }) => {
   const [bgColor, setBgColor] = useState<string | null>(null)
