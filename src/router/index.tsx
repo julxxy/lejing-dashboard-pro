@@ -54,8 +54,8 @@ const publicURIs = [URIs.home, URIs.login, URIs.welcome, URIs.notFound, URIs.noP
 const isURIPublic = (path: string) => publicURIs.includes(path)
 
 const jacksMenu: IRouteObject[] = [
-  { path: '/welcome', element: <Welcome /> },
-  { path: '/dashboard', element: <Dashboard /> },
+  { path: '/welcome', element: <Lazy Component={Welcome} /> },
+  { path: '/dashboard', element: <Lazy Component={Dashboard} /> },
   { path: '/userList', element: <Lazy Component={UserFC} /> },
   { path: '/deptList', element: <Lazy Component={DepartmentFC} /> },
   { path: '/menuList', element: <Lazy Component={MenuList} /> },
@@ -80,27 +80,27 @@ export const routes: IRouteObject[] = [
     children: Environment.canUseStaticLayout()
       ? jacksMenu
       : [
-          { path: URIs.welcome, element: <Welcome /> },
-          { path: URIs.dashboard, element: <Dashboard /> },
-          { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
-          {
-            path: URIs.module.system,
-            children: [
-              { path: URIs.system.user, element: <Lazy Component={UserFC} /> },
-              { path: URIs.system.dept, element: <Lazy Component={DepartmentFC} /> },
-              { path: URIs.system.menu, element: <Lazy Component={MenuList} /> },
-              { path: URIs.system.role, element: <Lazy Component={RoleList} /> },
-            ],
-          },
-          {
-            path: URIs.module.order,
-            children: [
-              { path: URIs.order.list, element: <Lazy Component={OrderList} /> },
-              { path: URIs.order.aggregation, element: <Lazy Component={OrderAggregate} /> },
-              { path: URIs.order.shipper, element: <Lazy Component={ShipperList} /> },
-            ],
-          },
-        ],
+        { path: URIs.welcome, element: <Lazy Component={Welcome} /> },
+        { path: URIs.dashboard, element: <Lazy Component={Dashboard} /> },
+        { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
+        {
+          path: URIs.module.system,
+          children: [
+            { path: URIs.system.user, element: <Lazy Component={UserFC} /> },
+            { path: URIs.system.dept, element: <Lazy Component={DepartmentFC} /> },
+            { path: URIs.system.menu, element: <Lazy Component={MenuList} /> },
+            { path: URIs.system.role, element: <Lazy Component={RoleList} /> },
+          ],
+        },
+        {
+          path: URIs.module.order,
+          children: [
+            { path: URIs.order.list, element: <Lazy Component={OrderList} /> },
+            { path: URIs.order.aggregation, element: <Lazy Component={OrderAggregate} /> },
+            { path: URIs.order.shipper, element: <Lazy Component={ShipperList} /> },
+          ],
+        },
+      ],
   },
   { path: '*', element: <Navigate to={URIs.notFound} /> },
   { path: URIs.notFound, element: <PageNotFound /> },

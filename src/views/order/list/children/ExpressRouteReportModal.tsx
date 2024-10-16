@@ -42,7 +42,6 @@ export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModa
     },
     closeModal: () => {
       setMarks([])
-      onRefresh()
       setShowModal(false)
     },
   }
@@ -86,7 +85,7 @@ export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModa
       log.error('Center point is not available')
       return
     }
-    const map = getMapInstance(center, 'bmContainer', 14)
+    const map = getMapInstance(center, 'bmContainer', 12)
     restoreMarkers(map)
     map.addEventListener('click', (event: any) => {
       const { latlng, timeStamp } = event
@@ -102,6 +101,7 @@ export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModa
     await api.order.update({ orderId, route: marks })
     message.success('保存成功')
     controller.closeModal()
+    onRefresh()
   }
 
   // Effect to render map when centerPoint changes
