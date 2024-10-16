@@ -16,7 +16,7 @@ import { URIs } from '@/router'
 let apiToken = import.meta.env.VITE_API_TOKEN as string
 const tokenIsBase64 = base64Utils.isBase64(apiToken)
 if (isDebugEnable) log.debug(`API token is base64: ${tokenIsBase64}, apiToken: ${apiToken}`)
-apiToken = tokenIsBase64 ? base64Utils.decodeBase64(apiToken, base64Utils.defaultRecursiveCount) : apiToken
+apiToken = tokenIsBase64 ? base64Utils.decode(apiToken, base64Utils.defaultRecursiveCount) : apiToken
 
 /**
  * Instantiate an axios instance

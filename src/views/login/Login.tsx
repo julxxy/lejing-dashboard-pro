@@ -21,8 +21,8 @@ function getAccount(): { username: string; password: string } {
   }
   let admin = import.meta.env.VITE_ACCOUNT_ADMIN as string
   let readonly = import.meta.env.VITE_ACCOUNT_READONLY as string
-  admin = base64Utils.isBase64(admin) ? base64Utils.decodeBase64(admin) : admin
-  readonly = base64Utils.isBase64(readonly) ? base64Utils.decodeBase64(readonly) : readonly
+  admin = base64Utils.isBase64(admin) ? base64Utils.decode(admin) : admin
+  readonly = base64Utils.isBase64(readonly) ? base64Utils.decode(readonly) : readonly
   if (isTrue(import.meta.env.VITE_USE_ADMIN_ACCOUNT)) {
     const { name, pwd } = JSON.parse(admin)
     account = { username: name, password: pwd }

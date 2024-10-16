@@ -53,9 +53,8 @@ setTimeout(() => {
       ],
     },
   ]
-}, 100) // 防止 URIs 未初始化完成时渲染菜单
-
-if (isDebugEnable) log.debug('静态导航栏:', staticMenuItems)
+  if (isDebugEnable && Environment.isStaticMenuEnable()) log.debug('静态导航栏:', staticMenuItems)
+}, 100) // 延迟加载: 防止 URIs 未初始化完报错
 
 // 生成菜单项
 function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[]) {
@@ -107,11 +106,11 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   // 组件挂载时: 获取菜单数据/恢复菜单状态
   useEffect(() => {
     if (Environment.isStaticMenuEnable()) {
-      if (isDebugEnable) log.warn('使用静态导航栏：', staticMenuItems)
+      if (isDebugEnable) log.warn('静态菜导航栏单数据：', JSON.stringify(staticMenuItems, null, 2))
       setMenuItems(staticMenuItems)
     } else {
       const dynamicMenuItems = getMenuTreeifyItems(routeData.menus)
-      if (isDebugEnable) log.warn('使用动态菜单项数据: ', dynamicMenuItems)
+      if (isDebugEnable) log.warn('动态菜导航栏单数据: ', JSON.stringify(dynamicMenuItems, null, 2))
       setMenuItems(dynamicMenuItems)
     }
     setOpenKeys(storageUtils.get<string[]>('menuOpenKeys') ?? [])
@@ -119,17 +118,17 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
   }, [routeData.menus, pathname])
 
   // 菜单展开 & 折叠时保存状态
-  const handleOpenChange: MenuProps['onOpenChange'] = keys => {
+  const onOpenChange: MenuProps['onOpenChange'] = keys => {
     setOpenKeys(keys)
     storageUtils.set('menuOpenKeys', keys)
   }
 
   // 菜单项选中时保存状态
-  const handleMenuClick: MenuProps['onClick'] = ({ key }: { key: string }) => {
-    if (isDebugEnable) log.info('菜单项导航:', key, pathname)
+  const onMenuClick: MenuProps['onClick'] = ({ key }: { key: string }) => {
+    if (isDebugEnable) log.info('菜单项导航:', key, 'Pathname:', pathname)
     storageUtils.set('menuSelectedKeys', [key])
     setSelectedKeys([key])
-    navigate(key)
+    return navigate(key)
   }
 
   return (
@@ -158,8 +157,8 @@ const LeftSideMenu: React.FC<SideMenuProps> = () => {
           items={menuItems}
           openKeys={openKeys}
           selectedKeys={selectedKeys}
-          onClick={handleMenuClick}
-          onOpenChange={handleOpenChange}
+          onClick={onMenuClick}
+          onOpenChange={onOpenChange}
         />
       </div>
     </Sider>

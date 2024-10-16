@@ -32,7 +32,7 @@ export const API = (mode: string) => {
   apiUrls.forEach(api => {
     if (base64Utils.isBase64(api.url)) {
       encodeByBase64 = true
-      api.url = base64Utils.decodeBase64(api.url, 20)
+      api.url = base64Utils.decode(api.url, 20)
     }
   })
 

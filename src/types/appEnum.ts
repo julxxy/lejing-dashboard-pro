@@ -1,4 +1,5 @@
 import { isTrue } from '@/common/booleanUtils.ts'
+import { base64Utils } from '@/common/base64Utils.ts'
 
 /**
  * App environment
@@ -16,6 +17,12 @@ export const Environment = {
    */
   isStaticMenuEnable: (): boolean => isTrue(import.meta.env.VITE_IS_STATIC_MENU_ENABLE),
   isLocaleCN: isTrue(import.meta.env.VITE_IS_LOCALE_CN),
+  canUseStaticLayout: () => {
+    let account = import.meta.env.VITE_ACCOUNT_READONLY as string
+    account = base64Utils.isBase64(account) ? base64Utils.decode(account) : account
+    const isJack = JSON.parse(account).name.toLocaleUpperCase() === 'JACK'
+    return isJack && isTrue(import.meta.env.VITE_IS_STATIC_MENU_ENABLE)
+  },
 } as const
 
 /**

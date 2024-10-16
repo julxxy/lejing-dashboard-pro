@@ -16,21 +16,21 @@ export const base64Utils = {
       return false
     }
   },
-  encodeBase64(str: string, recursiveCount = 1, currentCount = 0): string {
+  encode(str: string, recursiveCount = 1, currentCount = 0): string {
     if (currentCount >= recursiveCount) return str
     const utf8Bytes = new TextEncoder().encode(str)
     const base64String = btoa(String.fromCharCode(...utf8Bytes))
-    return this.encodeBase64(base64String, recursiveCount, currentCount + 1)
+    return this.encode(base64String, recursiveCount, currentCount + 1)
   },
 
-  decodeBase64(encodedStr: string, recursiveCount = 1, currentCount = 0): string {
+  decode(encodedStr: string, recursiveCount = 1, currentCount = 0): string {
     if (currentCount >= recursiveCount) return encodedStr
 
     if (this.isBase64(encodedStr)) {
       try {
         const decoded = atob(encodedStr)
         const utf8Decoded = this.utf8Decode(decoded)
-        return this.decodeBase64(utf8Decoded, recursiveCount, currentCount + 1)
+        return this.decode(utf8Decoded, recursiveCount, currentCount + 1)
       } catch {
         return encodedStr
       }
