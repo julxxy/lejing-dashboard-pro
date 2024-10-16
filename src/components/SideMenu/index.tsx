@@ -12,7 +12,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { Menu, MenuProps, Tooltip } from 'antd'
-import { Menu as IMenu, SideMenuProps } from '@/types/apiType.ts'
+import { Menu as IMenu } from '@/types/apiType.ts'
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { moduleURIs, URIs } from '@/router'
@@ -28,33 +28,6 @@ import storageUtils from '@/utils/storageUtils.ts'
 type MenuItem = Required<MenuProps>['items'][number]
 // 静态导航栏
 let staticMenuItems: MenuItem[] = []
-setTimeout(() => {
-  staticMenuItems = [
-    { key: URIs.dashboard, label: '工作台', icon: <DesktopOutlined /> },
-    {
-      key: moduleURIs.system,
-      icon: <SettingOutlined />,
-      label: '系统管理',
-      children: [
-        { key: URIs.system.menu, label: '菜单管理', icon: <MenuOutlined /> },
-        { key: URIs.system.dept, label: '部门管理', icon: <ApartmentOutlined /> },
-        { key: URIs.system.user, label: '用户管理', icon: <UserOutlined /> },
-        { key: URIs.system.role, label: '角色管理', icon: <TrademarkCircleOutlined /> },
-      ],
-    },
-    {
-      label: '订单管理',
-      key: moduleURIs.order,
-      icon: <ShoppingCartOutlined />,
-      children: [
-        { key: URIs.order.list, label: '订单列表', icon: <OrderedListOutlined /> },
-        { key: URIs.order.aggregation, label: '订单聚合', icon: <GiftOutlined /> },
-        { key: URIs.order.shipper, label: '货运人员', icon: <TruckOutlined /> },
-      ],
-    },
-  ]
-  if (isDebugEnable && Environment.isStaticMenuEnable()) log.debug('静态导航栏:', staticMenuItems)
-}, 100) // 延迟加载: 防止 URIs 未初始化完报错
 
 // 生成菜单项
 function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[]) {
@@ -87,32 +60,65 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
 /**
  * Left Side Menu
  */
-const LeftSideMenu: React.FC<SideMenuProps> = () => {
+const LeftSideMenu: React.FC = () => {
   const routeData = useAuthLoaderData()
-  if (isDebugEnable) log.info('加载动态路由权限数据: ', routeData)
-
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
   const platformText = import.meta.env.VITE_OPS_PLATFORM as string
-  const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${isDarkEnable ? '' : 'logo-text-dark-blue'}`
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${
+    isDarkEnable ? '' : 'logo-text-dark-blue'
+  }`
 
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
-
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
   // 组件挂载时: 获取菜单数据/恢复菜单状态
   useEffect(() => {
+    if (!URIs || !moduleURIs) {
+      // 如果 URIs 尚未初始化，等待
+      return
+    }
+
     if (Environment.isStaticMenuEnable()) {
-      if (isDebugEnable) log.warn('使用静态菜导航栏单数据：', staticMenuItems)
+      if (staticMenuItems.length === 0) {
+        staticMenuItems = [
+          { key: URIs.dashboard, label: '工作台', icon: <DesktopOutlined /> },
+          {
+            key: moduleURIs.system,
+            icon: <SettingOutlined />,
+            label: '系统管理',
+            children: [
+              { key: URIs.system.menu, label: '菜单管理', icon: <MenuOutlined /> },
+              { key: URIs.system.dept, label: '部门管理', icon: <ApartmentOutlined /> },
+              { key: URIs.system.user, label: '用户管理', icon: <UserOutlined /> },
+              { key: URIs.system.role, label: '角色管理', icon: <TrademarkCircleOutlined /> },
+            ],
+          },
+          {
+            label: '订单管理',
+            key: moduleURIs.order,
+            icon: <ShoppingCartOutlined />,
+            children: [
+              { key: URIs.order.list, label: '订单列表', icon: <OrderedListOutlined /> },
+              { key: URIs.order.aggregation, label: '订单聚合', icon: <GiftOutlined /> },
+              { key: URIs.order.shipper, label: '货运人员', icon: <TruckOutlined /> },
+            ],
+          },
+        ]
+      }
+
+      if (isDebugEnable) log.warn('使用静态导航栏数据：', staticMenuItems)
       setMenuItems(staticMenuItems)
     } else {
       const dynamicMenuItems = getMenuTreeifyItems(routeData.menus)
-      if (isDebugEnable) log.warn('使用动态菜导航栏单数据: ', dynamicMenuItems)
+      if (isDebugEnable) log.warn('使用动态导航栏数据: ', dynamicMenuItems)
       setMenuItems(dynamicMenuItems)
     }
+
+    // 恢复菜单展开和选中状态
     setOpenKeys(storageUtils.get<string[]>('menuOpenKeys') ?? [])
     setSelectedKeys([pathname])
   }, [routeData.menus, pathname])
