@@ -76,7 +76,7 @@ function getMenuTreeifyItems(sourceMenus: IMenu.Item[], targetMenus: MenuItem[] 
       } else {
         // 子菜单项
         targetMenus.push(
-          getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children)),
+          getAntMenuItem(menuName, path || index, <DynamicAntIcon iconName={icon} />, getMenuTreeifyItems(children))
         )
       }
     }

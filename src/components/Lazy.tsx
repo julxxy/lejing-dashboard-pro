@@ -1,5 +1,5 @@
 import '@/views/loading/loading.less'
-import React, { LazyExoticComponent, Suspense, useEffect, useRef, useState } from 'react'
+import React, { LazyExoticComponent, startTransition, Suspense, useEffect, useRef, useState } from 'react'
 import { Spin } from 'antd'
 
 interface LazyProps {
@@ -14,27 +14,37 @@ interface LazyProps {
  */
 const Lazy: React.FC<LazyProps> = ({ Component }) => {
   const [bgColor, setBgColor] = useState<string | null>(null)
-  const containerRef = useRef<HTMLDivElement | null>(null)
+  const fallbackRef = useRef<HTMLDivElement | null>(null)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+
+  const fallback = (
+    <div ref={fallbackRef} className="lazy-container">
+      <Spin tip="加载中..." size="large">
+        <div className="lazy-content" style={{ backgroundColor: bgColor ?? 'transparent' }}></div>
+      </Spin>
+    </div>
+  )
 
   useEffect(() => {
-    if (containerRef.current) {
-      const parentBgColor = window.getComputedStyle(containerRef.current.parentElement!).backgroundColor
+    if (fallbackRef.current) {
+      const parentBgColor = window.getComputedStyle(fallbackRef.current.parentElement!).backgroundColor
       if (parentBgColor !== bgColor) {
         setBgColor(parentBgColor)
       }
     }
   }, [bgColor])
 
+  // 开始过渡后，将 isTransitioning 设置为 false
+  useEffect(() => {
+    startTransition(() => setIsTransitioning(false))
+  }, [])
+
+  if (isTransitioning) {
+    return fallback
+  }
+
   return (
-    <Suspense
-      fallback={
-        <div ref={containerRef} className="lazy-container">
-          <Spin tip="加载中..." size="large">
-            <div className="lazy-content" style={{ backgroundColor: bgColor ?? 'transparent' }}></div>
-          </Spin>
-        </div>
-      }
-    >
+    <Suspense fallback={fallback}>
       <Component />
     </Suspense>
   )

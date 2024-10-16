@@ -1,4 +1,4 @@
-import { IRouteMeta, RouteConstants } from '@/router/DefaultAuthLoader.ts'
+import { IRouteMeta, RouteConstants } from '@/router/defaultAuthLoader.ts'
 import { useRouteLoaderData } from 'react-router-dom'
 
 /**

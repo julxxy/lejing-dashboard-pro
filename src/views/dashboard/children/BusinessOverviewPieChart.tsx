@@ -51,7 +51,7 @@ export default function BusinessOverviewPieChart() {
   }
 
   const renderCityChart = async () => {
-    const data = await api.getDriverCityData()
+    const data = await api.dashboard.getDriverCityData()
     const instance = EChartsManager.getInstanceIfPresent(cityRef)
     instance?.setOption({
       title: { text: '司机城市分布', left: 'center' },
@@ -78,7 +78,7 @@ export default function BusinessOverviewPieChart() {
     })
   }
   const renderAgeChart = async () => {
-    const data = await api.getDriverAgeData()
+    const data = await api.dashboard.getDriverAgeData()
     const instance = EChartsManager.getInstanceIfPresent(ageRef)
     instance?.setOption({
       title: { text: '司机年龄分布', left: 'center' },

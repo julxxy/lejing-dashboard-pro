@@ -33,7 +33,7 @@ export default function ModelDiagnosticsRadarChart() {
 
   // Render driver model radar chart
   const renderDriverModelChart = async () => {
-    const { indicator, data } = await api.getDriverRadarData()
+    const { indicator, data } = await api.dashboard.getDriverRadarData()
     const instance = EChartsManager.getInstanceIfPresent(driverModelRef)
     instance?.resize()
     instance?.setOption({

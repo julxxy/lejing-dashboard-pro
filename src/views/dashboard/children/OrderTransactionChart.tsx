@@ -31,7 +31,7 @@ export default function OrderTransactionChart() {
 
   // Update the chart with new options
   async function fetchAndRenderOrderChart() {
-    const data = await api.getOrderChartData()
+    const data = await api.dashboard.getOrderChartData()
     const instance = EChartsManager.getInstanceIfPresent(chartRef)
     instance?.resize()
     instance?.setOption({
