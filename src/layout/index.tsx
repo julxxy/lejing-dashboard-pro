@@ -61,7 +61,7 @@ const LayoutFC: React.FC = () => {
   const isAccessible = isURIAccessible(pathname)
 
   // 路由权限校验
-  if (!Environment.isStaticSideMenuEnable()) {
+  if (!Environment.isStaticMenuEnable()) {
     if (isTrue(isAccessible)) {
       if (isDebugEnable) log.info(`URI ${pathname} is accessible: ${isAccessible}`)
     } else {

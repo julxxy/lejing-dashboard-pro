@@ -168,7 +168,13 @@ export default function OrderList() {
               <Button icon={<InfoCircleOutlined />} shape="circle" onClick={() => getOrderDetail(record)} />
             </Tooltip>
             <Tooltip title="删除">
-              <Button icon={<DeleteOutlined />} shape="circle" danger onClick={() => onOrderDelete([record._id])} />
+              <DynamicAtnButton
+                show={true}
+                disabled={true}
+                icon={<DeleteOutlined />}
+                shape="circle"
+                onClick={() => onOrderDelete([record._id])}
+              />
             </Tooltip>
           </Space>
         )
@@ -256,6 +262,7 @@ export default function OrderList() {
                 danger={true}
                 onClick={() => onBatchDelete()}
                 show={true}
+                disabled={true}
               >
                 批量删除
               </DynamicAtnButton>

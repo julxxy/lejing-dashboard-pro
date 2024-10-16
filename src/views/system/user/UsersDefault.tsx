@@ -171,7 +171,7 @@ export default function UsersDefault() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 1 }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
         </Form.Item>
@@ -180,7 +180,7 @@ export default function UsersDefault() {
         </Form.Item>
         <Form.Item name="state" label={'状态'} style={{ width: 120 }}>
           <Select onChange={() => getUsers({})}>
-            <Select.Option value={0}>所有</Select.Option>
+            <Select.Option value={null}>所有</Select.Option>
             <Select.Option value={1}>在职</Select.Option>
             <Select.Option value={2}>离职</Select.Option>
             <Select.Option value={3}>试用期</Select.Option>
@@ -224,7 +224,7 @@ export default function UsersDefault() {
           }}
           dataSource={users}
           columns={columns}
-          rowKey="userId"
+          rowKey={record => record.userId}
           pagination={{
             ...pagination, // 分页参数
             showSizeChanger: true, // 显示分页大小选择器
