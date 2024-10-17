@@ -1,5 +1,6 @@
 import api from '@/api'
 import { Menu } from '@/types/apiType.ts'
+import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
 
 /**
  * 路由元信息
@@ -20,7 +21,7 @@ export interface IRouteMeta {
  */
 export async function defaultAuthLoader(): Promise<IRouteMeta> {
   const { buttonList, menuList } = await api.user.getPermissions()
-  const menuURIs = getMenuURIs(menuList)
+  const menuURIs = ApplicationAlgorithm.findMenuURIs(menuList)
   return {
     routeId: RouteConstants.layoutId,
     buttons: buttonList,
@@ -34,15 +35,4 @@ export async function defaultAuthLoader(): Promise<IRouteMeta> {
  */
 export const RouteConstants = {
   layoutId: 'layout',
-}
-
-/**
- * 获取菜单的 URI 树形列表
- */
-export function getMenuURIs(target: Menu.Item[]): string[] {
-  return target
-    .flatMap(({ path, children, buttons }) =>
-      Array.isArray(children) && !buttons ? getMenuURIs(children) : (path ?? '')
-    )
-    .filter(Boolean) // 过滤掉空字符串 ''
 }
