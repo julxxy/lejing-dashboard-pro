@@ -11,3 +11,10 @@ declare const BMapGL: {
 declare const BMapGLLib: {
   [key: string]: any
 }
+
+/**
+ * BMapGLib
+ */
+declare const BMapLib: {
+  [key: string]: any
+}

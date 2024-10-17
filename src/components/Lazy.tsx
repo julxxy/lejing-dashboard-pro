@@ -34,7 +34,6 @@ const Lazy: React.FC<LazyProps> = ({ Component }) => {
     }
   }, [bgColor])
 
-  // 开始过渡后，将 isTransitioning 设置为 false
   useEffect(() => {
     startTransition(() => setIsTransitioning(false))
   }, [])

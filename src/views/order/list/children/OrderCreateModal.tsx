@@ -1,5 +1,3 @@
-// noinspection t
-
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { useEffect, useImperativeHandle, useState } from 'react'
 import { Order } from '@/types/apiType.ts'
