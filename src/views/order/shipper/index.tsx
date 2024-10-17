@@ -35,17 +35,16 @@ export default function ShipperList() {
       dataIndex: 'driverName',
       width: 220,
       fixed: true,
-      render: (_, record) => {
-        return (
-          <p>
-            <span>司机ID：{record.driverId}</span> <br />
-            <span>手机号码：{record.driverPhone}</span> <br />
-            <span>注册城市：{record.cityName} </span> <br />
-            <span>会员等级：{record.grade} </span> <br />
-            <span>司机等级：{record.driverLevel} </span>
-          </p>
-        )
-      },
+      render: (_, record) => (
+        <p>
+          <span>司机ID：{record.driverId}</span>
+          <br />
+          <span>手机号码：{record.driverPhone}</span> <br />
+          <span>注册城市：{record.cityName}</span> <br />
+          <span>会员等级：{record.grade}</span> <br />
+          <span>司机等级：{record.driverLevel}</span>
+        </p>
+      ),
     },
     {
       title: '司机状态',
@@ -74,17 +73,15 @@ export default function ShipperList() {
       key: 'carInfo',
       dataIndex: 'carNo',
       width: 250,
-      render: (_, record) => {
-        return (
-          <p>
-            <span>车牌号码: {record.carNo}</span>
-            <br />
-            <span>车辆品牌: {record.vehicleBrand}</span>
-            <br />
-            <span>车辆名称: {record.vehicleName}</span>
-          </p>
-        )
-      },
+      render: (_, record) => (
+        <p>
+          <span>车牌号码: {record.carNo}</span>
+          <br />
+          <span>车辆品牌: {record.vehicleBrand}</span>
+          <br />
+          <span>车辆名称: {record.vehicleName}</span>
+        </p>
+      ),
     },
     { title: '昨日在线时长', key: 'onlineTime', dataIndex: 'onlineTime', width: 130 },
     {
