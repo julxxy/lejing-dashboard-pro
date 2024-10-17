@@ -5,7 +5,7 @@ import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 /**
  * 按钮操作类型定义
  */
-type BtAction = 'add' | 'edit' | 'delete' | 'view' | 'other'
+type BtnAction = 'add' | 'edit' | 'delete' | 'view' | 'other'
 
 /**
  * 按钮的类型定义
@@ -18,7 +18,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
   /**
    * 操作类型
    */
-  action?: BtAction
+  action?: BtnAction
   /**
    * 数据载荷
    */
