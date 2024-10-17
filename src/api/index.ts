@@ -1,4 +1,16 @@
-import { Department, Login, Menu, Order, PageResult, Result, Role, UcDashboard, User } from '@/types/apiType.ts'
+import {
+  Department,
+  Login,
+  Menu,
+  Order,
+  PageResult,
+  Point,
+  Result,
+  Role,
+  Shipper,
+  UcDashboard,
+  User,
+} from '@/types/apiType.ts'
 import httpUtils from '@/utils/httpUtils.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'
@@ -159,6 +171,17 @@ export default {
         params,
         `订单数据_${formatDateToLocalString(new Date(), 'yyyyMMddHHmm')}.xlsx`
       )
+    },
+    // 订单聚合热力图数据
+    getCityHeatMapPoints(cityCode: string) {
+      return httpUtils.get<Point[]>(`/order/cluster/${cityCode}`)
+    },
+  },
+
+  // 货运人员
+  shipper: {
+    getShipperList(params: Shipper.SearchParams) {
+      return httpUtils.get<PageResult<Shipper.ShipperInfo>>('/order/driver/list', params)
     },
   },
 }

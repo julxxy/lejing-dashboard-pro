@@ -103,7 +103,7 @@ const LeftSideMenu: React.FC = () => {
             icon: <ShoppingCartOutlined />,
             children: [
               { key: URIs.order.list, label: '订单列表', icon: <OrderedListOutlined /> },
-              { key: URIs.order.aggregation, label: '订单聚合', icon: <GiftOutlined /> },
+              { key: URIs.order.aggregation, label: '订单智汇', icon: <GiftOutlined /> },
               { key: URIs.order.shipper, label: '货运人员', icon: <TruckOutlined /> },
             ],
           },

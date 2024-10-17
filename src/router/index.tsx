@@ -22,7 +22,7 @@ const MenuList = lazy(() => import('@/views/system/menu'))
 const RoleList = lazy(() => import('@/views/system/role'))
 const OrderList = lazy(() => import('@/views/order/list'))
 const ShipperList = lazy(() => import('@/views/order/shipper'))
-const OrderAggregate = lazy(() => import('@/views/order/aggr'))
+const OrderAggregate = lazy(() => import('@/views/order/insights'))
 
 /**
  * URIs in the APP
@@ -80,27 +80,27 @@ export const routes: IRouteObject[] = [
     children: Environment.canUseStaticLayout()
       ? jacksMenu
       : [
-        { path: URIs.welcome, element: <Lazy Component={Welcome} /> },
-        { path: URIs.dashboard, element: <Lazy Component={Dashboard} /> },
-        { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
-        {
-          path: URIs.module.system,
-          children: [
-            { path: URIs.system.user, element: <Lazy Component={UserFC} /> },
-            { path: URIs.system.dept, element: <Lazy Component={DepartmentFC} /> },
-            { path: URIs.system.menu, element: <Lazy Component={MenuList} /> },
-            { path: URIs.system.role, element: <Lazy Component={RoleList} /> },
-          ],
-        },
-        {
-          path: URIs.module.order,
-          children: [
-            { path: URIs.order.list, element: <Lazy Component={OrderList} /> },
-            { path: URIs.order.aggregation, element: <Lazy Component={OrderAggregate} /> },
-            { path: URIs.order.shipper, element: <Lazy Component={ShipperList} /> },
-          ],
-        },
-      ],
+          { path: URIs.welcome, element: <Lazy Component={Welcome} /> },
+          { path: URIs.dashboard, element: <Lazy Component={Dashboard} /> },
+          { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
+          {
+            path: URIs.module.system,
+            children: [
+              { path: URIs.system.user, element: <Lazy Component={UserFC} /> },
+              { path: URIs.system.dept, element: <Lazy Component={DepartmentFC} /> },
+              { path: URIs.system.menu, element: <Lazy Component={MenuList} /> },
+              { path: URIs.system.role, element: <Lazy Component={RoleList} /> },
+            ],
+          },
+          {
+            path: URIs.module.order,
+            children: [
+              { path: URIs.order.list, element: <Lazy Component={OrderList} /> },
+              { path: URIs.order.aggregation, element: <Lazy Component={OrderAggregate} /> },
+              { path: URIs.order.shipper, element: <Lazy Component={ShipperList} /> },
+            ],
+          },
+        ],
   },
   { path: '*', element: <Navigate to={URIs.notFound} /> },
   { path: URIs.notFound, element: <PageNotFound /> },
