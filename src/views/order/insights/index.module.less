@@ -7,22 +7,42 @@
   border-radius: var(--border-radius-default);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   background-color: #d9ecff;
-}
 
-.selectTitle {
-  align-self: center;
-  text-align: center;
-  width: 25%;
-  font-size: 18px;
-  line-height: 22px;
-  color: #333;
-  margin-bottom: 20px;
-}
+  .headerWrapper {
+    display: flex;
+    height: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0 15px 0;
 
-.heatMapContainer {
-  flex-grow: 1;
-  border-radius: var(--border-radius-default);
-  border: 0.8px solid #cfdbe9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background-color: #fff;
+    .title {
+      display: flex;
+      align-items: flex-start;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .selectWrapper {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      align-self: center;
+      margin-right: 10px;
+      width: 25%;
+      font-size: 20px;
+      line-height: 22px;
+      color: #333;
+    }
+
+  }
+
+  .heatMapContainer {
+    flex-grow: 1;
+    border-radius: var(--border-radius-default);
+    border: 0.8px solid #cfdbe9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+  }
+
 }

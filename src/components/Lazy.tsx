@@ -1,9 +1,37 @@
-import '@/views/loading/loading.less'
-import React, { LazyExoticComponent, startTransition, Suspense, useEffect, useRef, useState } from 'react'
+import React, {
+  CSSProperties,
+  LazyExoticComponent,
+  startTransition,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Spin } from 'antd'
 
 interface LazyProps {
   Component: LazyExoticComponent<React.FC> | React.FC
+}
+
+const lazyContainer: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  minHeight: '200px',
+}
+
+const lazyContent: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  textAlign: 'center',
+  padding: '2rem',
+  borderRadius: '16px',
+  minWidth: '280px',
+  maxWidth: '90%',
+  maxHeight: '60%',
 }
 
 /**
@@ -18,9 +46,9 @@ const Lazy: React.FC<LazyProps> = ({ Component }) => {
   const [isTransitioning, setIsTransitioning] = useState(true)
 
   const fallback = (
-    <div ref={fallbackRef} className="lazy-container">
+    <div ref={fallbackRef} style={lazyContainer}>
       <Spin tip="加载中..." size="large">
-        <div className="lazy-content" style={{ backgroundColor: bgColor ?? 'transparent' }}></div>
+        <div style={{ ...lazyContent, backgroundColor: bgColor ?? 'transparent' }}></div>
       </Spin>
     </div>
   )
