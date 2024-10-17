@@ -18,7 +18,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
   /**
    * 操作类型
    */
-  action?: BtnAction
+  action?: BtnAction | string
   /**
    * 数据载荷
    */
@@ -31,7 +31,7 @@ interface DynamicBtnProps<T> extends ButtonProps {
  * @example
  * <DynamicAtnButton show={false} onClick={() => alert('Hello！')}>Dynamic Button</DynamicAtnButton>
  */
-const DynamicAtnButton = <T,>({ show, action, payload, children, ...props }: DynamicBtnProps<T>) => {
+const DynamicAtnButton = <T, >({ show, action, payload, children, ...props }: DynamicBtnProps<T>) => {
   const { buttons = [] } = useAuthLoaderData()
   const { userInfo } = useZustandStore()
   const isSuperAdmin = userInfo?.role === 1

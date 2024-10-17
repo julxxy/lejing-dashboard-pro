@@ -64,7 +64,7 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: Order.SearchArgs
+    formData: Order.SearchArgs,
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     setShowMockButton(result.page.total === 0)
@@ -253,8 +253,9 @@ export default function OrderList() {
               </Button>
               <DynamicAtnButton
                 icon={<DeleteOutlined />}
-                show={true}
                 type="primary"
+                show={true}
+                action="order:edit"
                 danger={true}
                 onClick={() => onBatchDelete()}
                 disabled={true}
@@ -280,9 +281,11 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} onRefresh={() => {}} />
+      <OrderDetailModal currentRef={detailRef} onRefresh={() => {
+      }} />
       <ExpressRouteReportModal currentRef={pointRef} onRefresh={() => search.submit()} />
-      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {}} />
+      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {
+      }} />
     </div>
   )
 }
