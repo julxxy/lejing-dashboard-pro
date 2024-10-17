@@ -1,4 +1,4 @@
-import { isTrue } from '@/common/booleanUtils.ts'
+import { isFalse, isTrue } from '@/common/booleanUtils.ts'
 import { base64Utils } from '@/common/base64Utils.ts'
 
 /**
@@ -17,11 +17,18 @@ export const Environment = {
    */
   isStaticMenuEnable: (): boolean => isTrue(import.meta.env.VITE_IS_STATIC_MENU_ENABLE),
   isLocaleCN: isTrue(import.meta.env.VITE_IS_LOCALE_CN),
+  /**
+   * 是否使用静态菜单布局
+   */
   canUseStaticLayout: () => {
-    let account = import.meta.env.VITE_ACCOUNT_READONLY as string
+    const useAdminAccount = isTrue(import.meta.env.VITE_USE_ADMIN_ACCOUNT)
+    const isStaticMenuDisabled = isFalse(import.meta.env.VITE_IS_STATIC_MENU_ENABLE)
+    let account = useAdminAccount ? import.meta.env.VITE_ACCOUNT_ADMIN : import.meta.env.VITE_ACCOUNT_READONLY
     account = base64Utils.isBase64(account) ? base64Utils.decode(account) : account
-    const isJack = JSON.parse(account).name.toLocaleUpperCase() === 'JACK'
-    return isJack && isTrue(import.meta.env.VITE_IS_STATIC_MENU_ENABLE)
+    const name = JSON.parse(account).name as string
+    let isJack = name.toLowerCase().startsWith('jack')
+    isJack = !useAdminAccount
+    return isStaticMenuDisabled && isJack
   },
 } as const
 

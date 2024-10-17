@@ -6,7 +6,7 @@ import {
   UserOutlined,
   UserSwitchOutlined,
 } from '@ant-design/icons'
-import { Breadcrumb, Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
+import { Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
 import styles from '@/components/NaviHeader/idnex.module.less'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
@@ -16,9 +16,10 @@ import useZustandStore from '@/store/useZustandStore.ts'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { isTrue } from '@/common/booleanUtils.ts'
+import TopBreadcrumb from '@/components/NaviHeader/TopBreadcrumb.tsx'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable, breadItems } = useZustandStore()
+  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
   const items: MenuProps['items'] = [
@@ -70,7 +71,7 @@ const NaviHeader = () => {
         <Button type={'text'} size={'large'} onClick={toggleCollapsed}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
-        <Breadcrumb items={breadItems} style={{ marginLeft: 10 }} />
+        <TopBreadcrumb />
       </div>
       <div className={styles.right}>
         <Switch

@@ -6,6 +6,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { MenuType } from '@/types/appEnum.ts'
 
 /**
  * 菜单弹窗: 创建&编辑
@@ -113,20 +114,33 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
             optionType="default"
           />
         </Form.Item>
-        <Form.Item name={'menuName'} label={'菜单名称'} rules={[{ required: true, message: '请输入菜单名称' }]}>
-          <Input placeholder={'请输入菜单名称'} required={true} />
-        </Form.Item>
         <Form.Item shouldUpdate noStyle>
           {() => {
-            if (form.getFieldValue('menuType') === 2) {
+            if (form.getFieldValue('menuType') === MenuType.btn.code) {
               return (
-                <Form.Item name={'menuCode'} label={'权限标识'}>
-                  <Input placeholder={'请输入权限标识'} />
-                </Form.Item>
+                <>
+                  <Form.Item
+                    name={'menuName'}
+                    label={'按钮名称'}
+                    rules={[{ required: true, message: '请输入按钮名称' }]}
+                  >
+                    <Input placeholder={'请输入按钮名称'} required={true} />
+                  </Form.Item>
+                  <Form.Item name={'menuCode'} label={'权限标识'}>
+                    <Input placeholder={'请输入权限标识'} />
+                  </Form.Item>
+                </>
               )
             } else {
               return (
                 <>
+                  <Form.Item
+                    name={'menuName'}
+                    label={'菜单名称'}
+                    rules={[{ required: true, message: '请输入菜单名称' }]}
+                  >
+                    <Input placeholder={'请输入菜单名称'} required={true} />
+                  </Form.Item>
                   <Form.Item name="icon" label="菜单的 antd 图标">
                     <Input placeholder={'请输入菜单图标'} />
                   </Form.Item>
