@@ -35,7 +35,7 @@ export default function OrderInsightsPro() {
       const res = await api.order.getCityHeatMapPoints(cityValue)
       setPoints(res)
     }, 300),
-    [],
+    []
   )
 
   // 城市名变换更新中心点经纬度
@@ -109,7 +109,7 @@ export default function OrderInsightsPro() {
   return (
     <div className={styles.mapAggrContainer}>
       <div className={styles.headerWrapper}>
-        <div className={styles.title}>订单洞察pro</div>
+        <div className={styles.title}>订单洞察中心</div>
         <Select
           className={styles.selectWrapper}
           placeholder="请选择城市"
