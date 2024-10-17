@@ -15,8 +15,6 @@ import {
   InfoCircleOutlined,
   PlusOutlined,
   PushpinOutlined,
-  ReloadOutlined,
-  SearchOutlined,
 } from '@ant-design/icons'
 import ExpressRouteReportModal from '@/views/order/list/children/ExpressRouteReportModal.tsx'
 import ExpressRouteAnimateModal from '@/views/order/list/children/ExpressRouteAnimateModal.tsx'
@@ -24,6 +22,7 @@ import OrderCreateModal from '@/views/order/list/children/OrderCreateModal.tsx'
 import orders from '@/mockdata/orders.json'
 import DynamicAtnButton from '@/components/DynamicAntButton.tsx'
 import OrderDetailModal from '@/views/order/list/children/OrderDetailModal.tsx'
+import SearchForm from '@/components/SearchForm.tsx'
 
 /**
  * 订单列表
@@ -64,7 +63,7 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: Order.SearchArgs
+    formData: Order.SearchArgs,
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     setShowMockButton(result.page.total === 0)
@@ -210,7 +209,12 @@ export default function OrderList() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: undefined }}>
+      <SearchForm
+        form={form}
+        initialValues={{ state: undefined }}
+        submit={() => search.submit()}
+        reset={() => search.reset()}
+      >
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
@@ -226,17 +230,7 @@ export default function OrderList() {
             <Select.Option value={4}>取消</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item>
-          <Space>
-            <Button icon={<SearchOutlined />} type="primary" onClick={() => search.submit()}>
-              搜索
-            </Button>
-            <Button icon={<ReloadOutlined />} htmlType={'reset'} onClick={() => search.reset()}>
-              重置
-            </Button>
-          </Space>
-        </Form.Item>
-      </Form>
+      </SearchForm>
       <div className="base-table">
         <div className="header-wrapper">
           <div className="title">订单列表</div>
@@ -281,9 +275,11 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} onRefresh={() => {}} />
+      <OrderDetailModal currentRef={detailRef} onRefresh={() => {
+      }} />
       <ExpressRouteReportModal currentRef={pointRef} onRefresh={() => search.submit()} />
-      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {}} />
+      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {
+      }} />
     </div>
   )
 }
