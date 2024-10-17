@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import React, { CSSProperties, useEffect, useState } from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import { Tabs } from 'antd'
 import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
@@ -8,7 +8,6 @@ import { Menu, TabItem } from '@/types/apiType.ts'
 import { URIs } from '@/router'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import useZustandStore from '@/store/useZustandStore.ts'
-import storageUtils from '@/utils/storageUtils.ts'
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string
 
@@ -28,38 +27,40 @@ const CSS = {
 const TabFC = () => {
   const { activeTab, setActiveTab } = useZustandStore()
   const navigate = useNavigate()
-  const [showTab, setShowTab] = useState(false)
   const { pathname } = useLocation()
   const { menus } = useAuthLoaderData()
+
   const [tabItems, setTabItems] = useState<TabItem[]>([{ label: '首页', key: URIs.welcome, closable: false }])
+  const tabItemsRef = useRef(tabItems)
 
   const createTabs = () => {
     const route = ApplicationAlgorithm.findRoute<Menu.Item>(menus, pathname)
     if (!route) return
 
-    setShowTab(true)
-    const isTabExist = tabItems.some(item => item.key === route.path)
+    const isTabExist = tabItemsRef.current.some(item => item.key === route.path)
 
     if (!isTabExist) {
-      setTabItems(prevTabs => [
-        ...prevTabs,
-        {
-          label: route.menuName,
-          key: route.path || '',
-          closable: pathname !== URIs.welcome,
-        },
-      ])
-      const prevActive = storageUtils.get<string>('activeTab')
-      if (prevActive) {
-        setActiveTab(prevActive)
-      } else {
-        setActiveTab(route.path || '')
+      const newTab = {
+        label: route.menuName,
+        key: route.path || '',
+        closable: pathname !== URIs.welcome,
       }
+      setTabItems(prevTabs => [...prevTabs, newTab])
     }
+
+    setActiveTab(route.path || '')
   }
 
   useEffect(() => {
-    createTabs()
+    tabItemsRef.current = tabItems
+  }, [tabItems])
+
+  useEffect(() => {
+    if (pathname === URIs.welcome) {
+      setActiveTab(URIs.welcome)
+    } else {
+      createTabs()
+    }
     if (isDebugEnable) log.info('Creating Tabs: ', tabItems)
   }, [pathname])
 
@@ -70,13 +71,12 @@ const TabFC = () => {
 
   const remove = (targetKey: TargetKey) => {
     if (pathname === targetKey) {
-      tabItems.forEach(({ key }, index) => {
-        if (key !== pathname) return
-        const nextTab = tabItems[index + 1] || tabItems[index - 1]
-        if (!nextTab) return
+      const tabIndex = tabItemsRef.current.findIndex(item => item.key === targetKey)
+      const nextTab = tabItemsRef.current[tabIndex + 1] || tabItemsRef.current[tabIndex - 1]
+      if (nextTab) {
         setActiveTab(nextTab.key)
         navigate(nextTab.key)
-      })
+      }
     }
     setTabItems(prevTabs => prevTabs.filter(item => item.key !== targetKey))
     if (isDebugEnable) log.info('Removed Tab: ', targetKey, tabItems)
@@ -88,7 +88,7 @@ const TabFC = () => {
     }
   }
 
-  if (!showTab) return null
+  if (tabItems.length === 1 && tabItems[0].key === URIs.welcome && pathname !== URIs.welcome) return null
 
   return (
     <Tabs
