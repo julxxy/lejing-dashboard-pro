@@ -323,3 +323,10 @@ export interface Point {
   lng: string
   lat: string
 }
+
+// 顶部页签
+export interface TabItem {
+  label: string
+  key: string
+  closable: boolean
+}

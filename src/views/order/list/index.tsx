@@ -210,7 +210,7 @@ export default function OrderList() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: null }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: undefined }}>
         <Form.Item name="orderId" label={'订单编号'}>
           <Input placeholder={'请输入订单编号'} />
         </Form.Item>
@@ -219,7 +219,7 @@ export default function OrderList() {
         </Form.Item>
         <Form.Item name="state" label={'订单状态'}>
           <Select style={{ width: 120 }} onChange={() => search.submit()}>
-            <Select.Option value={null}>全部</Select.Option>
+            <Select.Option value={undefined}>全部</Select.Option>
             <Select.Option value={1}>进行中</Select.Option>
             <Select.Option value={2}>已完成</Select.Option>
             <Select.Option value={3}>超时</Select.Option>

@@ -12,17 +12,18 @@ import { defaultAuthLoader, RouteConstants } from '@/router/defaultAuthLoader.ts
 import { isFalse } from '@/common/booleanUtils.ts'
 import Lazy from '@/components/Lazy.tsx'
 import { Environment } from '@/types/appEnum.ts'
+import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
 
 /* Lazy load views */
 const Welcome = lazy(() => import('@/views/welcome'))
 const Dashboard = lazy(() => import('@/views/dashboard'))
-const UserFC = lazy(() => import('@/views/system/user'))
-const DepartmentFC = lazy(() => import('@/views/system/dept'))
-const MenuList = lazy(() => import('@/views/system/menu'))
-const RoleList = lazy(() => import('@/views/system/role'))
-const OrderList = lazy(() => import('@/views/order/list'))
-const ShipperList = lazy(() => import('@/views/order/shipper'))
-const OrderAggregate = lazy(() => import('@/views/order/insights'))
+const User = lazy(() => import('@/views/system/user'))
+const Department = lazy(() => import('@/views/system/dept'))
+const Menu = lazy(() => import('@/views/system/menu'))
+const Role = lazy(() => import('@/views/system/role'))
+const Order = lazy(() => import('@/views/order/list'))
+const Shipper = lazy(() => import('@/views/order/shipper'))
+const OrderInsights = lazy(() => import('@/views/order/insights'))
 
 /**
  * URIs in the APP
@@ -53,23 +54,24 @@ if (isDebugEnable) log.info('Module URIs: \n', JSON.stringify(URIs, null, 2))
 const publicURIs = [URIs.home, URIs.login, URIs.welcome, URIs.notFound, URIs.noPermission]
 const isURIPublic = (path: string) => publicURIs.includes(path)
 
+export type IRouteObject = RouteObject & { enableAuth?: boolean; children?: IRouteObject[] }
+
 const jacksMenu: IRouteObject[] = [
   { path: '/welcome', element: <Lazy Component={Welcome} /> },
   { path: '/dashboard', element: <Lazy Component={Dashboard} /> },
-  { path: '/userList', element: <Lazy Component={UserFC} /> },
-  { path: '/deptList', element: <Lazy Component={DepartmentFC} /> },
-  { path: '/menuList', element: <Lazy Component={MenuList} /> },
-  { path: '/roleList', element: <Lazy Component={RoleList} /> },
-  { path: '/orderList', element: <Lazy Component={OrderList} /> },
-  { path: '/cluster', element: <Lazy Component={OrderAggregate} /> },
-  { path: '/driverList', element: <Lazy Component={ShipperList} /> },
+  { path: '/userList', element: <Lazy Component={User} /> },
+  { path: '/deptList', element: <Lazy Component={Department} /> },
+  { path: '/menuList', element: <Lazy Component={Menu} /> },
+  { path: '/roleList', element: <Lazy Component={Role} /> },
+  { path: '/orderList', element: <Lazy Component={Order} /> },
+  { path: '/cluster', element: <Lazy Component={OrderInsights} /> },
+  { path: '/driverList', element: <Lazy Component={Shipper} /> },
 ]
 
 /**
  * 路由配置
  * @apiNote 页面抖动很影响体验: 只对 Layout 进行加载，不包裹整个 Suspense
  */
-export type IRouteObject = RouteObject & { enableAuth?: boolean }
 export const routes: IRouteObject[] = [
   { path: URIs.home, element: <Navigate to={URIs.welcome} /> },
   { path: URIs.login, element: <LoginFC /> },
@@ -86,18 +88,18 @@ export const routes: IRouteObject[] = [
           {
             path: URIs.module.system,
             children: [
-              { path: URIs.system.user, element: <Lazy Component={UserFC} /> },
-              { path: URIs.system.dept, element: <Lazy Component={DepartmentFC} /> },
-              { path: URIs.system.menu, element: <Lazy Component={MenuList} /> },
-              { path: URIs.system.role, element: <Lazy Component={RoleList} /> },
+              { path: URIs.system.user, element: <Lazy Component={User} /> },
+              { path: URIs.system.dept, element: <Lazy Component={Department} /> },
+              { path: URIs.system.menu, element: <Lazy Component={Menu} /> },
+              { path: URIs.system.role, element: <Lazy Component={Role} /> },
             ],
           },
           {
             path: URIs.module.order,
             children: [
-              { path: URIs.order.list, element: <Lazy Component={OrderList} /> },
-              { path: URIs.order.aggregation, element: <Lazy Component={OrderAggregate} /> },
-              { path: URIs.order.shipper, element: <Lazy Component={ShipperList} /> },
+              { path: URIs.order.list, element: <Lazy Component={Order} /> },
+              { path: URIs.order.aggregation, element: <Lazy Component={OrderInsights} /> },
+              { path: URIs.order.shipper, element: <Lazy Component={Shipper} /> },
             ],
           },
         ],
@@ -113,20 +115,7 @@ export const router = createBrowserRouter(routes)
 export const isURIAccessible = (route?: string | null | undefined): boolean => {
   if (!route) return false
   if (isURIPublic(route)) return true
-  // Recursive function to search for the route in nested routes
-  const findRoute = (routes: IRouteObject[], route: string): IRouteObject | undefined => {
-    for (const r of routes) {
-      // Match route directly
-      if (r.path === route) return r
-      // If there are children, search recursively
-      if (r.children) {
-        const foundChild = findRoute(r.children, route)
-        if (foundChild) return foundChild
-      }
-    }
-    return undefined
-  }
-  const foundRoute = findRoute(routes, route)
+  const foundRoute = ApplicationAlgorithm.findRoute<IRouteObject>(routes, route)
   if (!foundRoute) return false
   if (foundRoute?.enableAuth === undefined) return false
   return isFalse(foundRoute.enableAuth)

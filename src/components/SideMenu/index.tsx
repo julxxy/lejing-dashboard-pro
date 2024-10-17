@@ -34,6 +34,7 @@ const LeftSideMenu: React.FC = () => {
   const platformTextStyle = `${collapsed ? styles.logoTextHidden : styles.logoTextVisible} ${
     isDarkEnable ? '' : 'logo-text-dark-blue'
   }`
+  const { setActiveTab } = useZustandStore()
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
   const [openKeys, setOpenKeys] = useState<string[]>([])
@@ -72,7 +73,7 @@ const LeftSideMenu: React.FC = () => {
       ])
       if (isDebugEnable) log.info('使用静态菜单数据：', menuItems)
     } else {
-      const dynamicMenuItems = ApplicationAlgorithm.getTreeifyMenuItems(routeData.menus)
+      const dynamicMenuItems = ApplicationAlgorithm.findTreeifyMenuItems(routeData.menus)
       if (isDebugEnable) log.info('使用动态菜单数据: ', dynamicMenuItems)
       setMenuItems(dynamicMenuItems)
     }
@@ -93,6 +94,7 @@ const LeftSideMenu: React.FC = () => {
     if (isDebugEnable) log.info('菜单项导航:', key)
     storageUtils.set('menuSelectedKeys', [key])
     setSelectedKeys([key])
+    setActiveTab(key)
     return navigate(key)
   }
 

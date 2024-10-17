@@ -42,8 +42,8 @@ export const ApplicationAlgorithm = {
   /**
    * 获取菜单的 URI 树形列表
    */
-  findMenuURIs(target: Menu.Item[]): string[] {
-    return target
+  findMenuURIs(source: Menu.Item[]): string[] {
+    return source
       .flatMap(({ path, children, buttons }) =>
         Array.isArray(children) && !buttons ? this.findMenuURIs(children) : (path ?? '')
       )
@@ -53,7 +53,7 @@ export const ApplicationAlgorithm = {
   /**
    * 生成菜单树型结构
    */
-  getTreeifyMenuItems(sourceMenus: Menu.Item[], targetMenus: MenuItem[] = []) {
+  findTreeifyMenuItems(sourceMenus: Menu.Item[], targetMenus: MenuItem[] = []) {
     // 生成动态图标
     sourceMenus.forEach(({ menuType, menuState, buttons, menuName, path, children, icon }, index) => {
       if (menuType === MenuType.menu.code && menuState === 1) {
@@ -67,13 +67,33 @@ export const ApplicationAlgorithm = {
               menuName,
               path || index,
               <DynamicAntIcon iconName={icon} />,
-              this.getTreeifyMenuItems(children)
+              this.findTreeifyMenuItems(children)
             )
           )
         }
       }
     })
     return targetMenus
+  },
+
+  /**
+   * 用于搜索路线的通用递归函数
+   * @description 递归搜索路由树，返回匹配的路由对象
+   * @param routes - 路由数组（T 类型）
+   * @param searchRoute - 要搜索的路由路径
+   * @returns 找到的 T 类型或 undefined
+   */
+  findRoute<T extends { path?: string; children?: T[] }>(routes: T[], searchRoute: string): T | undefined {
+    for (const route of routes) {
+      // 直接匹配
+      if (route.path === searchRoute) return route
+      // 如果有孩子，则递归搜索
+      if (route.children) {
+        const foundChild = this.findRoute(route.children, searchRoute)
+        if (foundChild) return foundChild
+      }
+    }
+    return undefined
   },
 }
 

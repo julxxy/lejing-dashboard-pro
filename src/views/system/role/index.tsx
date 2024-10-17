@@ -92,12 +92,18 @@ export default function RoleList() {
               />
             </Tooltip>
             <Tooltip title="设置权限">
-              <Button key={`assign-${record._id}`} icon={<EditOutlined />} onClick={() => assignPermission(record)} />
+              <Button
+                key={`assign-${record._id}`}
+                icon={<EditOutlined />}
+                shape="circle"
+                onClick={() => assignPermission(record)}
+              />
             </Tooltip>
             <Tooltip title="删除">
               <Button
                 key={`delete-${record._id}`}
                 icon={<DeleteOutlined />}
+                shape="circle"
                 danger
                 onClick={() => onDelete(record._id)}
               />

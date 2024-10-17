@@ -12,17 +12,20 @@ const useZustandStore = create<{
   userInfo: User.Info
   collapsed: boolean
   isDarkEnable: boolean
+  activeTab: string
   /* setters */
   setToken: (token: string) => void
   setUserInfo: (userInfo: User.Info) => void
   setCollapsed: () => void
   setDarkEnable: () => void
+  setActiveTab: (activeTab: string) => void
 }>(set => ({
   /* state */
   token: '',
   userInfo: {} as User.Info,
   collapsed: false,
   isDarkEnable: true,
+  activeTab: '',
   /* setters */
   setToken: (token: string) => set(() => ({ token })),
   setUserInfo: (userInfo: User.Info) => {
@@ -43,6 +46,11 @@ const useZustandStore = create<{
       storageUtils.set('darkEnable', enable)
       return { isDarkEnable: enable }
     })
+  },
+  setActiveTab: (activeTab: string) => {
+    logUpdate(activeTab)
+    storageUtils.set('activeTab', activeTab)
+    set(() => ({ activeTab }))
   },
 }))
 
