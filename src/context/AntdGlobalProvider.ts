@@ -31,7 +31,7 @@ export const useThemeToken = () => {
   const cssVariableValue = (variable: string) => {
     return getComputedStyle(document.documentElement).getPropertyValue(variable).trim()
   }
-  const colorPrimary = cssVariableValue('--color-primary-bright')
+  const colorPrimary = cssVariableValue('--color-primary')
   const borderRadius = cssVariableValue('--border-radius-default')
   return {
     token: { colorPrimary, borderRadius },

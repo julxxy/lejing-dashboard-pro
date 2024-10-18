@@ -8,20 +8,22 @@
   height: 100%;
 
   .backgroundImage {
-    background: url('@/assets/images/welcome-bg.png') no-repeat;
+    position: relative;
+    background: url('@/assets/images/data-view-1.png') no-repeat;
     background-size: contain;
-    height: 320px;
-    width: 240px;
-    margin-left: 100px;
+    height: 480px;
+    width: 320px;
+    margin-left: 50px;
     border-radius: var(--border-radius-default);
   }
 
   .content {
+    flex: 1;
     position: relative;
     bottom: 40px;
 
     .greeting {
-      font-size: 30px;
+      font-size: 38px;
       line-height: 40px;
       color: var(--content-text);
       font-weight: bold;
@@ -30,15 +32,15 @@
     }
 
     .title {
-      font-size: 40px;
+      font-size: 48px;
       height: 58px;
       font-weight: bold;
       color: dodgerblue;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     }
 
     .desc {
-      text-align: center;
+      text-align: left;
       font-size: 15px;
       line-height: 20px;
       font-weight: bold;

@@ -22,6 +22,7 @@
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "react": "^18.3.1",
+    "react-activation": "^0.12.4",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
     "react-router-dom": "^6.27.0",

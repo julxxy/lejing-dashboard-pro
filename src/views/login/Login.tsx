@@ -2,7 +2,7 @@ import styles from '@/views/login/Login.module.less'
 import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useAntd } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/appEnum.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
@@ -34,7 +34,7 @@ function getAccount(): { username: string; password: string } {
 }
 
 export default function LoginFC() {
-  const { setToken } = useZustandStore()
+  const { isDarkEnable, setToken } = useZustandStore()
   const { message } = useAntd()
   const [loading, setLoading] = useState(false)
   const { username, password } = getAccount()
@@ -64,6 +64,10 @@ export default function LoginFC() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkEnable ? 'dark' : 'light')
+  }, [])
 
   return (
     <div className={styles.login}>

@@ -57,42 +57,39 @@ const NaviHeader = () => {
 
   function switchAccount() {
     setToken('')
-    storageUtils.clear()
+    storageUtils.remove('token')
     location.href = `${URIs.login}?callback=${encodeURIComponent(location.href)}`
   }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkEnable ? 'dark' : 'light')
-  }, [])
+  }, [isDarkEnable])
 
   const toggleTheme = () => {
     setIsDarkEnable()
-    document.documentElement.setAttribute('data-theme', isDarkEnable ? 'light' : 'dark')
   }
 
   return (
     <div className={styles.header}>
       <div className={styles.left}>
-        <Button type={'text'} size={'large'} onClick={toggleCollapsed}>
+        <Button type="text" size="large" onClick={toggleCollapsed}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
         <BreadcrumbFC />
       </div>
       <div className={styles.right}>
         <Switch
-          className={`${styles.switch} ${isDarkEnable ? styles.switchDarkColor : styles.switchBrightColor}`}
+          className={styles.switch}
           checkedChildren={themeSwitch.sun}
           unCheckedChildren={themeSwitch.moon}
           checked={!isDarkEnable}
           onClick={toggleTheme}
         />
         <Dropdown.Button
-          className="btn-primary"
           menu={menuProps}
-          size={'middle'}
+          size="middle"
           icon={<UserOutlined />}
-          placement={'bottomLeft'}
-          type={'text'}
+          style={{ borderRadius: 'var(--border-radius-default)' }}
           arrow={true}
           buttonsRender={([leftButton, rightButton]) => [
             <Tooltip title={userInfo.job} key="leftButton">
