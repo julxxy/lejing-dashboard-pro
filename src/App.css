@@ -43,33 +43,26 @@
   background-color: var(--bg-color-breadcrumb-primary);
 }
 
+/* ant 固定列的视觉样式 */
+.ant-table-cell-fix-left {
+  background-color: #fff;
+  font-weight: bold;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
 /* 使用深蓝色 */
 .logo-text-dark-blue {
   color: var(--color-text-primary-dark);
 }
 
-.btn-secondary {
+.btn-primary {
   border-radius: var(--border-radius-default);
   background-color: var(--color-primary-bright);
   color: white;
 }
 
-.btn-secondary:hover {
+.btn-primary:hover {
   background-color: var(--color-primary-dark);
-}
-
-.cancel-button {
-  background-color: #f5f5f5; /* 淡灰色背景，低调 */
-  color: #333; /* 深灰色字体，易读 */
-  border: 1px solid #d9d9d9; /* 边框与背景相匹配 */
-  border-radius: var(--border-radius-default); /* 圆角一致 */
-  padding: 8px 16px; /* 增加按钮的填充，保持适当大小 */
-  cursor: pointer; /* 鼠标悬停时显示为指针 */
-  transition: background-color 0.3s ease; /* 添加过渡效果 */
-}
-
-.cancel-button:hover {
-  background-color: #e6e6e6; /* 悬停时稍微加深背景色 */
 }
 
 .cta-button {
@@ -81,13 +74,6 @@
 
 .success-message {
   color: var(--color-accent-green);
-}
-
-/* ant 固定列的视觉样式 */
-.ant-table-cell-fix-left {
-  background-color: #fff;
-  font-weight: bold;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Background styling */
