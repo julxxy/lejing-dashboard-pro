@@ -9,12 +9,12 @@ import { formatDateToLocalString, formatOrderStatus } from '@/utils'
 /**
  * 订单详情页
  */
-export default function OrderDetailModal({ currentRef }: IModalProps) {
+export default function OrderDetailModal({ parentRef }: IModalProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [items, setItems] = useState<DescriptionsProps['items']>([])
 
   // Expose methods to parent component
-  useImperativeHandle(currentRef, () => controller)
+  useImperativeHandle(parentRef, () => controller)
   // Controller for exposing modal actions to the parent component
   const controller = {
     openModal: (action: Action, data?: Order.OrderDetail | string) => {

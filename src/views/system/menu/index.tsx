@@ -148,7 +148,7 @@ export default function MenuFC() {
         </div>
         <Table bordered rowKey={'_id'} columns={columns} dataSource={data} pagination={false} loading={loading} />
       </div>
-      <MenuModal currentRef={menuRef} onRefresh={getMenus} />
+      <MenuModal parentRef={menuRef} onRefresh={getMenus} />
     </div>
   )
 }

@@ -11,7 +11,7 @@ import { MenuType } from '@/types/appEnum.ts'
 /**
  * 菜单弹窗: 创建&编辑
  */
-export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
+export default function MenuModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [menus, setMenus] = useState<Menu.Item[]>([])
@@ -32,7 +32,7 @@ export default function MenuModal({ currentRef, onRefresh }: IModalProps) {
     setShowModal(false)
     form.resetFields()
   }
-  useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
+  useImperativeHandle(parentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
 
   const fetchMenus = async () => {
     const data = await api.menu.getMenus(form.getFieldsValue())

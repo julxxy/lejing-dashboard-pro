@@ -11,7 +11,7 @@ import { formatDateToDayjs, formatDayjsToDateString } from '@/utils'
 /**
  * 订单弹窗
  */
-export default function OrderCreateModal({ currentRef, onRefresh }: IModalProps) {
+export default function OrderCreateModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [modalOpen, setModalOpen] = useState(false)
 
@@ -22,7 +22,7 @@ export default function OrderCreateModal({ currentRef, onRefresh }: IModalProps)
   const [vehicles, setVehicles] = useState<Order.VehicleDict[]>()
 
   // 暴露方法给父组件使用
-  useImperativeHandle(currentRef, () => modalController)
+  useImperativeHandle(parentRef, () => modalController)
   const modalController = {
     // 开启当前组件弹窗
     openModal: (action: Action, data?: Order.OrderDetail) => {

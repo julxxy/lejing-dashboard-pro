@@ -184,7 +184,7 @@ export default function UsersPrimary() {
           {...tableProps}
         />
         <UserModal
-          currentRef={currentRef}
+          parentRef={currentRef}
           onRefresh={() => {
             return action === 'create' ? search.reset() : search.submit()
           }}

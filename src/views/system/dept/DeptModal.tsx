@@ -10,7 +10,7 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 /**
  * 创建/编辑菜单弹窗
  */
-export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
+export default function DeptModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(true)
   const [deptList, setDeptList] = useState<Department.Item[]>([])
@@ -19,7 +19,7 @@ export default function DeptModal({ currentRef, onRefresh }: IModalProps) {
   const [action, setAction] = useState<Action>('create')
 
   // 暴露方法给父组件使用
-  useImperativeHandle(currentRef, () => modalController)
+  useImperativeHandle(parentRef, () => modalController)
   const modalController = {
     // 开启当前组件的弹窗显示
     openModal: (action: Action, data?: Department.EditParams | { parentId: string }) => {

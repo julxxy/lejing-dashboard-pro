@@ -19,7 +19,7 @@ import api from '@/api'
 /**
  * 创建/编辑用户弹窗
  */
-export default function UserModal({ currentRef, onRefresh }: IModalProps) {
+export default function UserModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [imageUrl, setImageUrl] = useState<string>()
@@ -46,7 +46,7 @@ export default function UserModal({ currentRef, onRefresh }: IModalProps) {
     setImageUrl(undefined)
     handleReset()
   }
-  useImperativeHandle(currentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
+  useImperativeHandle(parentRef, () => ({ openModal, closeModal })) // 暴露方法给父组件使用
 
   function onFinish(values: any) {
     if (isDebugEnable) log.info('on_finish: ', values)

@@ -1,4 +1,4 @@
-import styles from '@/components/SideMenu/index.module.less'
+import styles from '@/components/SidebarMenu/index.module.less'
 import {
   ApartmentOutlined,
   DesktopOutlined,
@@ -24,9 +24,9 @@ import storageUtils from '@/utils/storageUtils.ts'
 import { ApplicationAlgorithm, MenuItem } from '@/context/ApplicationAlgorithm.tsx'
 
 /**
- * Left Side Menu
+ * Left Sidebar Menu
  */
-const LeftSideMenu: React.FC = () => {
+const SidebarMenu: React.FC = () => {
   const routeData = useAuthLoaderData()
   const { isDarkEnable, collapsed } = useZustandStore()
   const theme = isDarkEnable ? 'dark' : 'light'
@@ -132,4 +132,4 @@ const LeftSideMenu: React.FC = () => {
   )
 }
 
-export default LeftSideMenu
+export default SidebarMenu

@@ -167,8 +167,8 @@ export default function RoleList() {
           {...tableProps}
         />
       </div>
-      <RoleModal currentRef={roleRef} onRefresh={() => search.reset()} />
-      <PermissionModal currentRef={permissionRef} onRefresh={() => search.reset()} />
+      <RoleModal parentRef={roleRef} onRefresh={() => search.reset()} />
+      <PermissionModal parentRef={permissionRef} onRefresh={() => search.reset()} />
     </div>
   )
 }

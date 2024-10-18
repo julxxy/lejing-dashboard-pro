@@ -7,7 +7,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { ApplicationAlgorithm, BreadcrumbNodeProps } from '@/context/ApplicationAlgorithm.tsx'
 
 // 顶部菜单右侧按钮
-export default function TopBreadcrumb() {
+export default function BreadcrumbFC() {
   const routeMeta = useAuthLoaderData()
   const { pathname } = useLocation()
   const [itemPaths, setItemPaths] = useState<BreadcrumbNodeProps[]>([])

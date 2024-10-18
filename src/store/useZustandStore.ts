@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { User } from '@/types/apiType.ts'
 import storageUtils from '@/utils/storageUtils.ts'
+import { isTrue } from '@/common/booleanUtils.ts'
 
 /**
  * This is the store for the app. implemented using Zustand library.
@@ -17,14 +18,14 @@ const useZustandStore = create<{
   setToken: (token: string) => void
   setUserInfo: (userInfo: User.Info) => void
   setCollapsed: () => void
-  setDarkEnable: () => void
+  setIsDarkEnable: () => void
   setActiveTab: (activeTab: string) => void
 }>(set => ({
   /* state */
   token: '',
   userInfo: {} as User.Info,
   collapsed: false,
-  isDarkEnable: true,
+  isDarkEnable: isTrue(storageUtils.get('dark-enable')),
   activeTab: '',
   /* setters */
   setToken: (token: string) => set(() => ({ token })),
@@ -39,11 +40,11 @@ const useZustandStore = create<{
       return { collapsed: !collapsed }
     })
   },
-  setDarkEnable: () => {
+  setIsDarkEnable: () => {
     set(state => {
       const enable = !state.isDarkEnable
       logUpdate(enable)
-      storageUtils.set('darkEnable', enable)
+      storageUtils.set('dark-enable', enable)
       return { isDarkEnable: enable }
     })
   },

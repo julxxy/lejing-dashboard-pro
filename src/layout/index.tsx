@@ -2,7 +2,7 @@ import React, { lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { Layout, Watermark } from 'antd'
 import NaviHeader from '@/components/NaviHeader'
 import NavFooter from '@/components/NavFooter'
-import LeftSideMenu from '@/components/SideMenu'
+import SidebarMenu from '@/components/SidebarMenu'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
 import useZustandStore from '@/store/useZustandStore.ts'
@@ -77,7 +77,7 @@ const LayoutFC: React.FC = () => {
   return (
     <Watermark content={watermark()} inherit={false}>
       <Layout style={{ minHeight: '100vh' }}>
-        <LeftSideMenu />
+        <SidebarMenu />
         <Layout ref={windowRef} className={styles.rightSideWrapper}>
           <NaviHeader />
           <TabFC />

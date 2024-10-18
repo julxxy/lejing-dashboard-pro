@@ -11,7 +11,7 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 /**
  * 权限弹窗
  */
-export default function PermissionModal({ currentRef, onRefresh }: IModalProps) {
+export default function PermissionModal({ parentRef, onRefresh }: IModalProps) {
   const [showModal, setShowModal] = useState(false)
   const [treeMenus, setTreeMenus] = useState<TreeDataNode[]>([]) // 统一为 TreeDataNode[]
   const [roleDetail, setRoleDetail] = useState<Role.RoleDetail>()
@@ -20,7 +20,7 @@ export default function PermissionModal({ currentRef, onRefresh }: IModalProps) 
   const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([])
   const [form] = Form.useForm() // 使用 Antd Form
   // Expose methods to parent component
-  useImperativeHandle(currentRef, () => modalController)
+  useImperativeHandle(parentRef, () => modalController)
   const modalController = {
     openModal: (action: Action, data?: any) => {
       if (isDebugEnable) log.info('收到父组件的弹窗显示请求: ', action, data)

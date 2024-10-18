@@ -15,11 +15,11 @@ import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { isTrue } from '@/common/booleanUtils.ts'
-import TopBreadcrumb from '@/components/NaviHeader/TopBreadcrumb.tsx'
+import BreadcrumbFC from '@/components/NaviHeader/BreadcrumbFC.tsx'
+import { themeSwitch } from '@/components/ThemeSwitch.tsx'
 
 const NaviHeader = () => {
-  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setDarkEnable } = useZustandStore()
+  const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setIsDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
   const items: MenuProps['items'] = [
@@ -62,8 +62,13 @@ const NaviHeader = () => {
   }
 
   useEffect(() => {
-    if (isTrue(storageUtils.get('darkEnable'))) setDarkEnable()
+    document.documentElement.setAttribute('data-theme', isDarkEnable ? 'dark' : 'light')
   }, [])
+
+  const toggleTheme = () => {
+    setIsDarkEnable()
+    document.documentElement.setAttribute('data-theme', isDarkEnable ? 'light' : 'dark')
+  }
 
   return (
     <div className={styles.header}>
@@ -71,15 +76,15 @@ const NaviHeader = () => {
         <Button type={'text'} size={'large'} onClick={toggleCollapsed}>
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
-        <TopBreadcrumb />
+        <BreadcrumbFC />
       </div>
       <div className={styles.right}>
         <Switch
           className={`${styles.switch} ${isDarkEnable ? styles.switchDarkColor : styles.switchBrightColor}`}
-          checkedChildren={'明亮'}
-          unCheckedChildren={'暗黑'}
+          checkedChildren={themeSwitch.sun}
+          unCheckedChildren={themeSwitch.moon}
           checked={!isDarkEnable}
-          onClick={() => setDarkEnable()}
+          onClick={toggleTheme}
         />
         <Dropdown.Button
           className="btn-primary"

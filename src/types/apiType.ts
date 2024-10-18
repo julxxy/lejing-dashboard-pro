@@ -1,4 +1,5 @@
 import { OrderStatus } from '@/types/appEnum.ts'
+import * as React from 'react'
 
 /**
  * API 入参定义
@@ -329,4 +330,5 @@ export interface TabItem {
   label: string
   key: string
   closable: boolean
+  icon?: React.ReactNode
 }

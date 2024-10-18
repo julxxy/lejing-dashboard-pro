@@ -10,7 +10,7 @@ import { Role } from '@/types/apiType.ts'
 /**
  * 角色弹窗: 创建&编辑
  */
-export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
+export default function RoleModal({ parentRef, onRefresh }: IModalProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [roles, setRoles] = useState<Role.RoleDetail[]>([])
@@ -19,7 +19,7 @@ export default function RoleModal({ currentRef, onRefresh }: IModalProps) {
   const title = (action === 'create' ? '创建' : '编辑') + '角色'
 
   // 暴露方法给父组件使用
-  useImperativeHandle(currentRef, () => modalController)
+  useImperativeHandle(parentRef, () => modalController)
   const modalController = {
     // 开启弹窗显示
     openModal: (action: Action, data?: Role.RoleDetail) => {
