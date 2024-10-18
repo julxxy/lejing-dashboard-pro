@@ -82,7 +82,7 @@ const NaviHeader = () => {
           onClick={() => setDarkEnable()}
         />
         <Dropdown.Button
-          className="btn-secondary"
+          className="btn-primary"
           menu={menuProps}
           size={'middle'}
           icon={<UserOutlined />}
