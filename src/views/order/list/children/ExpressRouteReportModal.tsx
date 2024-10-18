@@ -15,7 +15,7 @@ const deleteButtonHTML = `<div class="mapDeleteButton">删除 ?</div>`
 /**
  * 地图打点上报货运人员行驶轨迹：使用可点击标记显示驾驶员行驶的地图路线
  */
-export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModalProps) {
+export default function ExpressRouteReportModal({ parentRef, onRefresh }: IModalProps) {
   // Constants
   const [showModal, setShowModal] = useState(false)
   const [orderId, setOrderId] = useState<string>('')
@@ -23,7 +23,7 @@ export default function ExpressRouteReportModal({ currentRef, onRefresh }: IModa
   const [marks, setMarks] = useState<{ lng: string; lat: string; id: string }[]>([])
 
   // Expose methods to parent component
-  useImperativeHandle(currentRef, () => controller)
+  useImperativeHandle(parentRef, () => controller)
 
   const controller = {
     openModal: (action: Action, data: Order.OrderDetail) => {

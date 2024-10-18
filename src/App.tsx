@@ -1,4 +1,6 @@
 import '@/App.css'
+import '@/assets/styles/theme.less'
+
 import { RouterProvider } from 'react-router-dom'
 import { App as AntdApp, ConfigProvider, theme } from 'antd'
 import { router } from '@/router'
@@ -14,22 +16,19 @@ if (Environment.isLocaleCN) dayjs.locale('zh-cn')
 
 function App() {
   const { isDarkEnable } = useZustandStore()
-
   return (
-    <>
-      <ConfigProvider
-        theme={{
-          ...useThemeToken,
-          algorithm: isDarkEnable ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        }}
-        locale={Environment.isLocaleCN ? zhCN : enUS}
-      >
-        <AntdApp>
-          <AntdGlobalProvider />
-          <RouterProvider router={router} />
-        </AntdApp>
-      </ConfigProvider>
-    </>
+    <ConfigProvider
+      theme={{
+        ...useThemeToken,
+        algorithm: isDarkEnable ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }}
+      locale={Environment.isLocaleCN ? zhCN : enUS}
+    >
+      <AntdApp>
+        <AntdGlobalProvider />
+        <RouterProvider router={router} />
+      </AntdApp>
+    </ConfigProvider>
   )
 }
 

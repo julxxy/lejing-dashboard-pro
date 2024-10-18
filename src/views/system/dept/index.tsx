@@ -152,7 +152,7 @@ export default function DepartmentFC() {
           loading={loading}
         />
       </div>
-      <DeptModal currentRef={currentRef} onRefresh={getDepartments} />
+      <DeptModal parentRef={currentRef} onRefresh={getDepartments} />
     </div>
   )
 }

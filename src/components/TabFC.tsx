@@ -6,7 +6,7 @@ import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Menu, TabItem } from '@/types/apiType.ts'
 import { URIs } from '@/router'
-import { CloseCircleOutlined } from '@ant-design/icons'
+import { CloseCircleOutlined, PushpinFilled } from '@ant-design/icons'
 import useZustandStore from '@/store/useZustandStore.ts'
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string
@@ -16,8 +16,10 @@ const CSS = {
     display: 'flex',
     borderRadius: '0 0 8px 8px',
     margin: '0 14px 0 14px',
-    borderTop: '1px solid #e8e8e8',
+    borderTop: '1px solid var(--bg-color-primary)',
     height: 40,
+    color: 'var(--sidebar-text)',
+    backgroundColor: 'var(--bg-color-default)',
   }),
 }
 
@@ -30,7 +32,14 @@ const TabFC = () => {
   const { pathname } = useLocation()
   const { menus } = useAuthLoaderData()
 
-  const [tabItems, setTabItems] = useState<TabItem[]>([{ label: '首页', key: URIs.welcome, closable: false }])
+  const [tabItems, setTabItems] = useState<TabItem[]>([
+    {
+      label: '首页',
+      key: URIs.welcome,
+      icon: <PushpinFilled />,
+      closable: false,
+    },
+  ])
   const tabItemsRef = useRef(tabItems)
 
   const createTabs = () => {
@@ -40,10 +49,11 @@ const TabFC = () => {
     const isTabExist = tabItemsRef.current.some(item => item.key === route.path)
 
     if (!isTabExist) {
+      const closable = pathname !== URIs.welcome
       const newTab = {
         label: route.menuName,
         key: route.path || '',
-        closable: pathname !== URIs.welcome,
+        closable,
       }
       setTabItems(prevTabs => [...prevTabs, newTab])
     }
@@ -94,7 +104,7 @@ const TabFC = () => {
     <Tabs
       type="editable-card"
       removeIcon={<CloseCircleOutlined />}
-      tabBarStyle={{ ...CSS.tabBarWrapper(), backgroundColor: '#fff' }}
+      tabBarStyle={{ ...CSS.tabBarWrapper() }}
       activeKey={activeTab}
       onChange={onChangeTab}
       onEdit={onEdit}

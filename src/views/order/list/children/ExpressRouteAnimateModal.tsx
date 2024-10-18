@@ -11,14 +11,14 @@ import { message } from '@/context/AntdGlobalProvider.ts'
 /*
  * 货运物流驶路线详情
  */
-export default function ExpressRouteAnimateModal({ currentRef, onRefresh }: IModalProps) {
+export default function ExpressRouteAnimateModal({ parentRef, onRefresh }: IModalProps) {
   const [showModal, setShowModal] = useState(false)
   const [centerPoint, setCenterPoint] = useState<{ lng: string; lat: string }>()
   const [trackAni, setTrackAni] = useState<any>(null)
   const [order, setOrder] = useState<Order.OrderDetail | null>(null)
   const [isPaused, setIsPaused] = useState(false) // 跟踪暂停状态
 
-  useImperativeHandle(currentRef, () => controller)
+  useImperativeHandle(parentRef, () => controller)
 
   const controller = {
     openModal: (action: Action, data: Order.OrderDetail) => {

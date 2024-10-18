@@ -274,10 +274,10 @@ export default function OrderList() {
           {...tableProps}
         />
       </div>
-      <OrderCreateModal currentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal currentRef={detailRef} onRefresh={() => {}} />
-      <ExpressRouteReportModal currentRef={pointRef} onRefresh={() => search.submit()} />
-      <ExpressRouteAnimateModal currentRef={routeRef} onRefresh={() => {}} />
+      <OrderCreateModal parentRef={createRef} onRefresh={() => search.reset()} />
+      <OrderDetailModal parentRef={detailRef} onRefresh={() => {}} />
+      <ExpressRouteReportModal parentRef={pointRef} onRefresh={() => search.submit()} />
+      <ExpressRouteAnimateModal parentRef={routeRef} onRefresh={() => {}} />
     </div>
   )
 }

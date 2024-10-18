@@ -6,8 +6,9 @@ import React from 'react'
 export interface IModalProps {
   /**
    * 当前是否显示弹窗组件的 Ref 引用, 通过 useRef() 获取
+   * @apiNote 发起弹窗请求的组件
    */
-  currentRef: React.MutableRefObject<ModalAction> | undefined
+  parentRef: React.MutableRefObject<ModalAction> | undefined
   /**
    * 数据发生变化时接受父组件传递的回调函数
    */

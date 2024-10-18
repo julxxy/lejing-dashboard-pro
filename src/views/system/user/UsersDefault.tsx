@@ -237,7 +237,7 @@ export default function UsersDefault() {
             onChange: (current, pageSize) => handlePageChange(current, pageSize),
           }}
         />
-        <UserModal currentRef={currentRef} onRefresh={() => getUsers({})} />
+        <UserModal parentRef={currentRef} onRefresh={() => getUsers({})} />
       </div>
     </div>
   )
