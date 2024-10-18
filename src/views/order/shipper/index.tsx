@@ -34,7 +34,6 @@ export default function ShipperList() {
       key: 'driverInfo',
       dataIndex: 'driverName',
       width: 220,
-      fixed: true,
       render: (_, record) => (
         <p>
           <span>司机ID：{record.driverId}</span>
