@@ -1,5 +1,4 @@
 import '@/App.css'
-import '@/assets/styles/theme.less'
 
 import { RouterProvider } from 'react-router-dom'
 import { App as AntdApp, ConfigProvider, theme } from 'antd'

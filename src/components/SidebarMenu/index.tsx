@@ -99,7 +99,7 @@ const SidebarMenu: React.FC = () => {
   }
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} className={styles.sider} theme={theme}>
+    <Sider className={styles.sider} trigger={null} collapsible collapsed={collapsed} collapsedWidth={58} theme={theme}>
       <div className={styles.menu}>
         <div className={styles.logo} onClick={() => navigate(URIs.welcome)}>
           <Tooltip

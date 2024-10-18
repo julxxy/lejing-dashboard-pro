@@ -8,6 +8,7 @@ import { Menu, TabItem } from '@/types/apiType.ts'
 import { URIs } from '@/router'
 import { CloseCircleOutlined, PushpinFilled } from '@ant-design/icons'
 import useZustandStore from '@/store/useZustandStore.ts'
+import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string
 
@@ -19,7 +20,7 @@ const CSS = {
     borderTop: '1px solid var(--bg-color-primary)',
     height: 40,
     color: 'var(--sidebar-text)',
-    backgroundColor: 'var(--bg-color-default)',
+    backgroundColor: 'var(--header-bg)',
   }),
 }
 
@@ -54,6 +55,7 @@ const TabFC = () => {
         label: route.menuName,
         key: route.path || '',
         closable,
+        icon: <DynamicAntIcon iconName={route.icon} />,
       }
       setTabItems(prevTabs => [...prevTabs, newTab])
     }
