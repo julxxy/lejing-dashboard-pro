@@ -62,7 +62,7 @@ export default function OrderInsightsPro() {
 
       batchPoints.forEach(({ lng, lat }) => {
         const point = new BMapGL.Point(lng, lat)
-        const icon = new BMapGL.Icon(mapConstants.iconRoutAnimate, new BMapGL.Size(32, 32), {
+        const icon = new BMapGL.Icon(mapConstants.iconOrderInsight, new BMapGL.Size(32, 32), {
           imageSize: new BMapGL.Size(32, 32),
           anchor: new BMapGL.Size(16, 16),
         })
@@ -84,7 +84,7 @@ export default function OrderInsightsPro() {
     processBatch()
   }, [center, points])
 
-  // 当中心发生变化时获取点并渲染地图
+  // 当中心点发生变化时获取点并渲染地图
   useEffect(() => {
     if (center) {
       fetchPoints(city.value)
