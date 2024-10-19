@@ -4,7 +4,34 @@ The admin-dashboard for [lejing-mall](https://github.com/Weasley-J/lejing-mall),
 
 ##### ![login](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/eebee5eb-1c3b-4576-99db-01180a86060f_20241013123828.png)
 
-![uc-center](https://weasley.oss-cn-shanghai.aliyuncs.com/Photos/image-20241013123326848_20241013123326.png)
+## Features
+
+### Short GIFs
+
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 5px">
+<img src="resources/md/gif-dashboard-dark.gif" alt="Dashboard dark" style="border-radius: 5px;width: 50%; margin-right: 5px;">
+<img src="resources/md/gif-dashboard-light.gif" alt="Dashboard light" style=" border-radius: 5px;width: 50%; margin-right: 0;">
+</div>
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 5px">
+<img src="resources/md/gif-order-light.gif" alt="Order light" style="border-radius: 5px;width: 50%; margin-right: 5px;">
+<img src="resources/md/gif-order-dark.gif" alt="Order light" style=" border-radius: 5px;width: 50%; margin-right: 0;">
+</div>
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 5px">
+<img src="resources/md/gif-order-insight-dark.gif" alt="Order insight dark" style="border-radius: 5px;width: 50%; margin-right: 0;">
+<img src="resources/md/gif-order-insight-light.gif" alt="Order insight light" style=" border-radius: 5px;width: 50%; margin-right: 0;">
+</div>
+### Short Videos
+
+<div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
+  <video style="display: flex; flex: 1; border-radius: 5px" width="480" height="320" controls>
+    <source src="resources/md/video-hashboard.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  <video style="display: flex; flex: 1;border-radius: 5px" width="480" height="320" controls>
+    <source src="resources/md/video-all.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 # Tech Stack Links
 

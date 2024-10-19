@@ -40,6 +40,7 @@ function constants() {
   return {
     iconMarkPoint: '/images/icon_route_mark.png',
     iconRoutAnimate: '/images/icon_track_animate.png',
+    iconOrderInsight: '/images/icon_order_completion.png',
   }
 }
 

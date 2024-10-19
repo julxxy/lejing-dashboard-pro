@@ -18,10 +18,7 @@ export default function BreadcrumbFC() {
     if (isDebugEnable) log.info('顶部导航栏树形解构: ', paths)
     if (paths.length === 0) {
       // 兜底
-      setItemPaths([
-        { title: '首页', href: URIs.home },
-        { title: '工作台', href: URIs.dashboard },
-      ])
+      setItemPaths([{ title: '首页', href: URIs.home }])
     } else {
       setItemPaths([{ title: <a href={URIs.home}>首页</a> }, ...paths])
     }
