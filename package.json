@@ -6,6 +6,7 @@
   "scripts": {
     "local": "vite --mode developer_local --port 8080 --host",
     "dev": "vite --mode development --port 8080 --host",
+    "build:local": "tsc && vite build --mode developer_local && rm -fv tsconfig*.tsbuildinfo",
     "build:dev": "tsc && vite build --mode development && rm -fv tsconfig*.tsbuildinfo",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
@@ -22,7 +23,6 @@
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "react": "^18.3.1",
-    "react-activation": "^0.12.4",
     "react-dom": "^18.3.1",
     "react-draggable": "^4.4.6",
     "react-router-dom": "^6.27.0",
@@ -30,13 +30,13 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.12.0",
-    "@types/lodash": "^4.17.10",
-    "@types/node": "22.7.5",
+    "@eslint/js": "9.13.0",
+    "@types/lodash": "4.17.12",
+    "@types/node": "22.7.7",
     "@types/react": "^18.3.11",
     "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react": "^4.3.2",
-    "eslint": "^9.12.0",
+    "eslint": "9.13.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.11.0",

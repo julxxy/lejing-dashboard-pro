@@ -9,7 +9,6 @@ import { formatMoneyCNY, formatNumberWithComma, formatUserStatus } from '@/utils
 import api from '@/api'
 import root from '@/mockdata/root.json'
 import Lazy from '@/components/Lazy.tsx'
-import KeepAlive from 'react-activation'
 
 // Lazy load views
 const OrderTransaction = React.lazy<React.ComponentType<any>>(() => {
@@ -84,15 +83,9 @@ const Dashboard: React.FC = () => {
         ))}
       </div>
       <div className={styles.chartContainer}>
-        <KeepAlive>
-          <Lazy Component={OrderTransaction} />
-        </KeepAlive>
-        <KeepAlive>
-          <Lazy Component={BusinessOverview} />
-        </KeepAlive>
-        <KeepAlive>
-          <Lazy Component={ModelDiagnostics} />
-        </KeepAlive>
+        <Lazy Component={OrderTransaction} />
+        <Lazy Component={BusinessOverview} />
+        <Lazy Component={ModelDiagnostics} />
       </div>
     </>
   )
