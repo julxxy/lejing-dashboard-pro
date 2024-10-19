@@ -20,6 +20,9 @@ const BusinessOverview = React.lazy(() => import('@/views/dashboard/children/Bus
 const ModelDiagnostics = React.lazy(() => import('@/views/dashboard/children/ModelDiagnosticsRadarChart.tsx'))
 
 function getCardItems(userInfo?: User.Info): DescriptionsProps['items'] {
+  if (Environment.isLocal() && userInfo?.userName === '1432689025') {
+    return root.user.info
+  }
   return [
     { key: '1', label: '用户 ID', children: userInfo?.userId },
     { key: '2', label: '邮箱', children: userInfo?.userEmail },
