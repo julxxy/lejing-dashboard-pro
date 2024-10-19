@@ -83,7 +83,8 @@ const NaviHeader = () => {
           checkedChildren={themeSwitch.sun}
           unCheckedChildren={themeSwitch.moon}
           checked={!isDarkEnable}
-          onClick={toggleTheme}
+          onChange={toggleTheme}
+          style={{ backgroundColor: isDarkEnable ? '' : '#edf2f7' }}
         />
         <Dropdown.Button
           menu={menuProps}
