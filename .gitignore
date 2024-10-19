@@ -28,4 +28,4 @@ dist-ssr
 /.fastRequest/
 http
 *-bundle-analysis.html
-bg-color-advice.txt
+bgc-advice.txt
