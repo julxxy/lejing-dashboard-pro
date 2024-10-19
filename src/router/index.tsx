@@ -1,4 +1,4 @@
-/* eslint-disable react-refresh/only-export-components */
+// /* eslint-disable react-refresh/only-export-components */
 
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom'
 import { lazy } from 'react'
@@ -7,23 +7,11 @@ import NoPermission from '@/views/error/Error403.tsx'
 import LoginFC from '@/views/login/Login.tsx'
 import Layout from '@/layout/index.tsx'
 import { isDebugEnable, log } from '@/common/Logger.ts'
-import TestOverflow from '@/views/extra/TestOverflow.tsx'
 import { defaultAuthLoader, RouteConstants } from '@/router/defaultAuthLoader.ts'
 import { isFalse } from '@/common/booleanUtils.ts'
 import Lazy from '@/components/Lazy.tsx'
 import { Environment } from '@/types/appEnum.ts'
 import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
-
-/* Lazy load views */
-const Welcome = lazy(() => import('@/views/welcome'))
-const Dashboard = lazy(() => import('@/views/dashboard'))
-const User = lazy(() => import('@/views/system/user'))
-const Department = lazy(() => import('@/views/system/dept'))
-const Menu = lazy(() => import('@/views/system/menu'))
-const Role = lazy(() => import('@/views/system/role'))
-const Order = lazy(() => import('@/views/order/list'))
-const Shipper = lazy(() => import('@/views/order/shipper'))
-const OrderInsights = lazy(() => import('@/views/order/insights'))
 
 /**
  * URIs in the APP
@@ -50,22 +38,36 @@ export const URIs = {
     aggregation: moduleURIs.order + '/aggregation',
   },
 }
+
 if (isDebugEnable) log.info('Module URIs: \n', JSON.stringify(URIs, null, 2))
 const publicURIs = [URIs.home, URIs.login, URIs.welcome, URIs.notFound, URIs.noPermission]
 const isURIPublic = (path: string) => publicURIs.includes(path)
 
 export type IRouteObject = RouteObject & { enableAuth?: boolean; children?: IRouteObject[] }
+// Lazy load components
+const components = {
+  welcome: <Lazy Component={lazy(() => import('@/views/welcome'))} />,
+  dashboard: <Lazy Component={lazy(() => import('@/views/dashboard'))} />,
+  user: <Lazy Component={lazy(() => import('@/views/system/user'))} />,
+  department: <Lazy Component={lazy(() => import('@/views/system/dept'))} />,
+  menu: <Lazy Component={lazy(() => import('@/views/system/menu'))} />,
+  role: <Lazy Component={lazy(() => import('@/views/system/role'))} />,
+  order: <Lazy Component={lazy(() => import('@/views/order/list'))} />,
+  insight: <Lazy Component={lazy(() => import('@/views/order/insights'))} />,
+  shipper: <Lazy Component={lazy(() => import('@/views/order/shipper'))} />,
+  overflow: <Lazy Component={lazy(() => import('@/views/extra/TestOverflow.tsx'))} />,
+}
 
 const jacksMenu: IRouteObject[] = [
-  { path: '/welcome', element: <Lazy Component={Welcome} /> },
-  { path: '/dashboard', element: <Lazy Component={Dashboard} /> },
-  { path: '/userList', element: <Lazy Component={User} /> },
-  { path: '/deptList', element: <Lazy Component={Department} /> },
-  { path: '/menuList', element: <Lazy Component={Menu} /> },
-  { path: '/roleList', element: <Lazy Component={Role} /> },
-  { path: '/orderList', element: <Lazy Component={Order} /> },
-  { path: '/cluster', element: <Lazy Component={OrderInsights} /> },
-  { path: '/driverList', element: <Lazy Component={Shipper} /> },
+  { path: '/welcome', element: components.welcome },
+  { path: '/dashboard', element: components.dashboard },
+  { path: '/userList', element: components.user },
+  { path: '/deptList', element: components.department },
+  { path: '/menuList', element: components.menu },
+  { path: '/roleList', element: components.role },
+  { path: '/orderList', element: components.order },
+  { path: '/cluster', element: components.insight },
+  { path: '/driverList', element: components.shipper },
 ]
 
 /**
@@ -82,24 +84,24 @@ export const routes: IRouteObject[] = [
     children: Environment.canUseStaticLayout()
       ? jacksMenu
       : [
-          { path: URIs.welcome, element: <Lazy Component={Welcome} /> },
-          { path: URIs.dashboard, element: <Lazy Component={Dashboard} /> },
-          { path: URIs.overflow, element: <Lazy Component={TestOverflow} /> },
+          { path: URIs.welcome, element: components.welcome },
+          { path: URIs.dashboard, element: components.dashboard },
+          { path: URIs.overflow, element: components.overflow },
           {
             path: URIs.module.system,
             children: [
-              { path: URIs.system.user, element: <Lazy Component={User} /> },
-              { path: URIs.system.dept, element: <Lazy Component={Department} /> },
-              { path: URIs.system.menu, element: <Lazy Component={Menu} /> },
-              { path: URIs.system.role, element: <Lazy Component={Role} /> },
+              { path: URIs.system.user, element: components.user },
+              { path: URIs.system.dept, element: components.department },
+              { path: URIs.system.menu, element: components.menu },
+              { path: URIs.system.role, element: components.role },
             ],
           },
           {
             path: URIs.module.order,
             children: [
-              { path: URIs.order.list, element: <Lazy Component={Order} /> },
-              { path: URIs.order.aggregation, element: <Lazy Component={OrderInsights} /> },
-              { path: URIs.order.shipper, element: <Lazy Component={Shipper} /> },
+              { path: URIs.order.list, element: components.order },
+              { path: URIs.order.aggregation, element: components.insight },
+              { path: URIs.order.shipper, element: components.shipper },
             ],
           },
         ],
