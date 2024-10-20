@@ -90,6 +90,11 @@
   background-color: var(--bg-color-primary);
 }
 
+/* 覆盖 ant-switch 布局颜色 */
+.ant-switch .ant-switch-handle::before {
+  background-color: var(--bg-color-primary);
+}
+
 /* ant 固定列的视觉样式 */
 .ant-table-cell-fix-left {
   background-color: #fff;
