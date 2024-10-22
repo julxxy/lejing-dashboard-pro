@@ -2,7 +2,7 @@ import React from 'react'
 import * as Icons from '@ant-design/icons'
 
 // 定义图标类型
-interface DynamicAntIconProps extends React.HTMLAttributes<HTMLElement> {
+interface DynamicIconProps extends React.HTMLAttributes<HTMLElement> {
   iconName?: string // AntD 图标名称
 }
 
@@ -11,7 +11,7 @@ interface DynamicAntIconProps extends React.HTMLAttributes<HTMLElement> {
  * @example
  * <DynamicAntIcon iconName="ApartmentOutlined" />
  */
-const DynamicAntIcon: React.FC<DynamicAntIconProps> = ({ iconName, ...props }) => {
+const DynamicAntIcon: React.FC<DynamicIconProps> = ({ iconName, ...props }) => {
   if (!iconName) return null
   const AntIcon = Icons[iconName as keyof typeof Icons] as React.FC
   if (!AntIcon) return null
