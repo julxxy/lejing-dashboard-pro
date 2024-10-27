@@ -321,8 +321,8 @@ export namespace Shipper {
 
 // 经纬度
 export interface Point {
-  lng: string
-  lat: string
+  lng: string | number
+  lat: string | number
 }
 
 // 顶部页签

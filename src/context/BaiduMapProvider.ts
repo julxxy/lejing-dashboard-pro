@@ -1,7 +1,11 @@
 // Get map instance
 import { log } from '@/common/Logger.ts'
 
-export const getMapInstance = (center: { lng: string; lat: string }, bmContainerId: string, zoomSize?: number) => {
+export const getMapInstance = (
+  center: { lng: string | number; lat: string | number },
+  bmContainerId: string,
+  zoomSize?: number
+) => {
   const map = new BMapGL.Map(bmContainerId)
   const point = new BMapGL.Point(center.lng, center.lat)
   map.centerAndZoom(point, zoomSize ? zoomSize : 14)
