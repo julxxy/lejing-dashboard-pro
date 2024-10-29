@@ -10,18 +10,18 @@ import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 export const ApplicationAlgorithm = {
   /**
    * Find dynamic breadcrumb items
-   * @param tree Menu tree
+   * @param treeifyItems Menu tree
    * @param pathname Current pathname
    * @param targetPaths target Breadcrumb targetPaths
    */
   findDynamicBreadcrumbItems(
-    tree: Menu.Item[],
+    treeifyItems: Menu.Item[],
     pathname: string,
     targetPaths: BreadcrumbNodeProps[] = []
   ): BreadcrumbNodeProps[] {
-    if (!tree) return []
+    if (!treeifyItems) return []
 
-    for (const { menuName, path, children } of tree) {
+    for (const { menuName, path, children } of treeifyItems) {
       const currentPath = [...targetPaths, { title: menuName, href: path ?? '' }]
 
       if (path === pathname) {
@@ -77,19 +77,19 @@ export const ApplicationAlgorithm = {
   },
 
   /**
-   * 用于搜索路线的通用递归函数
+   * 用于搜索路径的通用递归函数
    * @description 递归搜索路由树，返回匹配的路由对象
    * @param routes - 路由数组（T 类型）
-   * @param searchRoute - 要搜索的路由路径
+   * @param targetRoute - 要搜索的路由路径
    * @returns 找到的 T 类型或 undefined
    */
-  findRoute<T extends { path?: string; children?: T[] }>(routes: T[], searchRoute: string): T | undefined {
+  findRoute<T extends { path?: string; children?: T[] }>(routes: T[], targetRoute: string): T | undefined {
     for (const route of routes) {
       // 直接匹配
-      if (route.path === searchRoute) return route
+      if (route.path === targetRoute) return route
       // 如果有孩子，则递归搜索
       if (route.children) {
-        const foundChild = this.findRoute(route.children, searchRoute)
+        const foundChild = this.findRoute(route.children, targetRoute)
         if (foundChild) return foundChild
       }
     }
