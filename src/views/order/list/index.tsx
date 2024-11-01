@@ -63,7 +63,7 @@ export default function OrderList() {
       current: number
       pageSize: number
     },
-    formData: Order.SearchArgs
+    formData: Order.SearchArgs,
   ) => {
     const result = await api.order.getOrderList({ ...formData, pageNum: current, pageSize })
     setShowMockButton(result.page.total === 0)
@@ -107,8 +107,8 @@ export default function OrderList() {
 
   // Define table columns
   const columns: TableColumnsType<Order.OrderDetail> = [
-    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', fixed: false },
-    { title: '城市', dataIndex: 'cityName', key: 'cityName', fixed: false },
+    { title: '订单编号', dataIndex: 'orderId', key: 'orderId', fixed: true },
+    { title: '城市', dataIndex: 'cityName', key: 'cityName', fixed: true },
     {
       title: '下单地址',
       dataIndex: 'address',
@@ -275,9 +275,11 @@ export default function OrderList() {
         />
       </div>
       <OrderCreateModal parentRef={createRef} onRefresh={() => search.reset()} />
-      <OrderDetailModal parentRef={detailRef} onRefresh={() => {}} />
+      <OrderDetailModal parentRef={detailRef} onRefresh={() => {
+      }} />
       <ExpressRouteReportModal parentRef={pointRef} onRefresh={() => search.submit()} />
-      <ExpressRouteAnimateModal parentRef={routeRef} onRefresh={() => {}} />
+      <ExpressRouteAnimateModal parentRef={routeRef} onRefresh={() => {
+      }} />
     </div>
   )
 }
