@@ -19,10 +19,13 @@
 
   .content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     position: relative;
     bottom: 40px;
 
     .greeting {
+      flex: 1;
       font-size: 38px;
       line-height: 40px;
       color: var(--content-text);
@@ -32,6 +35,7 @@
     }
 
     .title {
+      flex: 1;
       font-size: 48px;
       height: 58px;
       font-weight: bold;
@@ -40,6 +44,7 @@
     }
 
     .desc {
+      flex: 1;
       text-align: left;
       font-size: 15px;
       line-height: 20px;
