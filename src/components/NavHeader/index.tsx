@@ -7,7 +7,7 @@ import {
   UserSwitchOutlined,
 } from '@ant-design/icons'
 import { Button, Dropdown, MenuProps, Switch, Tooltip } from 'antd'
-import styles from '@/components/NaviHeader/idnex.module.less'
+import styles from '@/components/NavHeader/idnex.module.less'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import storageUtils from '@/utils/storageUtils.ts'
@@ -15,10 +15,10 @@ import { URIs } from '@/router'
 import useZustandStore from '@/store/useZustandStore.ts'
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import BreadcrumbFC from '@/components/NaviHeader/BreadcrumbFC.tsx'
+import BreadcrumbFC from '@/components/NavHeader/BreadcrumbFC.tsx'
 import { themeSwitch } from '@/components/ThemeSwitch.tsx'
 
-const NaviHeader = () => {
+const NavHeader = () => {
   const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setIsDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
@@ -106,4 +106,4 @@ const NaviHeader = () => {
   )
 }
 
-export default NaviHeader
+export default NavHeader

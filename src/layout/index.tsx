@@ -1,6 +1,6 @@
 import React, { lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { Layout, Watermark } from 'antd'
-import NaviHeader from '@/components/NaviHeader'
+import NavHeader from 'src/components/NavHeader'
 import NavFooter from '@/components/NavFooter'
 import SidebarMenu from '@/components/SidebarMenu'
 import styles from '@/layout/index.module.less'
@@ -79,7 +79,7 @@ const LayoutFC: React.FC = () => {
       <Layout style={{ minHeight: '100vh' }}>
         <SidebarMenu />
         <Layout ref={windowRef} className={styles.rightSideWrapper}>
-          <NaviHeader />
+          <NavHeader />
           <TabFC />
           <Content className={styles.scrollWrapper} style={{ height: contentHeight }}>
             <div className={styles.contentWrapper}>
