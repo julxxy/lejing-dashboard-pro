@@ -1,7 +1,5 @@
-import React, { lazy, useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { Layout, Watermark } from 'antd'
-import NavHeader from 'src/components/NavHeader'
-import NavFooter from '@/components/NavFooter'
 import SidebarMenu from '@/components/SidebarMenu'
 import styles from '@/layout/index.module.less'
 import api from '@/api'
@@ -14,6 +12,8 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import useAuthLoaderData from '@/hooks/useAuthLoader.ts'
 import TabFC from '@/components/TabFC.tsx'
 import Lazy from '@/components/Lazy.tsx'
+import { NavHeader } from '@/components/NavHeader'
+import { NavFooter } from '@/components/NavFooter'
 
 // 解构 antd 组件
 const { Content } = Layout
@@ -26,7 +26,7 @@ const watermark = (): string[] => {
 /**
  * Layout 组件
  */
-const LayoutFC: React.FC = () => {
+export default function LayoutFC() {
   const { userInfo, setUserInfo } = useZustandStore() // 获取 store
   const windowRef = useRef<HTMLDivElement>(null) // 创建引用
   const [contentHeight, setContentHeight] = useState<string>('100vh') // 默认视口高度
@@ -92,5 +92,3 @@ const LayoutFC: React.FC = () => {
     </Watermark>
   )
 }
-
-export default LayoutFC

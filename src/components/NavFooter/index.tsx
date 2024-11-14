@@ -1,6 +1,7 @@
 import styles from '@/components/NavFooter/index.module.less'
+import React from 'react'
 
-const NavFooter = () => {
+export const NavFooter: React.FC = () => {
   const links = [
     {
       label: '中国电子口岸一站式加签方案',
@@ -39,5 +40,3 @@ const NavFooter = () => {
     </div>
   )
 }
-
-export default NavFooter

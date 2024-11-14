@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import BreadcrumbFC from '@/components/NavHeader/BreadcrumbFC.tsx'
 import { themeSwitch } from '@/components/ThemeSwitch.tsx'
 
-const NavHeader = () => {
+export const NavHeader: React.FC = () => {
   const { userInfo, collapsed, isDarkEnable, setCollapsed, setToken, setIsDarkEnable } = useZustandStore()
   const toggleCollapsed = () => setCollapsed()
   const navigate = useNavigate()
@@ -105,5 +105,3 @@ const NavHeader = () => {
     </div>
   )
 }
-
-export default NavHeader
