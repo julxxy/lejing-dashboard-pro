@@ -4,7 +4,7 @@ import React from 'react'
 export const NavFooter: React.FC = () => {
   const links = [
     {
-      label: '中国电子口岸一站式加签方案',
+      label: '中国电子口岸加签方案',
       href: 'https://github.com/Weasley-J/chinaport-data-signature',
     },
     {
