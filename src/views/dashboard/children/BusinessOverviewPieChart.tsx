@@ -19,7 +19,6 @@ const generateNewVisitData = () => {
 
 export default function BusinessOverviewPieChart() {
   const [loading, setLoading] = useState(false)
-
   const cityRef = useRef<HTMLDivElement>(null)
   const ageRef = useRef<HTMLDivElement>(null)
   const visitRef = useRef<HTMLDivElement>(null)
