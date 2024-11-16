@@ -4,6 +4,9 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "local": "vite --mode developer_local --port 8080 --host",
     "dev": "vite --mode development --port 8080 --host",
