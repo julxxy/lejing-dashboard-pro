@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons'
 import { RcFile } from 'antd/es/upload'
 import { message } from '@/context/AntdGlobalProvider.ts'
-import requestUtils from '@/utils/httpUtils.ts'
+import apiClient from '@/api/apiClient.ts'
 import { ResultStatus } from '@/types/appEnum.ts'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Department, Role, User } from '@/types/apiType.ts'
@@ -237,7 +237,7 @@ export default function UserModal({ parentRef, onRefresh }: IModalProps) {
             listType="picture-circle"
             className="avatar-uploader"
             action="/api/users/upload"
-            headers={{ ...requestUtils.getAuthHeaders() }}
+            headers={{ ...apiClient.generateAuthHeaders() }}
             beforeUpload={beforeUpload}
             onChange={handleChange}
           >

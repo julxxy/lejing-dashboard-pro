@@ -21,7 +21,7 @@ apiToken = tokenIsBase64 ? base64Utils.decode(apiToken, base64Utils.defaultRecur
 /**
  * Instantiate an axios instance
  */
-const instance: AxiosInstance = axios.create({
+const axiosClient: AxiosInstance = axios.create({
   baseURL: '/api',
   timeout: 8000,
   timeoutErrorMessage: '请求超时，请稍后再试',
@@ -34,7 +34,7 @@ const instance: AxiosInstance = axios.create({
 /**
  * Request interceptor
  */
-instance.interceptors.request.use(
+axiosClient.interceptors.request.use(
   config => {
     if (config.showLoading) showLoading()
     const token = storageUtils.get<string>('token')
@@ -50,7 +50,7 @@ instance.interceptors.request.use(
 /**
  * Axios interceptor
  */
-instance.interceptors.response.use(
+axiosClient.interceptors.response.use(
   response => {
     hideLoading()
     const config = response.config
@@ -95,23 +95,23 @@ function handleSessionExpired(msg: string, data: any) {
 }
 
 /**
- * Encapsulating axios requests
+ * Axios Configuration and Basic Encapsulation
  */
-export default {
+const apiClient = {
   get: function <T>(url: string, params?: any, options?: IRequestConfig): Promise<T> {
-    return instance.get(url, { params, ...options })
+    return axiosClient.get(url, { params, ...options })
   },
   post: function <T>(url: string, data?: object, options?: IRequestConfig): Promise<T> {
-    return instance.post(url, data, options)
+    return axiosClient.post(url, data, options)
   },
   delete: function <T>(url: string, data?: any): Promise<T> {
-    return instance.delete(url, { data })
+    return axiosClient.delete(url, { data })
   },
   put: function <T>(url: string, data?: any): Promise<T> {
-    return instance.put(url, data)
+    return axiosClient.put(url, data)
   },
   download(url: string, data: any, filename: string = 'DefaultFilename.xlsx') {
-    instance({
+    axiosClient({
       url,
       data,
       method: 'post',
@@ -143,10 +143,12 @@ export default {
       window.URL.revokeObjectURL(blobUrl)
     })
   },
-  getAuthHeaders: function () {
+  generateAuthHeaders: function () {
     return {
       icode: apiToken,
       Authorization: `Bearer ${storageUtils.get<string>('token')}`,
     }
   },
 }
+
+export default apiClient
