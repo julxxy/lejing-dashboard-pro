@@ -1,5 +1,5 @@
 /**
- * 扩展 Axios 的请求配置
+ * 对 axios 的类型扩展
  */
 import { AxiosRequestConfig } from 'axios'
 
