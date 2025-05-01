@@ -1,12 +1,12 @@
 import { useImperativeHandle, useState } from 'react'
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Input, Modal, Radio, TreeSelect } from 'antd'
-import { Department, Menu } from '@/types/apiType.ts'
+import { Department, Menu } from '@/types'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { message } from '@/context/AntdGlobalProvider.ts'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { MenuType } from '@/types/appEnum.ts'
+import { MenuType } from '@/types/enum.ts'
 
 /**
  * 菜单弹窗: 创建&编辑
