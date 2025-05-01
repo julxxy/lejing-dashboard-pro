@@ -2,6 +2,7 @@ import { createRoot } from 'react-dom/client'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { StrictMode } from 'react'
 import App from '@/App.tsx'
+import '@ant-design/v5-patch-for-react-19'
 import { Environment } from '@/types/appEnum.ts'
 
 const root = createRoot(document.getElementById('root')!)

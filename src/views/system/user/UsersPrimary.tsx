@@ -123,7 +123,7 @@ export default function UsersPrimary() {
 
   return (
     <div className="sidebar-submenu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: undefined }}>
+      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 0 }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
         </Form.Item>
@@ -132,7 +132,7 @@ export default function UsersPrimary() {
         </Form.Item>
         <Form.Item name="state" label={'状态'} style={{ width: 120 }}>
           <Select>
-            <Select.Option value={undefined}>所有</Select.Option>
+            <Select.Option value={0}>所有</Select.Option>
             <Select.Option value={1}>在职</Select.Option>
             <Select.Option value={2}>离职</Select.Option>
             <Select.Option value={3}>试用期</Select.Option>
