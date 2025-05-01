@@ -1,7 +1,7 @@
 import { Select, SelectProps } from 'antd'
 import styles from '@/views/order/insights/index.module.less'
 import { useCallback, useEffect, useState } from 'react'
-import { Point } from '@/types/apiType.ts'
+import { Point } from '@/types'
 import { convertCityNameToGeoPoint, getMapInstance, mapConstants } from '@/context/BaiduMapProvider.ts'
 import api from '@/api'
 import { debounce } from 'lodash'

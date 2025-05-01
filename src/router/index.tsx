@@ -10,7 +10,7 @@ import { isDebugEnable, log } from '@/common/Logger.ts'
 import { defaultAuthLoader, RouteConstants } from '@/router/defaultAuthLoader.ts'
 import { isFalse } from '@/common/booleanUtils.ts'
 import Lazy from '@/components/Lazy.tsx'
-import { Environment } from '@/types/appEnum.ts'
+import { Environment } from '@/types/enum.ts'
 import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
 
 /**

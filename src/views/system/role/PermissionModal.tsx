@@ -3,9 +3,9 @@ import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { Form, Modal, Tree, TreeDataNode, TreeProps } from 'antd'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
-import { Menu, Role } from '@/types/apiType.ts'
+import { Menu, Role } from '@/types'
 import api from '@/api'
-import { MenuType } from '@/types/appEnum.ts'
+import { MenuType } from '@/types/enum.ts'
 import { message } from '@/context/AntdGlobalProvider.ts'
 
 /**

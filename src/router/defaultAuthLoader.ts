@@ -1,5 +1,5 @@
 import api from '@/api'
-import { Menu } from '@/types/apiType.ts'
+import { Menu } from '@/types'
 import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
 
 /**

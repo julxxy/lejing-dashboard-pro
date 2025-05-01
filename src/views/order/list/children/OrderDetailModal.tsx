@@ -1,6 +1,6 @@
 import { Action, IModalProps } from '@/types/modal.ts'
 import { useImperativeHandle, useState } from 'react'
-import { Order } from '@/types/apiType.ts'
+import { Order } from '@/types'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Descriptions, DescriptionsProps, Modal } from 'antd'
 import api from '@/api'

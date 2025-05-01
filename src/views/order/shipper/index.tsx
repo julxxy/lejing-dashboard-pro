@@ -1,7 +1,7 @@
 import styles from '@/views/order/shipper/index.module.less'
 import { Button, Form, Input, Select, Space, Table, TableColumnsType } from 'antd'
 import { useForm } from 'antd/es/form/Form'
-import { Shipper } from '@/types/apiType.ts'
+import { Shipper } from '@/types'
 import { formatDateToLocalString, formatMoneyCNY } from '@/utils'
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'

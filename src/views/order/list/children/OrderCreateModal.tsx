@@ -1,6 +1,6 @@
 import { Action, IModalProps, ModalVariables } from '@/types/modal.ts'
 import { useEffect, useImperativeHandle, useState } from 'react'
-import { Order } from '@/types/apiType.ts'
+import { Order } from '@/types'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { Button, Col, DatePicker, Form, Input, InputNumber, Modal, Row, Select } from 'antd'
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'

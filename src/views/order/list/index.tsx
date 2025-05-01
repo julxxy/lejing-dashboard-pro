@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select, Space, Table, TableColumnsType, Tooltip } from 'antd'
 import React, { useRef, useState } from 'react'
 import { ModalAction } from '@/types/modal.ts'
-import { Order } from '@/types/apiType.ts'
+import { Order } from '@/types'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import api from '@/api'
 import { useAntdTable } from 'ahooks'

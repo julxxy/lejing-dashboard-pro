@@ -1,16 +1,4 @@
-import {
-  Department,
-  Login,
-  Menu,
-  Order,
-  PageResult,
-  Point,
-  Result,
-  Role,
-  Shipper,
-  UcDashboard,
-  User,
-} from '@/types/apiType.ts'
+import { Department, Login, Menu, Order, PageResult, Point, Result, Role, Shipper, UcDashboard, User } from '@/types'
 import apiClient from '@/api/apiClient.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
 import { formatDateToLocalString } from '@/utils'

@@ -1,6 +1,6 @@
-import { Menu } from '@/types/apiType.ts'
+import { Menu } from '@/types'
 import React from 'react'
-import { MenuType } from '@/types/appEnum.ts'
+import { MenuType } from '@/types/enum.ts'
 import { MenuProps } from 'antd'
 import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 

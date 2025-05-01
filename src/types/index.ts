@@ -1,4 +1,4 @@
-import { OrderStatus } from '@/types/appEnum.ts'
+import { OrderStatus } from '@/types/enum.ts'
 import * as React from 'react'
 
 /**
