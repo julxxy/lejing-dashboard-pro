@@ -26,13 +26,13 @@
     "date-fns": "^4.1.0",
     "echarts": "^5.6.0",
     "less": "^4.3.0",
-    "less-loader": "^12.2.0",
+    "less-loader": "^12.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-draggable": "^4.4.6",
     "react-router-dom": "^7.5.3",
     "resso": "^0.17.0",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "9.14.0",

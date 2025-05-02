@@ -16,7 +16,11 @@ export const Environment = {
    * 是否使用静态导航栏
    */
   isStaticMenuEnable: (): boolean => isTrue(import.meta.env.VITE_IS_STATIC_MENU_ENABLE),
-  isLocaleCN: isTrue(import.meta.env.VITE_IS_LOCALE_CN),
+  isLocaleCN: () => {
+    const language = navigator.language || (navigator as any).userLanguage
+    const isZhCN = language.toString().toLowerCase().includes('cn')
+    return isTrue(isZhCN)
+  },
   /**
    * 是否使用静态菜单布局
    */
