@@ -11,7 +11,7 @@ import 'dayjs/locale/zh-cn'
 import dayjs from 'dayjs'
 import useZustandStore from '@/store/useZustandStore.ts'
 
-if (Environment.isLocaleCN) dayjs.locale('zh-cn')
+if (Environment.isLocaleCN()) dayjs.locale('zh-cn')
 
 function App() {
   const { isDarkEnable } = useZustandStore()
@@ -21,7 +21,7 @@ function App() {
         ...useThemeToken,
         algorithm: isDarkEnable ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}
-      locale={Environment.isLocaleCN ? zhCN : enUS}
+      locale={Environment.isLocaleCN() ? zhCN : enUS}
     >
       <AntdApp>
         <AntdGlobalProvider />
