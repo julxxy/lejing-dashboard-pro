@@ -55,7 +55,7 @@ const components = {
   order: <Lazy Component={lazy(() => import('@/views/order/list'))} />,
   insight: <Lazy Component={lazy(() => import('@/views/order/insights'))} />,
   shipper: <Lazy Component={lazy(() => import('@/views/order/shipper'))} />,
-  overflow: <Lazy Component={lazy(() => import('@/views/extra/TestOverflow.tsx'))} />,
+  overflow: <Lazy Component={lazy(() => import('@/views/extra/OverflowTest.tsx'))} />,
 }
 
 const jacksMenu: IRouteObject[] = [

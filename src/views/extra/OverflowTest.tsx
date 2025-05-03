@@ -1,5 +1,5 @@
-/* 测试内容溢出的情况 */
-export default function TestOverflow() {
+/* 内容溢出的情况测试 */
+export default function OverflowTest() {
   return (
     <>
       <div>
