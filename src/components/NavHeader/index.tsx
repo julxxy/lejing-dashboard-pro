@@ -80,8 +80,8 @@ export const NavHeader: React.FC = () => {
       <div className={styles.right}>
         <Switch
           className={styles.switch}
-          checkedChildren={themeSwitch.sun}
-          unCheckedChildren={themeSwitch.moon}
+          checkedChildren={themeSwitch.moon}
+          unCheckedChildren={themeSwitch.sun}
           checked={!isDarkEnable}
           onChange={toggleTheme}
           style={{ backgroundColor: isDarkEnable ? '' : '#edf2f7' }}
