@@ -110,8 +110,8 @@ export default function MenuFC() {
     },
   ]
   return (
-    <div className="main-content-menu">
-      <Form className={'search-box'} layout={'inline'} form={form} initialValues={{ menuState: undefined }}>
+    <div className="content-area">
+      <Form className={'content-search-box'} layout={'inline'} form={form} initialValues={{ menuState: undefined }}>
         <Form.Item name={'menuName'} label={'菜单名称'}>
           <Input placeholder={'请输入菜单名称'} />
         </Form.Item>
@@ -137,8 +137,8 @@ export default function MenuFC() {
           </Space>
         </Form.Item>
       </Form>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">菜单列表</div>
           <div className="action">
             <Button icon={<PlusOutlined />} type={'primary'} onClick={handleMainCreate}>

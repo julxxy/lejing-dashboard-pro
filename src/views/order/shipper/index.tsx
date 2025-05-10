@@ -107,9 +107,9 @@ export default function ShipperList() {
   }
 
   return (
-    <div className={`${styles.shipperList} main-content-menu`}>
+    <div className={`${styles.shipperList} content-area`}>
       <Form
-        className={'search-box'}
+        className={'content-search-box'}
         layout={'inline'}
         form={form}
         initialValues={{
@@ -144,8 +144,8 @@ export default function ShipperList() {
           </Space>
         </Form.Item>
       </Form>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">部门列表</div>
           <div className="action" />
         </div>

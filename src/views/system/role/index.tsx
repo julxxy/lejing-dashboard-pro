@@ -129,8 +129,8 @@ export default function RoleList() {
   useEffect(() => {}, [])
 
   return (
-    <div className={'main-content-menu'}>
-      <Form form={form} className="search-box" layout="inline">
+    <div className={'content-area'}>
+      <Form form={form} className="content-search-box" layout="inline">
         <Form.Item name="roleName" label="角色名称">
           <Input placeholder={'请输入角色名称'} />
         </Form.Item>
@@ -145,8 +145,8 @@ export default function RoleList() {
           </Space>
         </Form.Item>
       </Form>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">用户列表</div>
           <div className="actions">
             <Button

@@ -7,7 +7,7 @@ import { ReloadOutlined, SearchOutlined } from '@ant-design/icons'
  */
 export default function SearchForm(props: any) {
   return (
-    <Form className={'search-box'} layout={'inline'} form={props.form} initialValues={props.initialValues}>
+    <Form className={'content-search-box'} layout={'inline'} form={props.form} initialValues={props.initialValues}>
       {props.children}
       <Form.Item>
         <Space>
