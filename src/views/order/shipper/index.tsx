@@ -107,7 +107,7 @@ export default function ShipperList() {
   }
 
   return (
-    <div className={`${styles.shipperList} sidebar-submenu`}>
+    <div className={`${styles.shipperList} main-content-menu`}>
       <Form
         className={'search-box'}
         layout={'inline'}

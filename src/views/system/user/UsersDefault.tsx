@@ -166,7 +166,7 @@ export default function UsersDefault() {
   }
 
   return (
-    <div className="sidebar-submenu">
+    <div className="main-content-menu">
       <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: undefined }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
