@@ -145,6 +145,7 @@
   }
 }
 
+/* 搜索框与表格之间的垂直间距 */
 .content-search-box + .content-table {
   margin-top: 18px;
 }
