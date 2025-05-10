@@ -122,8 +122,8 @@ export default function UsersPrimary() {
   ]
 
   return (
-    <div className="main-content-menu">
-      <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 0 }}>
+    <div className="content-area">
+      <Form className="content-search-box" form={form} layout={'inline'} initialValues={{ state: 0 }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />
         </Form.Item>
@@ -149,8 +149,8 @@ export default function UsersPrimary() {
           </Space>
         </Form.Item>
       </Form>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">用户列表</div>
           <div className="actions">
             <Space>

@@ -108,11 +108,11 @@
 }
 
 /* 主内容区的菜单 */
-.main-content-menu {
+.content-area {
   width: 100%;
 }
 
-.search-box {
+.content-search-box {
   padding: 16px;
   color: var(--color-text-primary);
   background-color: var(--bg-color-secondary);
@@ -121,14 +121,14 @@
   box-shadow: var(--box-shadow-default);
 }
 
-.base-table {
+.content-table {
   border-radius: var(--border-radius-default);
   color: var(--color-text-primary);
   background-color: var(--bg-color-secondary);
   box-shadow: var(--box-shadow-default);
   border: var(--border-default);
 
-  .header-wrapper {
+  .content-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -145,6 +145,6 @@
   }
 }
 
-.search-box + .base-table {
+.content-search-box + .content-table {
   margin-top: 18px;
 }

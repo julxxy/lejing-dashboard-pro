@@ -118,8 +118,8 @@ export default function DepartmentFC() {
   ]
 
   return (
-    <div className="main-content-menu">
-      <Form className={'search-box'} layout={'inline'} form={form}>
+    <div className="content-area">
+      <Form className={'content-search-box'} layout={'inline'} form={form}>
         <Form.Item name={'deptName'} label={'部门名称'}>
           <Input placeholder={'请输入部门名称'} />
         </Form.Item>
@@ -134,8 +134,8 @@ export default function DepartmentFC() {
           </Space>
         </Form.Item>
       </Form>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">部门列表</div>
           <div className="action">
             <Button icon={<PlusOutlined />} type={'primary'} onClick={handleMainCreate}>

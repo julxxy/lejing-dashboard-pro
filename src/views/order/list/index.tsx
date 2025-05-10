@@ -208,7 +208,7 @@ export default function OrderList() {
   }
 
   return (
-    <div className="main-content-menu">
+    <div className="content-area">
       <SearchForm
         form={form}
         initialValues={{ state: undefined }}
@@ -231,8 +231,8 @@ export default function OrderList() {
           </Select>
         </Form.Item>
       </SearchForm>
-      <div className="base-table">
-        <div className="header-wrapper">
+      <div className="content-table">
+        <div className="content-header">
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>
