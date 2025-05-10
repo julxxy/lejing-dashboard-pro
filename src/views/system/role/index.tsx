@@ -129,7 +129,7 @@ export default function RoleList() {
   useEffect(() => {}, [])
 
   return (
-    <div className={'sidebar-submenu'}>
+    <div className={'main-content-menu'}>
       <Form form={form} className="search-box" layout="inline">
         <Form.Item name="roleName" label="角色名称">
           <Input placeholder={'请输入角色名称'} />

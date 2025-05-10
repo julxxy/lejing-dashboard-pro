@@ -208,7 +208,7 @@ export default function OrderList() {
   }
 
   return (
-    <div className="sidebar-submenu">
+    <div className="main-content-menu">
       <SearchForm
         form={form}
         initialValues={{ state: undefined }}

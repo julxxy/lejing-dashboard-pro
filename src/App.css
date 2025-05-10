@@ -107,8 +107,8 @@
   color: var(--color-text-primary-dark);
 }
 
-/* 侧边栏菜单 */
-.sidebar-submenu {
+/* 主内容区的菜单 */
+.main-content-menu {
   width: 100%;
 }
 

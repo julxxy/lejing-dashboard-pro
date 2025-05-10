@@ -122,7 +122,7 @@ export default function UsersPrimary() {
   ]
 
   return (
-    <div className="sidebar-submenu">
+    <div className="main-content-menu">
       <Form className="search-box" form={form} layout={'inline'} initialValues={{ state: 0 }}>
         <Form.Item name="userId" label={'用户ID'}>
           <Input placeholder={'请输入用户ID'} />

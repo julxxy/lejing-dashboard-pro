@@ -118,7 +118,7 @@ export default function DepartmentFC() {
   ]
 
   return (
-    <div className="sidebar-submenu">
+    <div className="main-content-menu">
       <Form className={'search-box'} layout={'inline'} form={form}>
         <Form.Item name={'deptName'} label={'部门名称'}>
           <Input placeholder={'请输入部门名称'} />

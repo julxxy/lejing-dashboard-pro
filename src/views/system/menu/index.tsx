@@ -110,7 +110,7 @@ export default function MenuFC() {
     },
   ]
   return (
-    <div className="sidebar-submenu">
+    <div className="main-content-menu">
       <Form className={'search-box'} layout={'inline'} form={form} initialValues={{ menuState: undefined }}>
         <Form.Item name={'menuName'} label={'菜单名称'}>
           <Input placeholder={'请输入菜单名称'} />
