@@ -107,7 +107,7 @@
   color: var(--color-text-primary-dark);
 }
 
-/* 主内容区的菜单 */
+/* 主内容区的容器 */
 .content-area {
   width: 100%;
 }
