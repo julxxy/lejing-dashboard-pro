@@ -232,7 +232,7 @@ export default function OrderList() {
         </Form.Item>
       </SearchForm>
       <div className="content-table">
-        <div className="content-header">
+        <div className="content-table-header">
           <div className="title">订单列表</div>
           <div className="actions">
             <Space>

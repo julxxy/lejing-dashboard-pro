@@ -128,7 +128,7 @@
   box-shadow: var(--box-shadow-default);
   border: var(--border-default);
 
-  .content-header {
+  .content-table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;

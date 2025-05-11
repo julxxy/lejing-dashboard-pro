@@ -146,7 +146,7 @@ export default function RoleList() {
         </Form.Item>
       </Form>
       <div className="content-table">
-        <div className="content-header">
+        <div className="content-table-header">
           <div className="title">用户列表</div>
           <div className="actions">
             <Button

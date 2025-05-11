@@ -138,7 +138,7 @@ export default function MenuFC() {
         </Form.Item>
       </Form>
       <div className="content-table">
-        <div className="content-header">
+        <div className="content-table-header">
           <div className="title">菜单列表</div>
           <div className="action">
             <Button icon={<PlusOutlined />} type={'primary'} onClick={handleMainCreate}>
