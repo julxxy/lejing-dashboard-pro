@@ -2,7 +2,7 @@ import styles from '@/views/login/Login.module.less'
 import { Button, Form, Input } from 'antd'
 import api from '@/api'
 import storageUtils from '@/utils/storageUtils.ts'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useAntd } from '@/context/AntdGlobalProvider.ts'
 import { Environment, ResultStatus } from '@/types/enum.ts'
 import { isDebugEnable, log } from '@/common/Logger.ts'
@@ -56,7 +56,11 @@ export default function LoginFC() {
       const data: any = await api.login(params)
       if (!objectUtils.hasData(data) || (objectUtils.hasKey(data, 'code') && data.code !== ResultStatus.Success)) {
         if (isDebugEnable) log.error('login failed: ', data)
-        message.error('用户名或密码错误')
+        if (data.code === 10018) {
+          message.error(data.message)
+        } else {
+          message.error('用户名或密码错误')
+        }
         return
       }
       redirectToWelcome(data)
@@ -71,7 +75,12 @@ export default function LoginFC() {
 
   return (
     <div className={styles.login}>
-      <Draggable nodeRef={loginWrapperRef} bounds="parent" handle=".drag-handle" disabled={!isDragEnable}>
+      <Draggable
+        nodeRef={loginWrapperRef as React.RefObject<HTMLDivElement>}
+        bounds="parent"
+        handle=".drag-handle"
+        disabled={!isDragEnable}
+      >
         <div
           ref={loginWrapperRef}
           className={`${styles.loginWrapper}`}

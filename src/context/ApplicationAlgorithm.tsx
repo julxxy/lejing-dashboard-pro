@@ -4,6 +4,15 @@ import { MenuType } from '@/types/enum.ts'
 import { MenuProps } from 'antd'
 import DynamicAntIcon from '@/components/DynamicAntIcon.tsx'
 
+// Breadcrumb Node Props
+export interface BreadcrumbNodeProps {
+  title: string | React.ReactNode
+  href?: string
+}
+
+// 侧边栏菜单项
+export type MenuItem = Required<MenuProps>['items'][number]
+
 /**
  * Embedded Algorithm for this Application
  */
@@ -43,6 +52,7 @@ export const ApplicationAlgorithm = {
    * 获取菜单的 URI 树形列表
    */
   findMenuURIs(source: Menu.Item[]): string[] {
+    if (!source) return []
     return source
       .flatMap(({ path, children, buttons }) =>
         Array.isArray(children) && !buttons ? this.findMenuURIs(children) : (path ?? '')
@@ -54,6 +64,7 @@ export const ApplicationAlgorithm = {
    * 生成菜单树型结构
    */
   findTreeifyMenuItems(sourceMenus: Menu.Item[], targetMenus: MenuItem[] = []) {
+    if (!sourceMenus || !targetMenus) return []
     // 生成动态图标
     sourceMenus.forEach(({ menuType, menuState, buttons, menuName, path, children, icon }, index) => {
       if (menuType === MenuType.menu.code && menuState === 1) {
@@ -84,6 +95,7 @@ export const ApplicationAlgorithm = {
    * @returns 找到的 T 类型或 undefined
    */
   findRoute<T extends { path?: string; children?: T[] }>(routes: T[], targetRoute: string): T | undefined {
+    if (!routes || !targetRoute) return undefined
     for (const route of routes) {
       // 直接匹配
       if (route.path === targetRoute) return route
@@ -96,15 +108,6 @@ export const ApplicationAlgorithm = {
     return undefined
   },
 }
-
-// Breadcrumb Node Props
-export interface BreadcrumbNodeProps {
-  title: string | React.ReactNode
-  href?: string
-}
-
-// 侧边栏菜单项
-export type MenuItem = Required<MenuProps>['items'][number]
 
 // 生成菜单项
 function getAntMenuItem(label: React.ReactNode, key?: React.Key | null, icon?: React.ReactNode, children?: MenuItem[]) {
