@@ -86,9 +86,9 @@ const Dashboard: React.FC = () => {
         ))}
       </div>
       <div className={styles.chartContainer}>
-        <Lazy Component={OrderTransaction} />
-        <Lazy Component={BusinessOverview} />
-        <Lazy Component={ModelDiagnostics} />
+        <Lazy Render={OrderTransaction} />
+        <Lazy Render={BusinessOverview} />
+        <Lazy Render={ModelDiagnostics} />
       </div>
     </>
   )

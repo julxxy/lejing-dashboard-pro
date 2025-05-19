@@ -83,7 +83,7 @@ export default function LayoutFC() {
           <TabFC />
           <Content className={styles.scrollWrapper} style={{ height: contentHeight }}>
             <div className={styles.contentWrapper}>
-              <Outlet context={<Lazy Component={lazy(() => import('@/views/welcome'))} />} />
+              <Outlet context={<Lazy Render={lazy(() => import('@/views/welcome'))} />} />
             </div>
             <NavFooter />
           </Content>
