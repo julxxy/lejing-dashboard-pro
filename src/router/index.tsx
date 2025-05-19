@@ -12,6 +12,7 @@ import { isFalse } from '@/common/booleanUtils.ts'
 import Lazy from '@/components/Lazy.tsx'
 import { Environment } from '@/types/enum.ts'
 import { ApplicationAlgorithm } from '@/context/ApplicationAlgorithm.tsx'
+import { Spin } from 'antd'
 
 /**
  * URIs in the APP
@@ -44,18 +45,19 @@ const publicURIs = [URIs.home, URIs.login, URIs.welcome, URIs.notFound, URIs.noP
 const isURIPublic = (path: string) => publicURIs.includes(path)
 
 export type IRouteObject = RouteObject & { enableAuth?: boolean; children?: IRouteObject[] }
+
 // Lazy load components
 const components = {
-  welcome: <Lazy Component={lazy(() => import('@/views/welcome'))} />,
-  dashboard: <Lazy Component={lazy(() => import('@/views/dashboard'))} />,
-  user: <Lazy Component={lazy(() => import('@/views/system/user'))} />,
-  department: <Lazy Component={lazy(() => import('@/views/system/dept'))} />,
-  menu: <Lazy Component={lazy(() => import('@/views/system/menu'))} />,
-  role: <Lazy Component={lazy(() => import('@/views/system/role'))} />,
-  order: <Lazy Component={lazy(() => import('@/views/order/list'))} />,
-  insight: <Lazy Component={lazy(() => import('@/views/order/insights'))} />,
-  shipper: <Lazy Component={lazy(() => import('@/views/order/shipper'))} />,
-  overflow: <Lazy Component={lazy(() => import('@/views/extra/OverflowTest.tsx'))} />,
+  welcome: <Lazy Render={lazy(() => import('@/views/welcome'))} />,
+  dashboard: <Lazy Render={lazy(() => import('@/views/dashboard'))} />,
+  user: <Lazy Render={lazy(() => import('@/views/system/user'))} />,
+  department: <Lazy Render={lazy(() => import('@/views/system/dept'))} />,
+  menu: <Lazy Render={lazy(() => import('@/views/system/menu'))} />,
+  role: <Lazy Render={lazy(() => import('@/views/system/role'))} />,
+  order: <Lazy Render={lazy(() => import('@/views/order/list'))} />,
+  insight: <Lazy Render={lazy(() => import('@/views/order/insights'))} />,
+  shipper: <Lazy Render={lazy(() => import('@/views/order/shipper'))} />,
+  overflow: <Lazy Render={lazy(() => import('@/views/extra/OverflowTest.tsx'))} />,
 }
 
 const jacksMenu: IRouteObject[] = [
@@ -81,6 +83,11 @@ export const routes: IRouteObject[] = [
     id: RouteConstants.layoutId,
     loader: defaultAuthLoader,
     element: <Layout />,
+    hydrateFallbackElement: (
+      <Spin tip="加载中..." size="large">
+        <div style={{ backgroundColor: 'transparent' }} />
+      </Spin>
+    ),
     children: Environment.canUseStaticLayout()
       ? jacksMenu
       : [

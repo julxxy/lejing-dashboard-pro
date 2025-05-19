@@ -10,7 +10,7 @@ import React, {
 import { Spin } from 'antd'
 
 interface LazyProps {
-  Component: LazyExoticComponent<React.FC> | React.FC
+  Render: LazyExoticComponent<React.FC> | React.FC
 }
 
 const lazyContainer: CSSProperties = {
@@ -40,7 +40,7 @@ const lazyContent: CSSProperties = {
  * @example
  * <Lazy Component={Dashboard} />
  */
-const Lazy: React.FC<LazyProps> = ({ Component }) => {
+const Lazy: React.FC<LazyProps> = ({ Render }) => {
   const [bgColor, setBgColor] = useState<string | null>(null)
   const fallbackRef = useRef<HTMLDivElement | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(true)
@@ -72,7 +72,7 @@ const Lazy: React.FC<LazyProps> = ({ Component }) => {
 
   return (
     <Suspense fallback={fallback}>
-      <Component />
+      <Render />
     </Suspense>
   )
 }
