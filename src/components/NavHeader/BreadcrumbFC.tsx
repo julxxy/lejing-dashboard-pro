@@ -24,5 +24,7 @@ export default function BreadcrumbFC() {
     }
   }, [pathname])
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return <Breadcrumb items={itemPaths} style={{ marginLeft: 10 }} />
 }
